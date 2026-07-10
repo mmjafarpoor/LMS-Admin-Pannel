@@ -7,7 +7,7 @@ import { selectThemeColors } from '@utils'
 // ** Reactstrap Imports
 import { Card, CardHeader, CardTitle, CardBody, Row, Col, Label } from 'reactstrap'
 
-// import UsersList from "./list"
+import UsersList from "./invoice/list/index"
 
 const colourOptions = [
   { value: 'ocean', label: 'Ocean' },
@@ -49,8 +49,7 @@ const SelectReact = () => {
             />
           </Col>
         </Row>
-
-        {/* <UsersList/> */}
+        <UsersList/>
       </CardBody>
     </Card>
   )

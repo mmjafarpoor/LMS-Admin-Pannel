@@ -30,11 +30,11 @@ import {
 
 import StatsHorizontal from "../components/_Global/StatsHorizontal";
 import StatsVertical from "../components/_Global/StatsVertical";
-import SelectReact from "../components/UsersManagement/SelectReact";
+// import SelectReact from "../components/UsersManagement/SelectReact";
 import UsersList from "../components/UsersManagement/invoice/list/index"
 
 
-const SecondPage = () => {
+const UsersManagement = () => {
   return (
     <div
       style={{
@@ -78,10 +78,10 @@ const SecondPage = () => {
           />
         </Col>
       </Row>
-      <SelectReact/>
+      {/* <SelectReact/> */}
       <UsersList/>
     </div>
   );
 };
 
-export default SecondPage;
+export default UsersManagement;

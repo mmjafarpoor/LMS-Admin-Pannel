@@ -1,4 +1,5 @@
 import axios from "axios";
+import { loginGmail } from "../core/services/loginApi";
 
 // ** React Imports
 import { useSkin } from "@hooks/useSkin";
@@ -29,7 +30,12 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
 import { useState } from "react";
-import { getUserData, getUserRole, getHomeRouteForLoggedInUser } from "../utility/Utils"
+import {
+  getUserData,
+  getUserRole,
+  getHomeRouteForLoggedInUser,
+} from "../utility/Utils";
+
 
 const Login = () => {
   const { skin } = useSkin();
@@ -38,46 +44,47 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const navigateHandeler = () => {
-    navigate("/home")
-  }
+    navigate("/home");
+  };
 
   const loginHandeler = async () => {
     try {
-      const response = await axios.post(
-        "http://188.121.104.25:3001/Sign/Login",
-        {
-          phoneOrGmail: email,
-          password: password,
-          rememberMe: true,
-        },
-      );
+      const response = await loginGmail({
+        phoneOrGmail: email,
+        password: password,
+        rememberMe: true,
+      });
       // const userRole = getUserRole()
       // localStorage.setItem("userData", JSON.stringify(response.data));
-      localStorage.setItem("token", (response.data.token))
-      localStorage.setItem("userRole", (response.data.roles))
-      localStorage.setItem("userName", (response.data.userName))
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userRole", response.data.roles);
+      localStorage.setItem("userName", response.data.userName);
 
       // console.log("user role:", response.data.roles[0])
-      const userRole = localStorage.getItem("userRole")
-      console.log(userRole)
+      const userRole = localStorage.getItem("userRole");
+      console.log(userRole);
 
       if (response.data.roles.includes("admin")) {
-        navigateHandeler()
-        console.log("you are an admin and your token is: ", response.data.token)
-      }
-      else return console.log("you are not an admin")
-      
+        navigateHandeler();
+        console.log(
+          "you are an admin and your token is: ",
+          response.data.token,
+        );
+      } else return console.log("you are not an admin", response.data);
     } catch (error) {
       localStorage.removeItem("token");
-      localStorage.removeItem("userRole")
-      localStorage.removeItem("userName")
-      console.log("------------>", error.response?.data);
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userName");
+      console.log("------------>", error.response);
     }
   };
 
-  const handleSubmit = (e) => {e.preventDefault(); loginHandeler()}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginHandeler();
+  };
 
   return (
     <div className="auth-wrapper auth-cover">
@@ -168,10 +175,7 @@ const Login = () => {
             <CardText className="mb-2">
               Please sign-in to your account and start the adventure
             </CardText>
-            <Form
-              className="auth-login-form mt-2"
-              onSubmit={handleSubmit}
-            >
+            <Form className="auth-login-form mt-2" onSubmit={handleSubmit}>
               <div className="mb-1">
                 <Label className="form-label" for="login-email">
                   Email
@@ -207,7 +211,7 @@ const Login = () => {
                   Remember Me
                 </Label>
               </div>
-              <Button type="submit"  color="primary" block>
+              <Button type="submit" color="primary" block>
                 Sign in
               </Button>
             </Form>

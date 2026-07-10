@@ -38,7 +38,7 @@ import {
 
 // ** Vars
 const invoiceStatusObj = {
-  Sent: { color: 'light-secondary', icon: Send },
+  // Sent: { color: 'light-secondary', icon: Send },
   Paid: { color: 'light-success', icon: CheckCircle },
   Draft: { color: 'light-primary', icon: Save },
   Downloaded: { color: 'light-info', icon: ArrowDownCircle },
@@ -52,11 +52,11 @@ const renderClient = row => {
     states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
     color = states[stateNum]
 
-  if (row.avatar.length) {
-    return <Avatar className='me-50' img={row.avatar} width='32' height='32' />
-  } else {
-    return <Avatar color={color} className='me-50' content={row.client ? row.client.name : 'John Doe'} initials />
-  }
+  // if (row.avatar.length) {
+  //   return <Avatar className='me-50' img={row.avatar} width='32' height='32' />
+  // } else {
+  //   return <Avatar color={color} className='me-50' content={row.client ? row.client.name : 'John Doe'} initials />
+  // }
 }
 
 // ** Table columns
@@ -64,7 +64,7 @@ export const columns = [
   {
     name: 'کاربر',
     sortable: true,
-    minWidth: '350px',
+    minWidth: '250px',
     sortField: 'client.name',
     // selector: row => row.client.name,
     cell: row => {
@@ -75,14 +75,22 @@ export const columns = [
           {renderClient(row)}
           <div className='d-flex flex-column'>
             <h6 className='user-name text-truncate mb-0'>{name}</h6>
-            <small className='text-truncate text-muted mb-0'>{email}</small>
+            {/* <small className='text-truncate text-muted mb-0'>{email}</small> */}
           </div>
         </div>
       )
     }
   },
   {
-    name: 'نقش',
+    name: 'عنوان نظر',
+    sortable: true,
+    minWidth: '150px',
+    sortField: 'total',
+    // selector: row => row.total,
+    cell: row => <span>${row.total || 0}</span>
+  },
+  {
+    name: 'توضیحات نظر',
     sortable: true,
     minWidth: '150px',
     sortField: 'total',
@@ -91,8 +99,8 @@ export const columns = [
   },
   {
     sortable: true,
-    minWidth: '200px',
-    name: 'درصد تکمیل پروفایل',
+    minWidth: '150px',
+    name: 'نام دوره',
     sortField: 'dueDate',
     cell: row => row.dueDate
     // selector: row => row.dueDate
@@ -106,20 +114,24 @@ export const columns = [
     cell: row => {
       return  (
         <Badge className="fs-5 px-1" color='light-success' pill>
-          فعال
+          تایید شده
         </Badge>
       )
     }
+  },
+  {
+    sortable: true,
+    minWidth: '150px',
+    name: 'پاسخ‌ها',
+    sortField: 'dueDate',
+    cell: row => row.dueDate
+    // selector: row => row.dueDate
   },
   {
     name: 'عملیات',
     minWidth: '110px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
-        <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
-        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
-          Send Mail
-        </UncontrolledTooltip>
         <Link to={`/apps/invoice/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
           <Eye size={17} className='mx-1' />
         </Link>
