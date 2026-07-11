@@ -31,10 +31,61 @@ import {
 import StatsHorizontal from "../components/_Global/StatsHorizontal";
 import StatsVertical from "../components/_Global/StatsVertical";
 // import SelectReact from "../components/UsersManagement/SelectReact";
-import UsersList from "../components/UsersManagement/invoice/list/index"
+import UsersList from "../components/UsersManagement/invoice/list/index";
 
+import { getUsers } from "../core/services/usersManagementApi";
+
+import { useEffect, useState } from "react";
+
+// const [perPage, setPerPage] = useState(10)
 
 const UsersManagement = () => {
+  const [totalCount, setTotalCount] = useState(0);
+  const [usersList, setUsersList] = useState([]);
+  const [completePercentage, setCompletePercentage] = useState(0);
+  const [teachers, setTeachers] = useState(0);
+  const [students, setStudents] = useState(0);
+
+  const setDataFromApi = (data) => {
+    setTotalCount(data.totalCount);
+    setUsersList(data.listUser);
+
+    const count = data.listUser.filter(
+      (user) => user.profileCompletionPercentage <= 20,
+    ).length;
+    setCompletePercentage(count);
+
+    const teachersCount = data.listUser.filter((user) =>
+      user.roles.includes("teacher"),
+    ).length;
+    setTeachers(teachersCount);
+
+    const studentsCount = data.listUser.filter((user) =>
+      user.roles.includes("student"),
+    ).length;
+    setStudents(studentsCount);
+
+    console.log(usersList);
+    console.log(completePercentage);
+    console.log(teachers)
+    console.log(students)
+    // setTotalCount(data.totalCount)
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await getUsers();
+      setDataFromApi(response.data);
+      console.log("data:", response.data);
+    } catch (error) {
+      console.error("fetch error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [completePercentage, teachers, students]);
+
   return (
     <div
       style={{
@@ -49,7 +100,7 @@ const UsersManagement = () => {
           <StatsHorizontal
             icon={<Users size={21} />}
             color="info"
-            stats="86%"
+            stats={totalCount}
             statTitle="تعداد کاربران"
           />
         </Col>
@@ -57,7 +108,7 @@ const UsersManagement = () => {
           <StatsHorizontal
             icon={<UserX size={21} />}
             color="warning"
-            stats="1.2gb"
+            stats={completePercentage}
             statTitle="کاربران با اطلاعات ناقص"
           />
         </Col>
@@ -65,7 +116,7 @@ const UsersManagement = () => {
           <StatsHorizontal
             icon={<Award size={21} />}
             color="success"
-            stats="0.1%"
+            stats={teachers}
             statTitle="اساتید"
           />
         </Col>
@@ -73,13 +124,13 @@ const UsersManagement = () => {
           <StatsHorizontal
             icon={<User size={21} />}
             color="primary"
-            stats="13"
+            stats={students}
             statTitle="دانشجویان"
           />
         </Col>
       </Row>
       {/* <SelectReact/> */}
-      <UsersList/>
+      <UsersList />
     </div>
   );
 };
