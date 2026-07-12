@@ -36,10 +36,13 @@ import { getData } from "../../components/CoursesManagement/store";
 const NewsList = () => {
   const dispatch = useDispatch();
   const store = useSelector((state) => state.courses);
-  const usersList = store.allData;
+  const CoursesList = store.allData;
   const totalCount = store.total;
 
-  console.log(usersList);
+  const activeCount = CoursesList.filter((course) => course.active).length;
+  const notActiveCount = totalCount - activeCount
+
+  console.log(NewsList);
 
   useEffect(() => {
     dispatch(getData());
@@ -69,7 +72,7 @@ const NewsList = () => {
             alignItems: "center",
             gap: "10px",
             marginBottom: "10px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           <Grid size={21} />
@@ -88,7 +91,7 @@ const NewsList = () => {
             alignItems: "center",
             gap: "10px",
             marginBottom: "10px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           <Bookmark size={21} />
@@ -107,7 +110,7 @@ const NewsList = () => {
             alignItems: "center",
             gap: "10px",
             marginBottom: "30px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           <CreditCard size={21} />
@@ -117,19 +120,19 @@ const NewsList = () => {
         <StatsHorizontal
           icon={<CheckCircle size={21} />}
           color="success"
-          stats={11}
+          stats={activeCount}
           statTitle="دوره‌های فعال"
         />
         <StatsHorizontal
           icon={<Circle size={21} />}
           color="info"
-          stats={12}
+          stats={totalCount}
           statTitle="مجموع دوره‌ها"
         />
         <StatsHorizontal
           icon={<XCircle size={21} />}
           color="danger"
-          stats={11}
+          stats={notActiveCount}
           statTitle="دوره‌های غیرفعال"
         />
       </Col>

@@ -33,16 +33,13 @@ import { getData } from "../../components/News/store";
 const NewsList = () => {
   const dispatch = useDispatch();
   const store = useSelector((state) => state.news);
-  const usersList = store.allData;
+  const NewsList = store.allData;
   const totalCount = store.total;
 
-  const activeCount = usersList.filter((user) =>
-    user.active,
-  ).length;
+  const activeCount = NewsList.filter((news) => news.active).length;
+  const notActiveCount = totalCount - activeCount;
 
-  const notActiveCount = totalCount - activeCount
-
-  console.log(usersList);
+  console.log(NewsList);
   console.log(activeCount);
   console.log(notActiveCount);
 
