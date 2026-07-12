@@ -1,6 +1,6 @@
 import apiClient from "../interceptor/interceptor";
 
-export const getUsers = ({ pageNumber = 1, rowOfPage = 10 } = {}) => {
+export const getUsers = ({ pageNumber, rowOfPage = 10 } = {}) => {
     return apiClient.get("User/UserMannage", {
         params: {
             PageNumber: pageNumber,

@@ -13,7 +13,11 @@ import PublicRoute from "@components/routes/PublicRoute";
 
 // ** Utils
 import { isObjEmpty } from "@utils";
-import { getUserData, getUserRole, getHomeRouteForLoggedInUser } from "../../utility/Utils"
+import {
+  getUserData,
+  getUserRole,
+  getHomeRouteForLoggedInUser,
+} from "../../utility/Utils";
 import { elements } from "chart.js";
 
 const getLayout = {
@@ -23,19 +27,18 @@ const getLayout = {
 };
 
 const getHomeRoute = () => {
-    const userRoles = getUserRole()
-    // console.log("user role:", userRole)
-    if (userRoles) return getHomeRouteForLoggedInUser(userRoles[0])
-    else return "/login"
-  }
+  const userRoles = getUserRole();
+  // console.log("user role:", userRole)
+  if (userRoles) return getHomeRouteForLoggedInUser(userRoles[0]);
+  else return "/login";
+};
 
 const ProtectedRoute = ({ children }) => {
   const userRole = getUserRole();
 
   if (!userRole || !userRole.includes("admin")) {
     return <Navigate to="/login" replace />;
-} else
-    return children;
+  } else return children;
 };
 
 // ** Document title
@@ -51,7 +54,12 @@ const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const CoursesManagement = lazy(() => import("../../pages/CoursesManagement"));
-const News = lazy(() => import("../../pages/News"));
+const News = lazy(() => import("../../pages/News/News"));
+const NewsList = lazy(() => import("../../pages/News/NewsList"));
+const AddNews = lazy(() => import("../../pages/News/AddNews"));
+const NewsCategoryManagement = lazy(() =>
+  import("../../pages/News/NewsCategoryManagement"),
+);
 const Comments = lazy(() => import("../../pages/Comments"));
 const Mails = lazy(() => import("../../pages/Mails"));
 const TimeManagement = lazy(() => import("../../pages/TimeManagement"));
@@ -67,11 +75,11 @@ const Routes = [
   },
   {
     path: "/home",
-    element: 
-    // <ProtectedRoute roles={["admin"]}>
+    element: (
+      // <ProtectedRoute roles={["admin"]}>
       <Home />
+    ),
     // </ProtectedRoute>
-    
   },
   {
     path: "/users-management",
@@ -84,7 +92,14 @@ const Routes = [
   {
     path: "/news",
     element: <News />,
-    // children: [{elements: }]
+    children: [
+      { path: "news-list", element: <NewsList /> },
+      { path: "add-news", element: <AddNews /> },
+      {
+        path: "news-category-management",
+        element: <NewsCategoryManagement />,
+      },
+    ],
   },
   {
     path: "/comments",

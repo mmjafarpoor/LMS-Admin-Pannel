@@ -7,7 +7,7 @@ import Avatar from '@components/avatar'
 
 // ** Store & Actions
 import { store } from '@store/store'
-import { deleteInvoice } from '../store'
+// import { deleteInvoice } from '../store'
 
 // ** Reactstrap Imports
 import {
@@ -46,80 +46,57 @@ const invoiceStatusObj = {
   'Partial Payment': { color: 'light-warning', icon: PieChart }
 }
 
-// ** renders client column
-const renderClient = row => {
-  const stateNum = Math.floor(Math.random() * 6),
-    states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
-    color = states[stateNum]
-
-  if (row.avatar.length) {
-    return <Avatar className='me-50' img={row.avatar} width='32' height='32' />
-  } else {
-    return <Avatar color={color} className='me-50' content={row.client ? row.client.name : 'John Doe'} initials />
-  }
-}
-
 // ** Table columns
 export const columns = [
   {
-    name: 'کاربر',
-    sortable: true,
+    name: "نام",
     minWidth: '350px',
-    sortField: 'client.name',
-    // selector: row => row.client.name,
-    cell: row => {
-      const name = row.client ? row.client.name : 'John Doe',
-        email = row.client ? row.client.companyEmail : 'johnDoe@email.com'
-      return (
-        <div className='d-flex justify-content-left align-items-center'>
-          {renderClient(row)}
-          <div className='d-flex flex-column'>
-            <h6 className='user-name text-truncate mb-0'>{name}</h6>
-            <small className='text-truncate text-muted mb-0'>{email}</small>
-          </div>
+    sortable: true,
+    sortField: "fName",
+    cell: (row) => (
+      <div className='d-flex justify-content-left align-items-center'>
+        <Avatar className='me-50' img={row.currentPictureAddress} width='32' height='32' />
+        <div className='d-flex flex-column'>
+          <div className="fw-bold">{`${row.fName} ${row.lName}`}</div>
+          <small className="text-muted">{row.userName}</small>
         </div>
-      )
-    }
+      </div>
+    ),
   },
   {
-    name: 'نقش',
+    name: "نقش",
+    minWidth: '250px',
     sortable: true,
-    minWidth: '150px',
-    sortField: 'total',
-    // selector: row => row.total,
-    cell: row => <span>${row.total || 0}</span>
+    sortField: "userRoles",
+    cell: (row) => row.userRoles.replaceAll(",", " & "),
   },
   {
+    name: "درصد تکمیل پروفایل",
     sortable: true,
-    minWidth: '200px',
-    name: 'درصد تکمیل پروفایل',
-    sortField: 'dueDate',
-    cell: row => row.dueDate
-    // selector: row => row.dueDate
+    sortField: "profileCompletionPercentage",
+    cell: (row) => `${row.profileCompletionPercentage}%`,
   },
   {
+    name: "وضعیت",
+    minWidth: '110px',
     sortable: true,
-    name: 'وضعیت',
-    minWidth: '164px',
-    sortField: 'balance',
-    // selector: row => row.balance,
-    cell: row => {
-      return  (
-        <Badge className="fs-5 px-1" color='light-success' pill>
-          فعال
-        </Badge>
-      )
-    }
+    sortField: "active",
+    cell: (row) => (
+      <Badge color={row.active ? "light-success px-1" : "light-danger px-1"} pill>
+        {row.active ? "فعال" : "غیرفعال"}
+      </Badge>
+    ),
   },
+
   {
     name: 'عملیات',
-    minWidth: '110px',
+    minWidth: '100px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
-        <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
+        {/* <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
         <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
           Send Mail
-        </UncontrolledTooltip>
+        </UncontrolledTooltip> */}
         <Link to={`/apps/invoice/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
           <Eye size={17} className='mx-1' />
         </Link>
@@ -145,7 +122,7 @@ export const columns = [
               className='w-100'
               onClick={e => {
                 e.preventDefault()
-                store.dispatch(deleteInvoice(row.id))
+                // store.dispatch(deleteInvoice(row.id))
               }}
             >
               <Trash size={14} className='me-50' />
@@ -161,3 +138,4 @@ export const columns = [
     )
   }
 ]
+

@@ -26,7 +26,7 @@ import {
 import StatsHorizontal from "../components/_Global/StatsHorizontal";
 import UsersList from "../components/Comments/invoice/list/index"
 
-const SecondPage = () => {
+const Comments = () => {
   return (
     <div
       style={{
@@ -62,9 +62,9 @@ const SecondPage = () => {
           />
         </Col>
       </Row>
-      <UsersList/>
+      {/* <UsersList/> */}
     </div>
   );
 };
 
-export default SecondPage;
+export default Comments;

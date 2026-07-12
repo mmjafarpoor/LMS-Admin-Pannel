@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
 
-const News = () => {
+const AddNews = () => {
   return (
     <Card>
       <CardHeader>
@@ -18,4 +18,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default AddNews;

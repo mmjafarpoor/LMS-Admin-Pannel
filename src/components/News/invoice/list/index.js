@@ -1,5 +1,3 @@
-import AddUser from "../../AddUser";
-
 // ** React Imports
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -26,15 +24,12 @@ import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { selectThemeColors } from "@utils";
 
-const rolesOptions = [
-  { value: "student", label: "دانشجو" },
-  { value: "teacher", label: "استاد" },
-  { value: "admin", label: "ادمین" },
-];
-
-const statusOptions = [
-  { value: "active", label: "فعال" },
-  { value: "notActive", label: "غیرفعال" },
+const colourOptions = [
+  { value: "ocean", label: "Ocean" },
+  { value: "blue", label: "Blue" },
+  { value: "purple", label: "Purple" },
+  { value: "red", label: "Red" },
+  { value: "orange", label: "Orange" },
 ];
 
 const CustomHeader = ({
@@ -45,38 +40,12 @@ const CustomHeader = ({
   handlePerPage,
   rowsPerPage,
 }) => {
-  const [addUserModal, setAddUserModal] = useState(false);
+  // const [addUserModal, setAddUserModal] = useState(false);
 
   return (
     <div className="invoice-list-table-header w-100 py-2">
-      {/* <CardBody> */}
       <Row>
-        <Col className="mb-1" md="4" sm="12">
-          <Label className="form-label fs-5">نقش</Label>
-          <Select
-            theme={selectThemeColors}
-            className="react-select"
-            classNamePrefix="select"
-            defaultValue={rolesOptions[0]}
-            options={rolesOptions}
-            isClearable={false}
-          />
-        </Col>
-        <Col className="mb-1" md="4" sm="12">
-          <Label className="form-label fs-5">وضعیت</Label>
-          <Select
-            theme={selectThemeColors}
-            className="react-select"
-            classNamePrefix="select"
-            defaultValue={statusOptions[0]}
-            options={statusOptions}
-            isClearable={false}
-          />
-        </Col>
-      </Row>
-      {/* </CardBody> */}
-      <Row>
-        <Col lg="12" className="d-flex align-items-center px-0 px-lg-1">
+        <Col md="6" className="d-flex align-items-center px-0 px-lg-1 mx-2">
           <div className="d-flex align-items-center me-2">
             <label className="fs-4" htmlFor="rows-per-page">
               نمایش
@@ -104,9 +73,20 @@ const CustomHeader = ({
               placeholder="جست‌وجو"
             />
           </div>
-          <AddUser />
         </Col>
-      </Row>
+        
+        <Col md="5">
+          <Label className="form-label fs-5">وضعیت</Label>
+          <Select
+            theme={selectThemeColors}
+            className="react-select"
+            classNamePrefix="select"
+            defaultValue={colourOptions[0]}
+            options={colourOptions}
+            isClearable={false}
+          />
+        </Col>
+      </Row>   
     </div>
   );
 };
@@ -114,8 +94,9 @@ const CustomHeader = ({
 const InvoiceList = () => {
   // ** Store vars
   const dispatch = useDispatch();
-  const store = useSelector((state) => state.users_management);
-  console.log("store:", store.data[0]);
+  const store = useSelector((state) => state.news);
+  console.log(store);
+
 
   // ** States
   const [value, setValue] = useState("");
@@ -136,7 +117,7 @@ const InvoiceList = () => {
         status: statusValue,
       }),
     );
-  }, [dispatch]);
+  }, []);
 
   const handleFilter = (val) => {
     setValue(val);
@@ -231,7 +212,7 @@ const InvoiceList = () => {
 
     if (store.data.length > 0) {
       return store.data;
-    } else if (store.data.length === 0 && isFiltered) {
+    } else if (store.allData.length === 0 && isFiltered) {
       return [];
     } else {
       return store.allData.slice(0, rowsPerPage);

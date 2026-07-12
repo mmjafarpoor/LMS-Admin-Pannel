@@ -53,8 +53,8 @@ const UserDropdown = () => {
       localStorage.setItem("userImg", response.data.currentPictureAddress);
       localStorage.setItem("userInfo", JSON.stringify(response.data));
 
-      console.log(response.data);
-      console.log(JSON.parse(localStorage.getItem("userInfo")));
+      // console.log(response.data);
+      // console.log(JSON.parse(localStorage.getItem("userInfo")));
     } catch (error) {
       console.log(error.response);
     }

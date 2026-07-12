@@ -49,32 +49,37 @@ const invoiceStatusObj = {
 // ** Table columns
 export const columns = [
   {
-    name: "نام",
-    minWidth: '350px',
+    name: "عنوان",
+    minWidth: '230px',
     sortable: true,
     sortField: "fName",
     cell: (row) => (
       <div className='d-flex justify-content-left align-items-center'>
-        <Avatar className='me-50' img={row.currentPictureAddress} width='32' height='32' />
-        <div className='d-flex flex-column'>
-          <div className="fw-bold">{`${row.fName} ${row.lName}`}</div>
-          <small className="text-muted">{row.userName}</small>
-        </div>
+        <Avatar className='me-50' width='32' height='32' img={row.currentImageAddress} /> 
+        <div className="fw-bold fs-5">{row.title}</div>     
       </div>
     ),
   },
   {
-    name: "نقش",
+    name: "آخرین آپدیت",
     minWidth: '250px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.userRoles.replaceAll(",", " & "),
+    cell: (row) => row.updateDate,
   },
   {
-    name: "درصد تکمیل پروفایل",
+    name: "دسته بندی",
+    minWidth: '120px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => `${row.profileCompletionPercentage}%`,
+    cell: (row) => row.newsCatregoryName,
+  },
+  {
+    name: "تعداد بازدید",
+    minWidth: '120px',
+    sortable: true,
+    sortField: "profileCompletionPercentage",
+    cell: (row) => row.currentView,
   },
   {
     name: "وضعیت",

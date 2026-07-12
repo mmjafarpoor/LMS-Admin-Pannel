@@ -36,55 +36,37 @@ import UsersList from "../components/UsersManagement/invoice/list/index";
 import { getUsers } from "../core/services/usersManagementApi";
 
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "../components/UsersManagement/invoice/store";
 
 // const [perPage, setPerPage] = useState(10)
 
 const UsersManagement = () => {
-  const [totalCount, setTotalCount] = useState(0);
-  const [usersList, setUsersList] = useState([]);
-  const [completePercentage, setCompletePercentage] = useState(0);
-  const [teachers, setTeachers] = useState(0);
-  const [students, setStudents] = useState(0);
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state.users_management);
+  const usersList = store.allData;
+  const totalCount = store.total;
 
-  const setDataFromApi = (data) => {
-    setTotalCount(data.totalCount);
-    setUsersList(data.listUser);
+  const completePercentage = usersList.filter(
+    (user) => user.profileCompletionPercentage <= 20,
+  ).length;
 
-    const count = data.listUser.filter(
-      (user) => user.profileCompletionPercentage <= 20,
-    ).length;
-    setCompletePercentage(count);
+  const teachers = usersList.filter((user) =>
+    user.roles.includes("teacher"),
+  ).length;
 
-    const teachersCount = data.listUser.filter((user) =>
-      user.roles.includes("teacher"),
-    ).length;
-    setTeachers(teachersCount);
+  const students = usersList.filter((user) =>
+    user.roles.includes("student"),
+  ).length;
 
-    const studentsCount = data.listUser.filter((user) =>
-      user.roles.includes("student"),
-    ).length;
-    setStudents(studentsCount);
-
-    console.log(usersList);
-    console.log(completePercentage);
-    console.log(teachers)
-    console.log(students)
-    // setTotalCount(data.totalCount)
-  };
-
-  const fetchUsers = async () => {
-    try {
-      const response = await getUsers();
-      setDataFromApi(response.data);
-      console.log("data:", response.data);
-    } catch (error) {
-      console.error("fetch error:", error);
-    }
-  };
+  console.log(usersList);
+  console.log(completePercentage);
+  console.log(teachers);
+  console.log(students);
 
   useEffect(() => {
-    fetchUsers();
-  }, [completePercentage, teachers, students]);
+    dispatch(getData());
+  }, [dispatch]);
 
   return (
     <div
