@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 import Layout from "@layouts/VerticalLayout";
 
 // ** Menu Items Array
-import navigation from "@src/navigation/vertical";
+import navigation from "@src/navigation";
 
 const VerticalLayout = (props) => {
   // const [menuData, setMenuData] = useState([])

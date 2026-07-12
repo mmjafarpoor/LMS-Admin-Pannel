@@ -47,24 +47,53 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 // ** Default Route
 const DefaultRoute = "/home";
 
-const Home = lazy(() => import("../../pages/Home"));
-const UsersManagement = lazy(() => import("../../pages/UsersManagement"));
-const Login = lazy(() => import("../../pages/Login"));
-const Register = lazy(() => import("../../pages/Register"));
-const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
-const Error = lazy(() => import("../../pages/Error"));
-const CoursesManagement = lazy(() => import("../../pages/CoursesManagement"));
+const Home = lazy(() => import("../../pages/Dashboard/Home"));
+const UsersManagement = lazy(() =>
+  import("../../pages/UsersManagement/UsersManagement"),
+);
+const Login = lazy(() => import("../../pages/Auth/Login"));
+const Register = lazy(() => import("../../pages/Auth/Register"));
+const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
+const Error = lazy(() => import("../../pages/Error/Error"));
+
+const CoursesManagement = lazy(() =>
+  import("../../pages/Courses/CoursesManagement"),
+);
+const CoursesList = lazy(() => import("../../pages/Courses/CoursesList"));
+const CreateCourse = lazy(() => import("../../pages/Courses/CreateCourse"));
+const CoursesLevel = lazy(() => import("../../pages/Courses/CoursesLevel"));
+const CoursesStatus = lazy(() => import("../../pages/Courses/CoursesStatus"));
+const CoursesTechnology = lazy(() =>
+  import("../../pages/Courses/CoursesTechnology"),
+);
+const CourseUsersList = lazy(() =>
+  import("../../pages/Courses/CourseUsersList"),
+);
+const ClassList = lazy(() => import("../../pages/Courses/ClassList"));
+const Tasks = lazy(() => import("../../pages/Courses/Tasks"));
+const Terms = lazy(() => import("../../pages/Courses/Terms"));
+
 const News = lazy(() => import("../../pages/News/News"));
 const NewsList = lazy(() => import("../../pages/News/NewsList"));
 const AddNews = lazy(() => import("../../pages/News/AddNews"));
 const NewsCategoryManagement = lazy(() =>
   import("../../pages/News/NewsCategoryManagement"),
 );
-const Comments = lazy(() => import("../../pages/Comments"));
-const Mails = lazy(() => import("../../pages/Mails"));
-const TimeManagement = lazy(() => import("../../pages/TimeManagement"));
-const Department = lazy(() => import("../../pages/Department"));
-const Apartments = lazy(() => import("../../pages/Apartments"));
+
+const TimeManagement = lazy(() =>
+  import("../../pages/TimeManagement/TimeManagement"),
+);
+const StudentsTimeManagement = lazy(() =>
+  import("../../pages/TimeManagement/StudentsTimeManagement"),
+);
+const AdminsTimeManagement = lazy(() =>
+  import("../../pages/TimeManagement/AdminsTimeManagement"),
+);
+
+const Comments = lazy(() => import("../../pages/Comments/Comments"));
+const Mails = lazy(() => import("../../pages/Mails/Mails"));
+const Department = lazy(() => import("../../pages/Department/Department"));
+const Apartments = lazy(() => import("../../pages/Apartments/Apartments"));
 
 // ** Merge Routes
 const Routes = [
@@ -88,6 +117,50 @@ const Routes = [
   {
     path: "/courses-management",
     element: <CoursesManagement />,
+    children: [
+      { path: "courses-list", element: <CoursesList /> },
+      { path: "create-course", element: <CreateCourse /> },
+      {
+        path: "courses-technology",
+        element: <CoursesTechnology />,
+      },
+      {
+        path: "courses-status",
+        element: <CoursesStatus />,
+      },
+      {
+        path: "courses-level",
+        element: <CoursesLevel />,
+      },
+      {
+        path: "course-users-list",
+        element: <CourseUsersList />,
+      },
+      {
+        path: "class-list",
+        element: <ClassList />,
+      },
+      {
+        path: "terms",
+        element: <Terms />,
+      },
+      {
+        path: "tasks",
+        element: <Tasks />,
+      },
+    ],
+  },
+  {
+    path: "/time-management",
+    element: <TimeManagement />,
+    children: [
+      { path: "students", element: <StudentsTimeManagement /> },
+      { path: "admins", element: <AdminsTimeManagement /> },
+      {
+        path: "news-category-management",
+        element: <NewsCategoryManagement />,
+      },
+    ],
   },
   {
     path: "/news",
@@ -109,10 +182,7 @@ const Routes = [
     path: "/mails",
     element: <Mails />,
   },
-  {
-    path: "/timeManagement",
-    element: <TimeManagement />,
-  },
+
   {
     path: "/department",
     element: <Department />,

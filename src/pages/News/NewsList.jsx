@@ -24,11 +24,11 @@ import {
 } from "react-feather";
 
 import StatsVertical from "../../components/_Global/StatsVertical";
-import NewsListFromApi from "../../components/News/invoice/list/index";
+import NewsListFromApi from "../../components/News/list/index";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../components/News/invoice/store";
+import { getData } from "../../components/News/store";
 
 const NewsList = () => {
   const dispatch = useDispatch();

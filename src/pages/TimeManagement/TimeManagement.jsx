@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 
-const News = () => {
+const TimeManagement = () => {
   return (
     <>
-      <Outlet/>
+      <Outlet />
     </>
   );
 };
 
-export default News;
+export default TimeManagement;
