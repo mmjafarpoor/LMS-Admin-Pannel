@@ -27,18 +27,18 @@ import {
 } from "react-feather";
 
 import StatsHorizontal from "../../components/_Global/StatsHorizontal";
-import CoursesStatusFromApi from "../../components/CoursesManagement/StatusList/list/index";
+import CoursesTechnologiesFromApi from "../../components/CoursesManagement/TechnologiesList/list/index";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../components/CoursesManagement/StatusList/store";
+import { getData } from "../../components/CoursesManagement/TechnologiesList/store";
 
-const CoursesStatus = () => {
+const CoursesTechnologies = () => {
   const dispatch = useDispatch();
-  const store = useSelector((state) => state.courses_status);
-  const statusList = store.allData;
+  const store = useSelector((state) => state.courses_technologies);
+  const TechnologiesList = store.allData;
 
-  console.log(statusList);
+  console.log(TechnologiesList);
 
   useEffect(() => {
     dispatch(getData());
@@ -55,10 +55,10 @@ const CoursesStatus = () => {
         gap: "7px",
       }}
     >
-
-      <CoursesStatusFromApi />
+      <CoursesTechnologiesFromApi />
     </div>
   );
 };
 
-export default CoursesStatus;
+export default CoursesTechnologies;
+

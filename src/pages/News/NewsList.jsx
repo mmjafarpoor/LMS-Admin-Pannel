@@ -55,7 +55,7 @@ const NewsList = () => {
         display: "flex",
         flexFlow: "row",
         justifyContent: "space-around",
-        gap: "7px",
+        gap: "15px",
       }}
     >
       <Col lg="2">

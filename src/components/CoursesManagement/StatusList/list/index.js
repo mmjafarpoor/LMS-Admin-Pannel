@@ -6,9 +6,19 @@ import Select from "react-select";
 // ** Table Columns
 import { columns } from "./columns";
 
+import AddStatus from "../AddStatus";
+
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
-import { ChevronDown } from "react-feather";
+import {
+  ChevronDown,
+  Grid,
+  Bookmark,
+  CreditCard,
+  CheckCircle,
+  Cpu,
+  Activity,
+} from "react-feather";
 import DataTable from "react-data-table-component";
 
 // ** Reactstrap Imports
@@ -23,6 +33,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { selectThemeColors } from "@utils";
+import StatsHorizontal from "../../../_Global/StatsHorizontal";
 
 const colourOptions = [
   { value: "ocean", label: "Ocean" },
@@ -33,6 +44,7 @@ const colourOptions = [
 ];
 
 const CustomHeader = ({
+  statusCount,
   handleFilter,
   value,
   handleStatusValue,
@@ -40,53 +52,20 @@ const CustomHeader = ({
   handlePerPage,
   rowsPerPage,
 }) => {
-  // const [addUserModal, setAddUserModal] = useState(false);
 
   return (
-    <div className="invoice-list-table-header w-100 py-2">
+    <div className="invoice-list-table-header w-100 py-2 d-flex flex-column">
+      <Row lg="1" className="fs-4">
+        <StatsHorizontal
+          icon={<Activity size={21} />}
+          color="info"
+          stats={statusCount}
+          statTitle="تعداد وضعیت‌ها"
+        />
+      </Row>
       <Row>
-        <Col md="6" className="d-flex align-items-center px-0 px-lg-1 mx-2">
-          <div className="d-flex align-items-center me-2">
-            <label className="fs-4" htmlFor="rows-per-page">
-              نمایش
-            </label>
-            <Input
-              type="select"
-              id="rows-per-page"
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              className="form-control ms-50 pe-3"
-            >
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </Input>
-          </div>
-          <div className="d-flex align-items-center">
-            <label className="fs-4" htmlFor="search-invoice"></label>
-            <Input
-              id="search-invoice"
-              className="ms-50 me-2 w-100"
-              type="text"
-              value={value}
-              onChange={(e) => handleFilter(e.target.value)}
-              placeholder="جست‌وجو"
-            />
-          </div>
-        </Col>
-        
-        <Col md="5">
-          <Label className="form-label fs-5">وضعیت</Label>
-          <Select
-            theme={selectThemeColors}
-            className="react-select"
-            classNamePrefix="select"
-            defaultValue={colourOptions[0]}
-            options={colourOptions}
-            isClearable={false}
-          />
-        </Col>
-      </Row>   
+        <AddStatus />
+      </Row>
     </div>
   );
 };
@@ -94,9 +73,11 @@ const CustomHeader = ({
 const InvoiceList = () => {
   // ** Store vars
   const dispatch = useDispatch();
-  const store = useSelector((state) => state.courses);
+  const store = useSelector((state) => state.courses_status);
   console.log(store);
 
+  const statusCount = store.allData.length;
+  // console.log(TechCount)
 
   // ** States
   const [value, setValue] = useState("");
@@ -210,8 +191,8 @@ const InvoiceList = () => {
       return filters[k].length > 0;
     });
 
-    if (store.data.length > 0) {
-      return store.data;
+    if (store.allData.length > 0) {
+      return store.allData;
     } else if (store.allData.length === 0 && isFiltered) {
       return [];
     } else {
@@ -255,6 +236,7 @@ const InvoiceList = () => {
             paginationComponent={CustomPagination}
             subHeaderComponent={
               <CustomHeader
+                statusCount={statusCount}
                 value={value}
                 statusValue={statusValue}
                 rowsPerPage={rowsPerPage}

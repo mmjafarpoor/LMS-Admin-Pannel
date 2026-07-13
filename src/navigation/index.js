@@ -32,10 +32,10 @@ export default [
         navLink: "/courses-management/create-course",
       },
       {
-        id: "coursesTechnology",
+        id: "coursesTechnologies",
         title: "تکنولوژی دوره‌ها",
         icon: <Circle size={12} />,
-        navLink: "/courses-management/courses-technology",
+        navLink: "/courses-management/courses-technologies",
       },
       {
         id: "coursesStatus",

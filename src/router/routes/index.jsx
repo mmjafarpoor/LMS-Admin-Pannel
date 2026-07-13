@@ -63,8 +63,8 @@ const CoursesList = lazy(() => import("../../pages/Courses/CoursesList"));
 const CreateCourse = lazy(() => import("../../pages/Courses/CreateCourse"));
 const CoursesLevel = lazy(() => import("../../pages/Courses/CoursesLevel"));
 const CoursesStatus = lazy(() => import("../../pages/Courses/CoursesStatus"));
-const CoursesTechnology = lazy(() =>
-  import("../../pages/Courses/CoursesTechnology"),
+const CoursesTechnologies = lazy(() =>
+  import("../../pages/Courses/CoursesTechnologies"),
 );
 const CourseUsersList = lazy(() =>
   import("../../pages/Courses/CourseUsersList"),
@@ -121,8 +121,8 @@ const Routes = [
       { path: "courses-list", element: <CoursesList /> },
       { path: "create-course", element: <CreateCourse /> },
       {
-        path: "courses-technology",
-        element: <CoursesTechnology />,
+        path: "courses-technologies",
+        element: <CoursesTechnologies />,
       },
       {
         path: "courses-status",
