@@ -5,11 +5,19 @@ import Select from "react-select";
 
 // ** Table Columns
 import { columns } from "./columns";
-import AddTerm from "../AddTerm"
+
+import AddCategory from "../AddCategory";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
-import { ChevronDown } from "react-feather";
+import {
+  ChevronDown,
+  Grid,
+  Bookmark,
+  CreditCard,
+  CheckCircle,
+  Cpu,
+} from "react-feather";
 import DataTable from "react-data-table-component";
 
 // ** Reactstrap Imports
@@ -24,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { selectThemeColors } from "@utils";
+import StatsHorizontal from "../../../_Global/StatsHorizontal";
 
 const colourOptions = [
   { value: "ocean", label: "Ocean" },
@@ -34,6 +43,7 @@ const colourOptions = [
 ];
 
 const CustomHeader = ({
+  techCount,
   handleFilter,
   value,
   handleStatusValue,
@@ -41,29 +51,20 @@ const CustomHeader = ({
   handlePerPage,
   rowsPerPage,
 }) => {
-  // const [addUserModal, setAddUserModal] = useState(false);
 
   return (
-    <div className="invoice-list-table-header w-100 py-2">
-        <Col md="6" className="d-flex align-items-center px-0 px-lg-1">
-          <div className="d-flex align-items-center me-2">
-            <label className="fs-4" htmlFor="rows-per-page">
-              نمایش
-            </label>
-            <Input
-              type="select"
-              id="rows-per-page"
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              className="form-control ms-50 pe-3"
-            >
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </Input>
-          </div>
-          <AddTerm/>
-        </Col>
+    <div className="invoice-list-table-header w-100 py-2 d-flex flex-column">
+      <Row md="2" className="fs-4">
+        <StatsHorizontal
+          icon={<Cpu size={21} />}
+          color="primary"
+          stats={techCount}
+          statTitle="تعداد دسته‌بندی‌ها"
+        />
+      </Row>
+      <Row>
+        <AddCategory />
+      </Row>
     </div>
   );
 };
@@ -71,9 +72,11 @@ const CustomHeader = ({
 const InvoiceList = () => {
   // ** Store vars
   const dispatch = useDispatch();
-  const store = useSelector((state) => state.courses_terms);
+  const store = useSelector((state) => state.news_categories);
   console.log(store);
 
+  const techCount = store.allData.length;
+  // console.log(TechCount)
 
   // ** States
   const [value, setValue] = useState("");
@@ -232,6 +235,7 @@ const InvoiceList = () => {
             paginationComponent={CustomPagination}
             subHeaderComponent={
               <CustomHeader
+                techCount={techCount}
                 value={value}
                 statusValue={statusValue}
                 rowsPerPage={rowsPerPage}

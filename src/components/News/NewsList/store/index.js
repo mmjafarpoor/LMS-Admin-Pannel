@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getNews } from "../../../core/services/newsApi";
+import { getNews } from "../../../../core/services/newsApi";
 
 export const getData = createAsyncThunk(
   "news/getData",

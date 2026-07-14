@@ -16,12 +16,24 @@ export const getTechnologies = () => {
     return apiClient.get("/Home/GetTechnologies");
 };
 
+export const createTechnology = (data) => {
+    return apiClient.post("/Technology", data);
+};
+
 export const getStatus = () => {
     return apiClient.get("/Status");
 };
 
+export const createStatus = (data) => {
+    return apiClient.post("/Status", data);
+};
+
 export const getLevels = () => {
     return apiClient.get("/CourseLevel/GetAllCourseLevel");
+};
+
+export const createLevel = (data) => {
+    return apiClient.post("/CourseLevel", data);
 };
 
 export const getClasses = () => {
@@ -30,4 +42,8 @@ export const getClasses = () => {
 
 export const getTerms = () => {
     return apiClient.get("/Term");
+};
+
+export const createTerm = (data) => {
+    return apiClient.post("/Term", data);
 };

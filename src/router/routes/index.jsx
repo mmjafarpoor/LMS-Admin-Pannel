@@ -76,8 +76,8 @@ const Terms = lazy(() => import("../../pages/Courses/Terms"));
 const News = lazy(() => import("../../pages/News/News"));
 const NewsList = lazy(() => import("../../pages/News/NewsList"));
 const AddNews = lazy(() => import("../../pages/News/AddNews"));
-const NewsCategoryManagement = lazy(() =>
-  import("../../pages/News/NewsCategoryManagement"),
+const NewsCategoriesManagement = lazy(() =>
+  import("../../pages/News/NewsCategoriesManagement"),
 );
 
 const TimeManagement = lazy(() =>
@@ -156,10 +156,6 @@ const Routes = [
     children: [
       { path: "students", element: <StudentsTimeManagement /> },
       { path: "admins", element: <AdminsTimeManagement /> },
-      {
-        path: "news-category-management",
-        element: <NewsCategoryManagement />,
-      },
     ],
   },
   {
@@ -169,8 +165,8 @@ const Routes = [
       { path: "news-list", element: <NewsList /> },
       { path: "add-news", element: <AddNews /> },
       {
-        path: "news-category-management",
-        element: <NewsCategoryManagement />,
+        path: "news-categories-management",
+        element: <NewsCategoriesManagement />,
       },
     ],
   },

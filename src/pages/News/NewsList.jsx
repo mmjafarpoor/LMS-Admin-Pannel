@@ -24,17 +24,17 @@ import {
 } from "react-feather";
 
 import StatsVertical from "../../components/_Global/StatsVertical";
-import NewsListFromApi from "../../components/News/list/index";
+import NewsListFromApi from "../../components/News/NewsList/list/index";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../components/News/store";
+import { getData } from "../../components/News/NewsList/store";
 
 const NewsList = () => {
   const dispatch = useDispatch();
   const store = useSelector((state) => state.news);
   const NewsList = store.allData;
-  const totalCount = store.total;
+  const totalCount = store.allData.length;
 
   const activeCount = NewsList.filter((news) => news.active).length;
   const notActiveCount = totalCount - activeCount;

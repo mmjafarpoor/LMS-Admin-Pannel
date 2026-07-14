@@ -29,6 +29,9 @@ import { selectThemeColors } from "@utils";
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 
+import { useDispatch } from "react-redux";
+import { addStatus, getData } from "./store";
+
 const statusOptions = [
   { value: "user", label: "کاربر عادی" },
   { value: "teacher", label: "استاد" },
@@ -52,13 +55,13 @@ const languageOptions = [
 ];
 
 const defaultValues = {
-  firstName: "",
-  lastName: "",
-  username: "",
+  statusName: "",
+  describe: "",
+  statusNumber: ""
 };
 
-const AddUser = () => {
-  // ** States
+const AddStatus = () => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   // ** Hooks
@@ -69,18 +72,33 @@ const AddUser = () => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (Object.values(data).every((field) => field.length > 0)) {
-      return null;
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: "manual",
-          });
+      try {
+        await dispatch(
+          addStatus({
+            statusName: data.statusName,
+            describe: data.describe,
+            statusNumber: data.statusNumber,
+            })
+          ).unwrap();
+      
+          dispatch(getData());
+          setShow(false);
+      
+        } catch (error){
+          console.log(error)
+        }}
+
+      else {
+        for (const key in data) {
+          if (data[key].length === 0) {
+            setError(key, {
+              type: "manual",
+            });
+          }
         }
       }
-    }
   };
 
   return (
@@ -99,119 +117,76 @@ const AddUser = () => {
         ></ModalHeader>
         <ModalBody className="px-sm-5 mx-50 pb-5">
           
-          <h1 className="text-center mb-2">افزودن کاربر جدید</h1>    
+          <h1 className="text-center mb-2">افزودن وضعیت جدید</h1>    
           <Row
             tag="form"
             className="gy-1 pt-75"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="firstName">
-                نام
+            <Col xs={12}>
+              <Label className="form-label fs-5" for="statusName">
+                نام وضعیت
               </Label>
               <Controller
                 control={control}
-                name="firstName"
+                name="statusName"
                 render={({ field }) => {
                   return (
                     <Input
                       {...field}
-                      id="firstName"
+                      id="statusName"
                       placeholder=""
                       value={field.value}
-                      invalid={errors.firstName && true}
+                      invalid={errors.statusName && true}
                     />
                   );
                 }}
               />
-              {errors.firstName && (
+              {errors.statusName && (
                 <FormFeedback>لطفا یک اسم درست وارد کنید</FormFeedback>
               )}
             </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="lastName">
-                نام خانوادگی
+            <Col xs={12}>
+              <Label className="form-label fs-5" for="describe">
+                توضیحات وضعیت
               </Label>
               <Controller
-                name="lastName"
+                name="describe"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="lastName"
+                    id="describe"
                     placeholder=""
-                    invalid={errors.lastName && true}
+                    invalid={errors.describe && true}
                   />
                 )}
               />
-              {errors.lastName && (
-                <FormFeedback>لطفا یک نام خانوادگی درست وارد کنید</FormFeedback>
+              {errors.describe && (
+                <FormFeedback>لطفا توضیحات درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col xs={12}>
-              <Label className="form-label" for="username">
-                نام کاربری
+              <Label className="form-label fs-5" for="statusNumber">
+                شماره
               </Label>
               <Controller
-                name="username"
+                name="statusNumber"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="username"
+                    id="statusNumber"
                     placeholder=""
-                    invalid={errors.username && true}
+                    invalid={errors.statusNumber && true}
                   />
                 )}
               />
-              {errors.username && (
-                <FormFeedback>لطفا یک نام کاربری درست وارد کنید</FormFeedback>
+              {errors.statusNumber && (
+                <FormFeedback>لطفا یک عدد درست وارد کنید</FormFeedback>
               )}
             </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="email">
-                ایمیل
-              </Label>
-              <Input type="email" id="email" placeholder="example@domain.com" />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="contact">
-                شماره تماس
-              </Label>
-              <Input
-                id="contact"
-                defaultValue=""
-                placeholder=""
-              />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="language">
-                زبان
-              </Label>
-              <Select
-                id="language"
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={languageOptions}
-                theme={selectThemeColors}
-                defaultValue={languageOptions[0]}
-              />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="status">
-                نقش
-              </Label>
-              <Select
-                id="status"
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={statusOptions}
-                theme={selectThemeColors}
-                defaultValue={statusOptions[0]}
-              />
-            </Col>
+            
             
             <Col xs={12} className="text-center mt-2 pt-50">
               <Button type="submit" className="me-1" color="primary">
@@ -233,4 +208,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddStatus;

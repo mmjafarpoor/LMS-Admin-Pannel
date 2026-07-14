@@ -24,7 +24,7 @@ import { User, Check, X } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 
 // ** Utils
-import { addTechnology, getData } from "./store";
+import { addTerm, getData } from "./store";
 import { selectThemeColors } from "@utils";
 
 // ** Styles
@@ -56,12 +56,13 @@ const languageOptions = [
 ];
 
 const defaultValues = {
-  courseName: "",
-  describe: "",
-  imgAddress: "",
+  termName: "",
+  startDate: "",
+  endDate: "",
+  departmentId: "",
 };
 
-const AddTech = () => {
+const AddTerm = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
@@ -79,10 +80,11 @@ const AddTech = () => {
     if (Object.values(data).every((field) => field.length > 0)) {
       try {
         await dispatch(
-          addTechnology({
-            techName: data.courseName,
-            describe: data.describe,
-            iconAddress: data.imgAddress,
+          addTerm({
+            termName: data.termName,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            departmentId: data.departmentId,
           })
         ).unwrap();
 
@@ -91,7 +93,8 @@ const AddTech = () => {
 
       } catch (error){
         console.log(error)
-      }}
+      }
+    }
 
     else {
       for (const key in data) {
@@ -106,8 +109,8 @@ const AddTech = () => {
 
   return (
     <Fragment>
-      <Button className="fs-4" color="primary" onClick={() => setShow(true)}>
-        افزودن تکنولوژی
+      <Button className="fs-5" color="primary" onClick={() => setShow(true)}>
+        افزودن ترم
       </Button>
       <Modal
         isOpen={show}
@@ -120,76 +123,95 @@ const AddTech = () => {
         ></ModalHeader>
         <ModalBody className="px-sm-5 mx-50 pb-5">
           
-          <h1 className="text-center mb-2">افزودن تکنولوژی جدید</h1>    
+          <h1 className="text-center mb-2">افزودن ترم جدید</h1>    
           <Row
             tag="form"
             className="gy-1 pt-75"
             onSubmit={handleSubmit(onSubmit)}
           >
             <Col xs={12}>
-              <Label className="form-label fs-5" for="courseName">
-                نام تکنولوژی
+              <Label className="form-label fs-5" for="termName">
+                نام ترم
               </Label>
               <Controller
                 control={control}
-                name="courseName"
+                name="termName"
                 render={({ field }) => {
                   return (
                     <Input
                       {...field}
-                      id="courseName"
+                      id="termName"
                       placeholder=""
                       value={field.value}
-                      invalid={errors.courseName && true}
+                      invalid={errors.termName && true}
                     />
                   );
                 }}
               />
-              {errors.courseName && (
+              {errors.termName && (
                 <FormFeedback>لطفا یک اسم درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col xs={12}>
-              <Label className="form-label fs-5" for="describe">
-                توضیحات تکنولوژی
+              <Label className="form-label fs-5" for="startDate">
+                تاریخ شروع
               </Label>
               <Controller
-                name="describe"
+                name="startDate"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="describe"
+                    id="startDate"
                     placeholder=""
-                    invalid={errors.describe && true}
+                    invalid={errors.startDate && true}
                   />
                 )}
               />
-              {errors.describe && (
-                <FormFeedback>لطفا توضیحات درست وارد کنید</FormFeedback>
+              {errors.startDate && (
+                <FormFeedback>لطفا تاریخ درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col xs={12}>
-              <Label className="form-label fs-5" for="imgAddress">
-                آدرس عکس
+              <Label className="form-label fs-5" for="endDate">
+                تاریخ پایان
               </Label>
               <Controller
-                name="imgAddress"
+                name="endDate"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="imgAddress"
+                    id="endDate"
                     placeholder=""
-                    invalid={errors.imgAddress && true}
+                    invalid={errors.endDate && true}
                   />
                 )}
               />
-              {errors.imgAddress && (
-                <FormFeedback>لطفا یک آدرس درست وارد کنید</FormFeedback>
+              {errors.endDate && (
+                <FormFeedback>لطفا یک تاریخ درست وارد کنید</FormFeedback>
               )}
             </Col>
-            
+            <Col xs={12}>
+              <Label className="form-label fs-5" for="departmentId">
+                دپارتمان
+              </Label>
+              <Controller
+                name="departmentId"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="departmentId"
+                    placeholder=""
+                    invalid={errors.departmentId && true}
+                  />
+                )}
+              />
+              {errors.departmentId && (
+                <FormFeedback>لطفا یک عدد درست وارد کنید</FormFeedback>
+              )}
+            </Col>
             
             <Col xs={12} className="text-center mt-2 pt-50">
               <Button type="submit" className="me-1" color="primary">
@@ -211,4 +233,4 @@ const AddTech = () => {
   );
 };
 
-export default AddTech;
+export default AddTerm;

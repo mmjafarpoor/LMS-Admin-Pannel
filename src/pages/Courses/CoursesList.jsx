@@ -26,7 +26,7 @@ import {
   CreditCard,
 } from "react-feather";
 
-import StatsVertical from "../../components/_Global/StatsVertical";
+import StatsHorizontal from "../../components/_Global/StatsHorizontal";
 import CoursesListFromApi from "../../components/CoursesManagement/CoursesList/list/index";
 
 import { useEffect, useState } from "react";
@@ -54,33 +54,31 @@ const NewsList = () => {
         height: "auto",
         width: "100%",
         display: "flex",
-        flexFlow: "row",
-        justifyContent: "space-around",
-        gap: "15px",
+        flexFlow: "column",
       }}
     >
-      <Col lg="2">
-        <StatsVertical
+      <Row md="4" className="d-flex justify-content-around">
+        <StatsHorizontal
           icon={<CheckCircle size={21} />}
           color="success"
           stats={activeCount}
           statTitle="ترم‌های فعال"
         />
 
-        <StatsVertical
+        <StatsHorizontal
           icon={<Circle size={21} />}
           color="info"
           statTitle="تعداد کل ترم‌ها"
           stats={totalCount}
         />
 
-        <StatsVertical
+        <StatsHorizontal
           icon={<XCircle size={21} />}
           color="danger"
           stats={notActiveCount}
           statTitle="ترم‌های منقضی شده"
         />
-      </Col>
+      </Row>
 
       <CoursesListFromApi />
     </div>

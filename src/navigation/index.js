@@ -117,7 +117,7 @@ export default [
         id: "newsCategoryManagement",
         title: "مدیریت دسته‌بندی اخبار",
         icon: <Circle size={12} />,
-        navLink: "/news/news-category-management",
+        navLink: "/news/news-categories-management",
       },
     ],
   },

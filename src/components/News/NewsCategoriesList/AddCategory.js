@@ -24,14 +24,10 @@ import { User, Check, X } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 
 // ** Utils
-import { addTechnology, getData } from "./store";
 import { selectThemeColors } from "@utils";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
-import { useDispatch } from "react-redux";
-
-
 
 const statusOptions = [
   { value: "user", label: "کاربر عادی" },
@@ -56,13 +52,13 @@ const languageOptions = [
 ];
 
 const defaultValues = {
-  courseName: "",
-  describe: "",
-  imgAddress: "",
+  firstName: "",
+  lastName: "",
+  username: "",
 };
 
-const AddTech = () => {
-  const dispatch = useDispatch();
+const AddUser = () => {
+  // ** States
   const [show, setShow] = useState(false);
 
   // ** Hooks
@@ -73,27 +69,10 @@ const AddTech = () => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onSubmit = async (data) => {
-    console.log("submit");
-
+  const onSubmit = (data) => {
     if (Object.values(data).every((field) => field.length > 0)) {
-      try {
-        await dispatch(
-          addTechnology({
-            techName: data.courseName,
-            describe: data.describe,
-            iconAddress: data.imgAddress,
-          })
-        ).unwrap();
-
-        dispatch(getData());
-        setShow(false);
-
-      } catch (error){
-        console.log(error)
-      }}
-
-    else {
+      return null;
+    } else {
       for (const key in data) {
         if (data[key].length === 0) {
           setError(key, {
@@ -120,76 +99,119 @@ const AddTech = () => {
         ></ModalHeader>
         <ModalBody className="px-sm-5 mx-50 pb-5">
           
-          <h1 className="text-center mb-2">افزودن تکنولوژی جدید</h1>    
+          <h1 className="text-center mb-2">افزودن کاربر جدید</h1>    
           <Row
             tag="form"
             className="gy-1 pt-75"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Col xs={12}>
-              <Label className="form-label fs-5" for="courseName">
-                نام تکنولوژی
+            <Col md={6} xs={12}>
+              <Label className="form-label" for="firstName">
+                نام
               </Label>
               <Controller
                 control={control}
-                name="courseName"
+                name="firstName"
                 render={({ field }) => {
                   return (
                     <Input
                       {...field}
-                      id="courseName"
+                      id="firstName"
                       placeholder=""
                       value={field.value}
-                      invalid={errors.courseName && true}
+                      invalid={errors.firstName && true}
                     />
                   );
                 }}
               />
-              {errors.courseName && (
+              {errors.firstName && (
                 <FormFeedback>لطفا یک اسم درست وارد کنید</FormFeedback>
               )}
             </Col>
-            <Col xs={12}>
-              <Label className="form-label fs-5" for="describe">
-                توضیحات تکنولوژی
+            <Col md={6} xs={12}>
+              <Label className="form-label" for="lastName">
+                نام خانوادگی
               </Label>
               <Controller
-                name="describe"
+                name="lastName"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="describe"
+                    id="lastName"
                     placeholder=""
-                    invalid={errors.describe && true}
+                    invalid={errors.lastName && true}
                   />
                 )}
               />
-              {errors.describe && (
-                <FormFeedback>لطفا توضیحات درست وارد کنید</FormFeedback>
+              {errors.lastName && (
+                <FormFeedback>لطفا یک نام خانوادگی درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col xs={12}>
-              <Label className="form-label fs-5" for="imgAddress">
-                آدرس عکس
+              <Label className="form-label" for="username">
+                نام کاربری
               </Label>
               <Controller
-                name="imgAddress"
+                name="username"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="imgAddress"
+                    id="username"
                     placeholder=""
-                    invalid={errors.imgAddress && true}
+                    invalid={errors.username && true}
                   />
                 )}
               />
-              {errors.imgAddress && (
-                <FormFeedback>لطفا یک آدرس درست وارد کنید</FormFeedback>
+              {errors.username && (
+                <FormFeedback>لطفا یک نام کاربری درست وارد کنید</FormFeedback>
               )}
             </Col>
-            
+            <Col md={6} xs={12}>
+              <Label className="form-label" for="email">
+                ایمیل
+              </Label>
+              <Input type="email" id="email" placeholder="example@domain.com" />
+            </Col>
+            <Col md={6} xs={12}>
+              <Label className="form-label" for="contact">
+                شماره تماس
+              </Label>
+              <Input
+                id="contact"
+                defaultValue=""
+                placeholder=""
+              />
+            </Col>
+            <Col md={6} xs={12}>
+              <Label className="form-label" for="language">
+                زبان
+              </Label>
+              <Select
+                id="language"
+                isClearable={false}
+                className="react-select"
+                classNamePrefix="select"
+                options={languageOptions}
+                theme={selectThemeColors}
+                defaultValue={languageOptions[0]}
+              />
+            </Col>
+            <Col md={6} xs={12}>
+              <Label className="form-label" for="status">
+                نقش
+              </Label>
+              <Select
+                id="status"
+                isClearable={false}
+                className="react-select"
+                classNamePrefix="select"
+                options={statusOptions}
+                theme={selectThemeColors}
+                defaultValue={statusOptions[0]}
+              />
+            </Col>
             
             <Col xs={12} className="text-center mt-2 pt-50">
               <Button type="submit" className="me-1" color="primary">
@@ -211,4 +233,4 @@ const AddTech = () => {
   );
 };
 
-export default AddTech;
+export default AddUser;

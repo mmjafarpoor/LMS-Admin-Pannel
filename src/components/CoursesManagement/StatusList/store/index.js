@@ -4,7 +4,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getStatus } from "../../../../core/services/coursesApi";
+import { getStatus, createStatus } from "../../../../core/services/coursesApi";
+
 
 export const getData = createAsyncThunk(
   "courses_status/getData",
@@ -22,6 +23,19 @@ export const getData = createAsyncThunk(
   },
 );
 
+export const addStatus = createAsyncThunk(
+  "courses_status/addStatus",
+  async (data) => {
+    try {
+      const response = await createStatus(data);
+      return response.data
+
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
 export const appInvoiceSlice = createSlice({
   name: "courses_status",
   initialState: {
@@ -29,9 +43,13 @@ export const appInvoiceSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getData.fulfilled, (state, action) => { 
-      state.allData = action.payload.allData;
-    });
+    builder
+      .addCase(getData.fulfilled, (state, action) => { 
+        state.allData = action.payload.allData;
+      })
+      .addCase(addStatus.fulfilled, (state, action) => {
+        state.allData.push(action.payload)
+      });
   },
 });
 

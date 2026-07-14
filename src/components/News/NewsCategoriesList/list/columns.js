@@ -9,7 +9,7 @@ import Avatar from '@components/avatar'
 import { store } from '@store/store'
 // import { deleteInvoice } from '../store'
 
-import EditStatus from "../EditStatus"
+import EditCategory from "../EditCategory"
 
 // ** Reactstrap Imports
 import {
@@ -52,29 +52,26 @@ const invoiceStatusObj = {
 export const columns = [
   {
     name: "عنوان",
-    minWidth: '100px',
+    minWidth: '200px',
     sortable: true,
     sortField: "fName",
     cell: (row) => (
-      <div className='d-flex justify-content-left align-items-center gap-1'>
-        <Avatar className='me-50' width='32' height='32' img={row.iconAddress} /> 
-        <div className="fw-bold fs-5">{row.statusName}</div>     
-      </div>
+        <div className="fw-bold fs-5">{row.categoryName}</div>     
     ),
   },
   {
     name: "توضیحات",
-    minWidth: '200px',
+    minWidth: '300px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => "",
+    cell: (row) => row.GoogleDescribe,
   },
   {
     name: 'اقدام',
-    minWidth: '200px',
+    minWidth: '100px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
-        <EditStatus/>
+        <EditCategory/>
       </div>
     )
   }
