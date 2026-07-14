@@ -11,6 +11,7 @@ import courses_status from "../components/CoursesManagement/StatusList/store";
 import courses_levels from "../components/CoursesManagement/LevelsList/store";
 import courses_class_list from "../components/CoursesManagement/ClassList/store";
 import courses_terms from "../components/CoursesManagement/TermsList/store";
+import department_list from "../components/Department/DepartmentList/store";
 
 const rootReducer = {
   navbar,
@@ -25,6 +26,7 @@ const rootReducer = {
   courses_levels,
   courses_class_list,
   courses_terms,
+  department_list
 };
 
 export default rootReducer;
