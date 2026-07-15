@@ -140,9 +140,9 @@ export default [
     navLink: "/department",
   },
   {
-    id: "apartments",
+    id: "buildings",
     title: "ساختمان‌ها",
     icon: <Globe size={20} />,
-    navLink: "/apartments",
+    navLink: "/buildings",
   },
 ];

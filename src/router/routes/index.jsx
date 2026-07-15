@@ -93,7 +93,7 @@ const AdminsTimeManagement = lazy(() =>
 const Comments = lazy(() => import("../../pages/Comments/Comments"));
 const Mails = lazy(() => import("../../pages/Mails/Mails"));
 const Department = lazy(() => import("../../pages/Department/Department"));
-const Apartments = lazy(() => import("../../pages/Apartments/Apartments"));
+const Buildings = lazy(() => import("../../pages/Buildings/Buildings"));
 
 // ** Merge Routes
 const Routes = [
@@ -184,8 +184,8 @@ const Routes = [
     element: <Department />,
   },
   {
-    path: "/apartments",
-    element: <Apartments />,
+    path: "/buildings",
+    element: <Buildings />,
   },
   {
     path: "/login",

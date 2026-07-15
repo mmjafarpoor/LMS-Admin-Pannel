@@ -27,15 +27,15 @@ import {
 } from "react-feather";
 
 import StatsHorizontal from "../../components/_Global/StatsHorizontal";
-import DepartmentListFromApi from "../../components/Department/DepartmentList/list/index";
+import BuildingsListFromApi from "../../components/Buildings/BuildingsList/list/index";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../components/Department/DepartmentList/store";
+import { getData } from "../../components/Buildings/BuildingsList/store";
 
-const Department = () => {
+const Buildings = () => {
   const dispatch = useDispatch();
-  const store = useSelector((state) => state.department);
+  const store = useSelector((state) => state.buildings);
   const DepartmentList = store.allData;
 
   console.log(DepartmentList);
@@ -55,10 +55,10 @@ const Department = () => {
         gap: "7px",
       }}
     >
-      <DepartmentListFromApi />
+      <BuildingsListFromApi />
     </div>
   );
 };
 
-export default Department;
+export default Buildings;
 

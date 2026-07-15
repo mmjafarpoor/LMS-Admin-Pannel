@@ -5,35 +5,25 @@ import Select from "react-select";
 
 // ** Table Columns
 import { columns } from "./columns";
-import AddDepartment from "../AddDepartment"
+import AddBuilding from "../AddBuilding";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
-import {
-  ChevronDown,
-  Grid,
-  Bookmark,
-  CreditCard,
-  CheckCircle,
-  Cpu,
-} from "react-feather";
+import { ChevronDown, Grid, Bookmark, CreditCard } from "react-feather";
 import DataTable from "react-data-table-component";
 
 // ** Reactstrap Imports
 import { Button, Input, Row, Col, Card, CardBody, Label } from "reactstrap";
 
 // ** Store & Actions
-import { getData, addDepartment } from "../store";
+import { getData } from "../store";
 import { useDispatch, useSelector } from "react-redux";
-
-
 
 // ** Styles
 
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { selectThemeColors } from "@utils";
-import StatsHorizontal from "../../../_Global/StatsHorizontal";
 
 const colourOptions = [
   { value: "ocean", label: "Ocean" },
@@ -44,7 +34,6 @@ const colourOptions = [
 ];
 
 const CustomHeader = ({
-  departmentCount,
   handleFilter,
   value,
   handleStatusValue,
@@ -54,17 +43,38 @@ const CustomHeader = ({
 }) => {
 
   return (
-    <div className="invoice-list-table-header w-100 py-2 d-flex flex-column">
-      <Row md="2" className="fs-4">
-        <StatsHorizontal
-          icon={<Cpu size={21} />}
-          color="primary"
-          stats={departmentCount}
-          statTitle="تعداد دپارتمان‌ها"
-        />
-      </Row>
+    <div className="invoice-list-table-header w-100 py-2">
       <Row>
-        <AddDepartment />
+        <Col md="10" className="d-flex align-items-center px-0 px-lg-1 mx-2">
+          <div className="d-flex align-items-center me-2">
+            <label className="fs-4" htmlFor="rows-per-page">
+              نمایش
+            </label>
+            <Input
+              type="select"
+              id="rows-per-page"
+              value={rowsPerPage}
+              onChange={handlePerPage}
+              className="form-control ms-50 pe-3"
+            >
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </Input>
+          </div>
+          <div className="d-flex align-items-center">
+            <label className="fs-4" htmlFor="search-invoice"></label>
+            <Input
+              id="search-invoice"
+              className="ms-50 me-2 w-100"
+              type="text"
+              value={value}
+              onChange={(e) => handleFilter(e.target.value)}
+              placeholder="جست‌وجو"
+            />
+          </div>
+          <AddBuilding/>
+        </Col>       
       </Row>
     </div>
   );
@@ -73,10 +83,8 @@ const CustomHeader = ({
 const InvoiceList = () => {
   // ** Store vars
   const dispatch = useDispatch();
-  const store = useSelector((state) => state.department);
+  const store = useSelector((state) => state.buildings);
   console.log(store);
-
-  const departmentCount = store.allData.length;
 
   // ** States
   const [value, setValue] = useState("");
@@ -235,7 +243,6 @@ const InvoiceList = () => {
             paginationComponent={CustomPagination}
             subHeaderComponent={
               <CustomHeader
-                departmentCount={departmentCount}
                 value={value}
                 statusValue={statusValue}
                 rowsPerPage={rowsPerPage}

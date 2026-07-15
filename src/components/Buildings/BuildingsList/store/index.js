@@ -4,26 +4,25 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getDepartments, createDepartment} from "../../../../core/services/departmentApi";
+import { getBuildings, createBuilding } from "../../../../core/services/buildingsApi";
 
 export const getData = createAsyncThunk(
-  "department/getData",
+  "buildings/getData",
   async () => {
     try {
-      const response = await getDepartments();
+      const response = await getBuildings();
       
       return {
-        allData: response.data,
+        allData: response.data
       };
-
     } catch (error) {
       console.log(error);
     }
   },
 );
 
-export const addDepartment = createAsyncThunk(
-  "department/addDepartment",
+export const addBuilding = createAsyncThunk(
+  "buildings/addBuilding",
   async (data, { rejectWithValue }) => {
     try {
       const response = await createDepartment(data);
@@ -36,20 +35,19 @@ export const addDepartment = createAsyncThunk(
 )
 
 export const appInvoiceSlice = createSlice({
-  name: "department",
+  name: "buildings",
   initialState: {
     allData: [],
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(getData.fulfilled, (state, action) => { 
-        state.allData = action.payload.allData;
-      })
-      // .addCase(addDepartment.fulfilled, (state, action) => {
-      //   state.allData.push(action.payload)
-      // });
-
+    builder.
+    addCase(getData.fulfilled, (state, action) => { 
+      state.allData = action.payload.allData;
+    })
+    // .addCase(addBuilding.fulfilled, (state, action) => {
+    //   state.allData.push(action.payload)
+    // }); 
   },
 });
 
