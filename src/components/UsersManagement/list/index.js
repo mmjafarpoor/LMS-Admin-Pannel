@@ -27,29 +27,34 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { selectThemeColors } from "@utils";
 
 const rolesOptions = [
-  { value: "student", label: "دانشجو" },
-  { value: "teacher", label: "استاد" },
-  { value: "admin", label: "ادمین" },
+  { id: "", value: "all", label: "همه" },
+  { id: 2, value: "student", label: "دانشجو" },
+  { id: 3, value: "teacher", label: "استاد" },
+  { id: 1, value: "admin", label: "ادمین" },
+  { id: 10, value: "GOD", label: "GOD" },
 ];
 
 const statusOptions = [
-  { value: "active", label: "فعال" },
-  { value: "notActive", label: "غیرفعال" },
+  { value: "", label: "همه" },
+  { value: true, label: "فعال" },
+  { value: false, label: "غیرفعال" },
 ];
 
+
+
 const CustomHeader = ({
+  role,
+  handleRoleFilter,
+  status,
+  handleStatusFilter,
   handleFilter,
   value,
-  handleStatusValue,
-  statusValue,
   handlePerPage,
   rowsPerPage,
 }) => {
-  const [addUserModal, setAddUserModal] = useState(false);
 
   return (
     <div className="invoice-list-table-header w-100 py-2">
-      {/* <CardBody> */}
       <Row>
         <Col className="mb-1" md="4" sm="12">
           <Label className="form-label fs-5">نقش</Label>
@@ -57,9 +62,12 @@ const CustomHeader = ({
             theme={selectThemeColors}
             className="react-select"
             classNamePrefix="select"
-            defaultValue={rolesOptions[0]}
             options={rolesOptions}
             isClearable={false}
+            defaultValue={rolesOptions[0]}
+            onChange={
+              selectedOption => {handleRoleFilter(selectedOption)}
+            }
           />
         </Col>
         <Col className="mb-1" md="4" sm="12">
@@ -68,13 +76,13 @@ const CustomHeader = ({
             theme={selectThemeColors}
             className="react-select"
             classNamePrefix="select"
-            defaultValue={statusOptions[0]}
             options={statusOptions}
             isClearable={false}
+            defaultValue={statusOptions[0]}
+            onChange={selectedOption => handleStatusFilter(selectedOption)}
           />
         </Col>
       </Row>
-      {/* </CardBody> */}
       <Row>
         <Col lg="12" className="d-flex align-items-center px-0 px-lg-1">
           <div className="d-flex align-items-center me-2">
@@ -115,14 +123,15 @@ const InvoiceList = () => {
   // ** Store vars
   const dispatch = useDispatch();
   const store = useSelector((state) => state.users_management);
-  console.log("store:", store.data[0]);
 
   // ** States
+  const [role, setRole] = useState({})
+  const [status, setStatus] = useState({})
   const [value, setValue] = useState("");
   const [sort, setSort] = useState("desc");
   const [sortColumn, setSortColumn] = useState("id");
   const [currentPage, setCurrentPage] = useState(1);
-  const [statusValue, setStatusValue] = useState("");
+  // const [statusValue, setStatusValue] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
@@ -133,10 +142,53 @@ const InvoiceList = () => {
         sortColumn,
         page: currentPage,
         perPage: rowsPerPage,
-        status: statusValue,
+        roleId: role.id,
+        isActiveUser: status.value
       }),
     );
-  }, [dispatch]);
+  }, [
+    dispatch,
+    currentPage,
+    rowsPerPage,
+    sort,
+    sortColumn,
+    value,
+    role,
+    status    
+  ]);
+
+
+  const handleRoleFilter = (roleOption) => {
+    setRole(roleOption)
+    console.log("role:", roleOption.id);
+    dispatch(
+      getData({
+        sort,
+        q: "",
+        sortColumn,
+        page: currentPage,
+        perPage: rowsPerPage,
+        roleId: roleOption.id,
+        isActiveUser: status.value
+      }),
+    );
+  };
+  
+  const handleStatusFilter = (statusOption) => {
+    setStatus(statusOption)
+    console.log("status:", statusOption.value);
+    dispatch(
+      getData({
+        sort,
+        q: "",
+        sortColumn,
+        page: currentPage,
+        perPage: rowsPerPage,
+        roleId: role.id,
+        isActiveUser: statusOption.value
+      }),
+    );
+  };
 
   const handleFilter = (val) => {
     setValue(val);
@@ -147,7 +199,8 @@ const InvoiceList = () => {
         sortColumn,
         page: currentPage,
         perPage: rowsPerPage,
-        status: statusValue,
+        roleId: role.id,
+        isActiveUser: status.value
       }),
     );
   };
@@ -159,25 +212,12 @@ const InvoiceList = () => {
         q: value,
         sortColumn,
         page: currentPage,
-        status: statusValue,
         perPage: parseInt(e.target.value),
+        roleId: role.id,
+        isActiveUser: status.value
       }),
     );
     setRowsPerPage(parseInt(e.target.value));
-  };
-
-  const handleStatusValue = (e) => {
-    setStatusValue(e.target.value);
-    dispatch(
-      getData({
-        sort,
-        q: value,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        status: e.target.value,
-      }),
-    );
   };
 
   const handlePagination = (page) => {
@@ -186,16 +226,17 @@ const InvoiceList = () => {
         sort,
         q: value,
         sortColumn,
-        status: statusValue,
         perPage: rowsPerPage,
         page: page.selected + 1,
+        roleId: role.id,
+        isActiveUser: status.value
       }),
     );
     setCurrentPage(page.selected + 1);
   };
 
   const CustomPagination = () => {
-    const count = Number((store.total / rowsPerPage).toFixed(0));
+    const count =  Math.ceil(store.total / rowsPerPage);
 
     return (
       <ReactPaginate
@@ -222,7 +263,6 @@ const InvoiceList = () => {
   const dataToRender = () => {
     const filters = {
       q: value,
-      status: statusValue,
     };
 
     const isFiltered = Object.keys(filters).some(function (k) {
@@ -246,9 +286,10 @@ const InvoiceList = () => {
         q: value,
         page: currentPage,
         sort: sortDirection,
-        status: statusValue,
         perPage: rowsPerPage,
         sortColumn: column.sortField,
+        roleId: role.id,
+        isActiveUser: status.value
       }),
     );
   };
@@ -275,11 +316,13 @@ const InvoiceList = () => {
             subHeaderComponent={
               <CustomHeader
                 value={value}
-                statusValue={statusValue}
                 rowsPerPage={rowsPerPage}
+                handleRoleFilter={handleRoleFilter}
+                handleStatusFilter={handleStatusFilter}
                 handleFilter={handleFilter}
                 handlePerPage={handlePerPage}
-                handleStatusValue={handleStatusValue}
+                role={role}
+                status={status}
               />
             }
           />

@@ -86,15 +86,15 @@ const AddLevel = () => {
             console.log(error)
           }}
   
-        else {
-          for (const key in data) {
-            if (data[key].length === 0) {
-              setError(key, {
-                type: "manual",
-              });
-            }
+      else {
+        for (const key in data) {
+          if (data[key].length === 0) {
+            setError(key, {
+              type: "manual",
+            });
           }
         }
+      }
     };
 
   return (

@@ -30,7 +30,6 @@ import {
 
 import StatsHorizontal from "../../components/_Global/StatsHorizontal";
 import StatsVertical from "../../components/_Global/StatsVertical";
-// import SelectReact from "../components/UsersManagement/SelectReact";
 import UsersList from "../../components/UsersManagement/list/index";
 
 import { getUsers } from "../../core/services/usersManagementApi";
@@ -65,8 +64,12 @@ const UsersManagement = () => {
   console.log(students);
 
   useEffect(() => {
-    dispatch(getData());
-  }, [dispatch]);
+    dispatch(
+      getData({
+        page: 1,
+        perPage: 10,
+      }));
+  }, []);
 
   return (
     <div
@@ -111,7 +114,6 @@ const UsersManagement = () => {
           />
         </Col>
       </Row>
-      {/* <SelectReact/> */}
       <UsersList />
     </div>
   );

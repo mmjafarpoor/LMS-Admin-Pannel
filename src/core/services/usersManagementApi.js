@@ -1,16 +1,20 @@
 import apiClient from "../interceptor/interceptor";
 
-export const getUsers = ({ pageNumber, rowOfPage = 10 } = {}) => {
+export const getUsers = ({ pageNumber, rowsOfPage, roleId, isActiveUser } = {}) => {
     return apiClient.get("User/UserMannage", {
         params: {
             PageNumber: pageNumber,
-            RowsOfPage: rowOfPage,
+            RowsOfPage: rowsOfPage,
             SortingCol: "DESC",
             SortType: "InsertDate",
             Query: "",
-            IsActiveUser: true,
+            IsActiveUser: isActiveUser,
             IsDeletedUser: false,
-            // roleId: ,
+            roleId: roleId,
         }
     });
+};
+
+export const createUser = (data) => {
+    return apiClient.post("User/CreateUser", data);
 };

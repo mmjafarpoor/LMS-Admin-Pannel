@@ -4,15 +4,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getUsers } from "../../../core/services/usersManagementApi";
+import { createUser, getUsers } from "../../../core/services/usersManagementApi";
 
 export const getData = createAsyncThunk(
-  "usersManagement/getData",
+  "users_management/getData",
   async (params) => {
     try {
+      console.log(">>>>>>>>>>", params)
       const response = await getUsers({
-      pageNumber: params.page,
-      rowOfPage: params.perPage
+      pageNumber: params.page ?? 1,
+      rowsOfPage: params.perPage ?? 10,
+      roleId: params.roleId ?? "",
+      isActiveUser: params.isActiveUser ?? ""
     });
       // console.log("yoooooooooo");
 
@@ -28,17 +31,22 @@ export const getData = createAsyncThunk(
   },
 );
 
-// export const deleteInvoice = createAsyncThunk(
-//   "usersManagement/deleteInvoice",
-//   async (id, { dispatch, getState }) => {
-//     await axios.delete("/apps/invoice/delete", { id });
-//     await dispatch(getData(getState().invoice.params));
-//     return id;
-//   },
-// );
+
+export const addUser = createAsyncThunk(
+  "users_management/addUser",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await createUser(data);
+      return response.data
+
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
 
 export const appInvoiceSlice = createSlice({
-  name: "usersManagement",
+  name: "users_management",
   initialState: {
     data: [],
     allData: [],

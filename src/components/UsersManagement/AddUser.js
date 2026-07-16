@@ -18,6 +18,9 @@ import {
   FormFeedback,
 } from "reactstrap";
 
+import { useDispatch } from "react-redux";
+import { addUser, getData } from "./store";
+
 // ** Third Party Components
 import Select from "react-select";
 import { User, Check, X } from "react-feather";
@@ -30,36 +33,25 @@ import { selectThemeColors } from "@utils";
 import "@styles/react/libs/react-select/_react-select.scss";
 
 const statusOptions = [
-  { value: "user", label: "کاربر عادی" },
+  { value: "student", label: "دانشجو" },
   { value: "teacher", label: "استاد" },
   { value: "admin", label: "ادمین" },
-];
-
-const countryOptions = [
-  { value: "uk", label: "UK" },
-  { value: "usa", label: "USA" },
-  { value: "france", label: "France" },
-  { value: "russia", label: "Russia" },
-  { value: "canada", label: "Canada" },
-];
-
-const languageOptions = [
-  { value: "english", label: "English" },
-  { value: "spanish", label: "Spanish" },
-  { value: "french", label: "French" },
-  { value: "german", label: "German" },
-  { value: "dutch", label: "Dutch" },
 ];
 
 const defaultValues = {
   firstName: "",
   lastName: "",
-  username: "",
+  gmail: "",
+  phoneNumber: "",
+  password: "",
+  isStudent: "",
+  isTeacher: ""
 };
 
 const AddUser = () => {
-  // ** States
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [role, setRole] = useState(statusOptions[0])
 
   // ** Hooks
   const {
@@ -69,9 +61,29 @@ const AddUser = () => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    console.log(data, role)
     if (Object.values(data).every((field) => field.length > 0)) {
-      return null;
+      try {
+        await dispatch(
+          addUser({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            gmail: data.gmail,
+            phoneNumber: data.phoneNumber,
+            password: data.password,
+            isStudent: role.value === "student",
+            isTeacher: role.value === "teacher",
+            })
+          ).unwrap();
+
+          dispatch(getData());
+          setShow(false);
+  
+        } catch (error){
+          console.log(error)
+        }
+
     } else {
       for (const key in data) {
         if (data[key].length === 0) {
@@ -148,55 +160,65 @@ const AddUser = () => {
                 <FormFeedback>لطفا یک نام خانوادگی درست وارد کنید</FormFeedback>
               )}
             </Col>
-            <Col xs={12}>
-              <Label className="form-label" for="username">
-                نام کاربری
+            <Col md={6} xs={12}>
+              <Label className="form-label" for="gmail">
+                ایمیل
               </Label>
               <Controller
-                name="username"
+                name="gmail"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="username"
-                    placeholder=""
-                    invalid={errors.username && true}
+                    id="gmail"
+                    placeholder="example@domain.com"
+                    invalid={errors.gmail && true}
                   />
                 )}
               />
-              {errors.username && (
-                <FormFeedback>لطفا یک نام کاربری درست وارد کنید</FormFeedback>
+              {errors.gmail && (
+                <FormFeedback>لطفا یک ایمیل درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col md={6} xs={12}>
-              <Label className="form-label" for="email">
-                ایمیل
-              </Label>
-              <Input type="email" id="email" placeholder="example@domain.com" />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="contact">
+              <Label className="form-label" for="phoneNumber">
                 شماره تماس
               </Label>
-              <Input
-                id="contact"
-                defaultValue=""
-                placeholder=""
+              <Controller
+                name="phoneNumber"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="phoneNumber"
+                    placeholder="09000000000"
+                    invalid={errors.phoneNumber && true}
+                  />
+                )}
               />
+              {errors.phoneNumber && (
+                <FormFeedback>لطفا یک شماره تماس درست وارد کنید</FormFeedback>
+              )}
             </Col>
             <Col md={6} xs={12}>
-              <Label className="form-label" for="language">
-                زبان
+              <Label className="form-label" for="password">
+                رمز عبور
               </Label>
-              <Select
-                id="language"
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={languageOptions}
-                theme={selectThemeColors}
-                defaultValue={languageOptions[0]}
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    id="password"
+                    placeholder=""
+                    invalid={errors.password && true}
+                  />
+                )}
               />
+              {errors.password && (
+                <FormFeedback>لطفا یک رمز عبور درست وارد کنید</FormFeedback>
+              )}
             </Col>
             <Col md={6} xs={12}>
               <Label className="form-label" for="status">
@@ -210,6 +232,7 @@ const AddUser = () => {
                 options={statusOptions}
                 theme={selectThemeColors}
                 defaultValue={statusOptions[0]}
+                onChange={selectedOption => setRole(selectedOption)}
               />
             </Col>
             
