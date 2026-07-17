@@ -1,7 +1,8 @@
 // ** Reducers Imports
 import layout from "./layout";
 import navbar from "./navbar";
-import users_management from "../components/UsersManagement/store";
+import users_management from "../components/UsersManagement/UsersList/store";
+import user_details from "../components/UsersManagement/UserDetails/store";
 import comments from "../components/Comments/store";
 import news from "../components/News/NewsList/store";
 import news_categories from "../components/News/NewsCategoriesList/store";
@@ -18,6 +19,7 @@ const rootReducer = {
   navbar,
   layout,
   users_management,
+  user_details,
   comments,
   news,
   news_categories,

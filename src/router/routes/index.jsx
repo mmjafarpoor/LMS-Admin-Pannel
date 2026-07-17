@@ -51,6 +51,9 @@ const Home = lazy(() => import("../../pages/Dashboard/Home"));
 const UsersManagement = lazy(() =>
   import("../../pages/UsersManagement/UsersManagement"),
 );
+const UserDetails = lazy(() =>
+  import("../../pages/UsersManagement/UserDetails"),
+);
 const Login = lazy(() => import("../../pages/Auth/Login"));
 const Register = lazy(() => import("../../pages/Auth/Register"));
 const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
@@ -110,10 +113,10 @@ const Routes = [
     ),
     // </ProtectedRoute>
   },
-  {
-    path: "/users-management",
-    element: <UsersManagement />,
-  },
+
+  { path: "/users-management", element: <UsersManagement /> },
+  { path: "/users-management/:UserId/:Name", element: <UserDetails /> },
+
   {
     path: "/courses-management",
     element: <CoursesManagement />,

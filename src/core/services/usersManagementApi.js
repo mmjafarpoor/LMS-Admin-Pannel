@@ -18,3 +18,7 @@ export const getUsers = ({ pageNumber, rowsOfPage, roleId, isActiveUser } = {}) 
 export const createUser = (data) => {
     return apiClient.post("User/CreateUser", data);
 };
+
+export const getUserDetails = (UserId) => {
+    return apiClient.get(`User/UserDetails/${UserId}`);
+};
