@@ -51,3 +51,11 @@ export const createTerm = (data) => {
 export const getCourseDetails = (CourseId) => {
     return apiClient.get(`Course/${CourseId}`);
 };
+
+export const getCreateCourse = () => {
+    return apiClient.get("Course/GetCreate");
+};
+
+export const createCourse = (data) => {
+    return apiClient.post("Course", data);
+};

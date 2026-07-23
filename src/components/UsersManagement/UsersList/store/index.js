@@ -37,6 +37,7 @@ export const addUser = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await createUser(data);
+      console.log("response", response.data)
       return response.data
 
     } catch (error) {

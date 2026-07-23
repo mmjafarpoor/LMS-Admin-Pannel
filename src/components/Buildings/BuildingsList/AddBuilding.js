@@ -31,32 +31,9 @@ import { selectThemeColors } from "@utils";
 import "@styles/react/libs/react-select/_react-select.scss";
 import { useDispatch } from "react-redux";
 
-
-
-const statusOptions = [
-  { value: "user", label: "کاربر عادی" },
-  { value: "teacher", label: "استاد" },
-  { value: "admin", label: "ادمین" },
-];
-
-const countryOptions = [
-  { value: "uk", label: "UK" },
-  { value: "usa", label: "USA" },
-  { value: "france", label: "France" },
-  { value: "russia", label: "Russia" },
-  { value: "canada", label: "Canada" },
-];
-
-const languageOptions = [
-  { value: "english", label: "English" },
-  { value: "spanish", label: "Spanish" },
-  { value: "french", label: "French" },
-  { value: "german", label: "German" },
-  { value: "dutch", label: "Dutch" },
-];
-
 const defaultValues = {
   buildingName: "",
+  buildingFloor: ""
 };
 
 const AddBuilding = () => {
@@ -77,11 +54,16 @@ const AddBuilding = () => {
         await dispatch(
           addBuilding({
             buildingName: data.buildingName,
+            floor: data.buildingFloor,
+            id: "",
+            latitude: "",
+            longitude: ""
           })
         ).unwrap();
 
         dispatch(getData());
         setShow(false);
+        
 
       } catch (error){
         console.log(error)
@@ -120,7 +102,7 @@ const AddBuilding = () => {
             className="gy-1 pt-75"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Col xs={12}>
+            <Col xs={6}>
               <Label className="form-label fs-5" for="buildingName">
                 نام ساختمان
               </Label>
@@ -141,6 +123,29 @@ const AddBuilding = () => {
               />
               {errors.buildingName && (
                 <FormFeedback>لطفا یک اسم درست وارد کنید</FormFeedback>
+              )}
+            </Col>
+            <Col xs={6}>
+              <Label className="form-label fs-5" for="buildingFloor">
+                طبقه
+              </Label>
+              <Controller
+                control={control}
+                name="buildingFloor"
+                render={({ field }) => {
+                  return (
+                    <Input
+                      {...field}
+                      id="buildingFloor"
+                      placeholder=""
+                      value={field.value}
+                      invalid={errors.buildingFloor && true}
+                    />
+                  );
+                }}
+              />
+              {errors.buildingFloor && (
+                <FormFeedback>لطفا یک عدد درست وارد کنید</FormFeedback>
               )}
             </Col>
             

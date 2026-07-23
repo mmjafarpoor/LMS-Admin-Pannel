@@ -63,36 +63,25 @@ const AddUser = () => {
 
   const onSubmit = async (data) => {
     console.log(data, role)
-    if (Object.values(data).every((field) => field.length > 0)) {
-      try {
-        await dispatch(
-          addUser({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            gmail: data.gmail,
-            phoneNumber: data.phoneNumber,
-            password: data.password,
-            isStudent: role.value === "student",
-            isTeacher: role.value === "teacher",
-            })
-          ).unwrap();
+    try {
+      await dispatch(
+        addUser({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          gmail: data.gmail,
+          phoneNumber: data.phoneNumber,
+          password: data.password,
+          isStudent: role.value === "student",
+          isTeacher: role.value === "teacher",
+          })
+        ).unwrap();
 
-          dispatch(getData());
-          setShow(false);
-  
-        } catch (error){
-          console.log(error)
-        }
+        dispatch(getData());
+        setShow(false);
 
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: "manual",
-          });
-        }
+      } catch (error){
+        console.log(error)
       }
-    }
   };
 
   return (
@@ -124,6 +113,7 @@ const AddUser = () => {
               <Controller
                 control={control}
                 name="firstName"
+                rules={{ required: true }}
                 render={({ field }) => {
                   return (
                     <Input
@@ -147,6 +137,7 @@ const AddUser = () => {
               <Controller
                 name="lastName"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -167,6 +158,7 @@ const AddUser = () => {
               <Controller
                 name="gmail"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -187,6 +179,7 @@ const AddUser = () => {
               <Controller
                 name="phoneNumber"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -207,6 +200,7 @@ const AddUser = () => {
               <Controller
                 name="password"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -233,6 +227,7 @@ const AddUser = () => {
                 theme={selectThemeColors}
                 defaultValue={statusOptions[0]}
                 onChange={selectedOption => setRole(selectedOption)}
+                
               />
             </Col>
             
