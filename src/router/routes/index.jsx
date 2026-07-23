@@ -51,6 +51,9 @@ const Home = lazy(() => import("../../pages/Dashboard/Home"));
 const UsersManagement = lazy(() =>
   import("../../pages/UsersManagement/UsersManagement"),
 );
+const UserDetails = lazy(() =>
+  import("../../pages/UsersManagement/UserDetails"),
+);
 const Login = lazy(() => import("../../pages/Auth/Login"));
 const Register = lazy(() => import("../../pages/Auth/Register"));
 const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
@@ -72,12 +75,16 @@ const CourseUsersList = lazy(() =>
 const ClassList = lazy(() => import("../../pages/Courses/ClassList"));
 const Tasks = lazy(() => import("../../pages/Courses/Tasks"));
 const Terms = lazy(() => import("../../pages/Courses/Terms"));
+const CourseDetails = lazy(() => import("../../pages/Courses/CourseDetails"));
 
 const News = lazy(() => import("../../pages/News/News"));
 const NewsList = lazy(() => import("../../pages/News/NewsList"));
 const AddNews = lazy(() => import("../../pages/News/AddNews"));
 const NewsCategoriesManagement = lazy(() =>
   import("../../pages/News/NewsCategoriesManagement"),
+);
+const NewsDetails = lazy(() =>
+  import("../../pages/News/NewsDetails"),
 );
 
 const TimeManagement = lazy(() =>
@@ -110,10 +117,10 @@ const Routes = [
     ),
     // </ProtectedRoute>
   },
-  {
-    path: "/users-management",
-    element: <UsersManagement />,
-  },
+
+  { path: "/users-management", element: <UsersManagement /> },
+  { path: "/users-management/:UserId/:Name", element: <UserDetails /> },
+
   {
     path: "/courses-management",
     element: <CoursesManagement />,
@@ -150,6 +157,8 @@ const Routes = [
       },
     ],
   },
+  { path: "/courses-management/:CourseId/:Name", element: <CourseDetails /> },
+
   {
     path: "/time-management",
     element: <TimeManagement />,
@@ -170,6 +179,7 @@ const Routes = [
       },
     ],
   },
+  { path: "/news/:NewsId/:Name", element: <NewsDetails /> },
   {
     path: "/comments",
     element: <Comments />,

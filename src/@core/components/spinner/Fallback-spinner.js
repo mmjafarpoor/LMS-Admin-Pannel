@@ -1,5 +1,5 @@
 // ** Logo
-import logo from "@src/assets/images/logo/logo.png";
+import logo from "@src/assets/images/logo/MistLayer.png";
 
 const SpinnerComponent = () => {
   return (

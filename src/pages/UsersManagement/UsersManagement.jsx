@@ -30,13 +30,13 @@ import {
 
 import StatsHorizontal from "../../components/_Global/StatsHorizontal";
 import StatsVertical from "../../components/_Global/StatsVertical";
-import UsersList from "../../components/UsersManagement/list/index";
+import UsersList from "../../components/UsersManagement/UsersList/list/index";
 
 import { getUsers } from "../../core/services/usersManagementApi";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../components/UsersManagement/store";
+import { getData } from "../../components/UsersManagement/UsersList/store";
 
 // const [perPage, setPerPage] = useState(10)
 

@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { createUser, getUsers } from "../../../core/services/usersManagementApi";
+import { createUser, getUsers } from "../../../../core/services/usersManagementApi";
 
 export const getData = createAsyncThunk(
   "users_management/getData",
@@ -37,6 +37,7 @@ export const addUser = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await createUser(data);
+      console.log("response", response.data)
       return response.data
 
     } catch (error) {

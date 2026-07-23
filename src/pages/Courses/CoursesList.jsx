@@ -40,7 +40,7 @@ const NewsList = () => {
   const totalCount = store.total;
 
   const activeCount = CoursesList.filter((course) => course.active).length;
-  const notActiveCount = totalCount - activeCount;
+  const notActiveCount = CoursesList.filter((course) => !course.active).length;
 
   console.log(NewsList);
 
@@ -62,13 +62,13 @@ const NewsList = () => {
           icon={<CheckCircle size={21} />}
           color="success"
           stats={activeCount}
-          statTitle="ترم‌های فعال"
+          statTitle="دوره‌های فعال"
         />
 
         <StatsHorizontal
           icon={<Circle size={21} />}
           color="info"
-          statTitle="تعداد کل ترم‌ها"
+          statTitle="کل دوره‌ها"
           stats={totalCount}
         />
 
@@ -76,7 +76,7 @@ const NewsList = () => {
           icon={<XCircle size={21} />}
           color="danger"
           stats={notActiveCount}
-          statTitle="ترم‌های منقضی شده"
+          statTitle="دوره‌های غیرفعال"
         />
       </Row>
 

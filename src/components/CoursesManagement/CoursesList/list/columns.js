@@ -50,7 +50,7 @@ const invoiceStatusObj = {
 export const columns = [
   {
     name: "عنوان",
-    minWidth: '230px',
+    minWidth: '200px',
     sortable: true,
     sortField: "fName",
     cell: (row) => (
@@ -62,7 +62,7 @@ export const columns = [
   },
   {
     name: "توضیح مختصر",
-    minWidth: '140px',
+    minWidth: '300px',
     sortable: true,
     sortField: "userRoles",
     cell: (row) => row.miniDescribe,
@@ -76,7 +76,7 @@ export const columns = [
   },
   {
     name: "تکنولوژی",
-    minWidth: '120px',
+    minWidth: '230px',
     sortable: true,
     sortField: "profileCompletionPercentage",
     cell: (row) => row.technologyList,
@@ -90,7 +90,7 @@ export const columns = [
   },
   {
     name: "وضعیت",
-    minWidth: '110px',
+    minWidth: '90px',
     sortable: true,
     sortField: "active",
     cell: (row) => (
@@ -102,17 +102,17 @@ export const columns = [
 
   {
     name: 'عملیات',
-    minWidth: '100px',
+    minWidth: '80px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
         {/* <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
         <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
           Send Mail
         </UncontrolledTooltip> */}
-        <Link to={`/apps/invoice/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
+        <Link to={`/courses-management/${row.courseId}/${row.googleTitle.replaceAll(" ", "-")}`} id={`pw-tooltip-${row.courseId}`}>
           <Eye size={17} className='mx-1' />
         </Link>
-        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
+        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.courseId}`}>
           Preview Invoice
         </UncontrolledTooltip>
         <UncontrolledDropdown>
@@ -124,7 +124,7 @@ export const columns = [
               <Download size={14} className='me-50' />
               <span className='align-middle'>Download</span>
             </DropdownItem>
-            <DropdownItem tag={Link} to={`/apps/invoice/edit/${row.id}`} className='w-100'>
+            <DropdownItem tag={Link} to={`/apps/invoice/edit/${row.courseId}`} className='w-100'>
               <Edit size={14} className='me-50' />
               <span className='align-middle'>Edit</span>
             </DropdownItem>

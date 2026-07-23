@@ -36,6 +36,8 @@ import {
   ArrowDownCircle
 } from 'react-feather'
 
+import { useDispatch } from 'react-redux'
+
 // ** Vars
 const invoiceStatusObj = {
   Sent: { color: 'light-secondary', icon: Send },
@@ -97,7 +99,7 @@ export const columns = [
         <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
           Send Mail
         </UncontrolledTooltip> */}
-        <Link to={`/apps/invoice/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
+        <Link to={`/users-management/${row.id}/${row.fName.replaceAll(" ", "-")}-${row.lName.replaceAll(" ", "-")}`} id={`pw-tooltip-${row.id}`}>
           <Eye size={17} className='mx-1' />
         </Link>
         <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>

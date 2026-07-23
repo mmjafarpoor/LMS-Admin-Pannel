@@ -7,3 +7,7 @@ export const getNews = () => {
 export const getNewsCategories = () => {
     return apiClient.get("News/GetListNewsCategory");
 };
+
+export const getNewsDetails = (NewsId) => {
+    return apiClient.get(`News/${NewsId}`);
+};

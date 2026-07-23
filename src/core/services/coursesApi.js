@@ -47,3 +47,15 @@ export const getTerms = () => {
 export const createTerm = (data) => {
     return apiClient.post("/Term", data);
 };
+
+export const getCourseDetails = (CourseId) => {
+    return apiClient.get(`Course/${CourseId}`);
+};
+
+export const getCreateCourse = () => {
+    return apiClient.get("Course/GetCreate");
+};
+
+export const createCourse = (data) => {
+    return apiClient.post("Course", data);
+};
