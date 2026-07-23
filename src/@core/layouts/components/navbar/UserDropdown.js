@@ -76,7 +76,7 @@ const UserDropdown = () => {
           <span className="user-status">{userRole}</span>
         </div>
         <Avatar
-          img={defaultAvatar}
+          img={userImg || defaultAvatar}
           imgHeight="40"
           imgWidth="40"
           status="online"
