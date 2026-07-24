@@ -7,7 +7,6 @@ import Avatar from '@components/avatar'
 
 // ** Store & Actions
 import { store } from '@store/store'
-// import { deleteInvoice } from '../store'
 
 // ** Reactstrap Imports
 import {
@@ -22,7 +21,7 @@ import {
 // ** Third Party Components
 import {
   CheckSquare,
-  MinusSquare,
+  Trash,
   MoreVertical,
 } from 'react-feather'
 
@@ -101,7 +100,7 @@ export const columns = (dispatch) => [
             : <></>
             }
             <DropdownItem className='w-100' onClick={() => dispatch(deleteComment(row.id))} >
-              <MinusSquare size={14} className='me-50' />
+              <Trash size={14} className='me-50' />
               <span className='align-middle'>حذف نظر</span>
             </DropdownItem>
           </DropdownMenu>
