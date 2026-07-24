@@ -74,7 +74,7 @@ export const columns = [
     minWidth: '200px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
-        <EditStatus/>
+        <EditStatus status={row}/>
       </div>
     )
   }

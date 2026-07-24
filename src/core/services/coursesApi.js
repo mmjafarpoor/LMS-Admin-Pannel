@@ -32,6 +32,10 @@ export const createStatus = (data) => {
     return apiClient.post("/Status", data);
 };
 
+export const editStatus = (data) => {
+    return apiClient.put("/Status", data);
+};
+
 export const getLevels = () => {
     return apiClient.get("/CourseLevel/GetAllCourseLevel");
 };
