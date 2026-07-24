@@ -48,6 +48,10 @@ export const getClasses = () => {
     return apiClient.get("/ClassRoom");
 };
 
+export const editClasses = (data) => {
+    return apiClient.put("/ClassRoom", data);
+};
+
 export const getTerms = () => {
     return apiClient.get("/Term");
 };

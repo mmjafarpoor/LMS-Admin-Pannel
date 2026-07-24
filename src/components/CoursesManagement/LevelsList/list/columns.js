@@ -69,14 +69,14 @@ export const columns = [
     sortField: "userRoles",
     cell: (row) => row.levelName,
   },
-  {
-    name: 'اقدام',
-    minWidth: '200px',
-    cell: row => (
-      <div className='column-action d-flex align-items-center'>
-        <EditLevel/>
-      </div>
-    )
-  }
+  // {
+  //   name: 'اقدام',
+  //   minWidth: '200px',
+  //   cell: row => (
+  //     <div className='column-action d-flex align-items-center'>
+  //       <EditLevel/>
+  //     </div>
+  //   )
+  // }
 ]
 
