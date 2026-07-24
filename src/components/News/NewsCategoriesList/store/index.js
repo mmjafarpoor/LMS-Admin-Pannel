@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getNewsCategories } from "../../../../core/services/newsApi";
+import { getNewsCategories , editNewsCategories} from "../../../../core/services/newsApi";
 
 export const getData = createAsyncThunk(
   "news_categories/getData",
@@ -20,6 +20,18 @@ export const getData = createAsyncThunk(
       console.log(error);
     }
   },
+);
+
+export const updateNewsCategories = createAsyncThunk(
+  "news_categories/NewsCategories",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await editNewsCategories(data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
 );
 
 export const appInvoiceSlice = createSlice({
