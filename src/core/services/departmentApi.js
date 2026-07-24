@@ -7,3 +7,7 @@ export const getDepartments = () => {
 export const createDepartment = (data) => {
     return apiClient.post("Department", data);
 };
+
+export const editDepartment = (data) => {
+    return apiClient.put("Department", data);
+};

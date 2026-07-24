@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getDepartments, createDepartment} from "../../../../core/services/departmentApi";
+import { getDepartments, createDepartment , editDepartment } from "../../../../core/services/departmentApi";
 
 export const getData = createAsyncThunk(
   "department/getData",
@@ -33,7 +33,19 @@ export const addDepartment = createAsyncThunk(
       return rejectWithValue(error.response.data);
     }
   }
-)
+);
+
+export const updateDepartment = createAsyncThunk(
+  "department/updateDepartment",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await editDepartment(data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const appInvoiceSlice = createSlice({
   name: "department",
