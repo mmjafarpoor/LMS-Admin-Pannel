@@ -13,11 +13,15 @@ export const getCourses = ({ pageNumber, rowOfPage, techCount=0 } = {}) => {
 };
 
 export const getTechnologies = () => {
-    return apiClient.get("/Home/GetTechnologies");
+    return apiClient.get("/Technology");
 };
 
 export const createTechnology = (data) => {
     return apiClient.post("/Technology", data);
+};
+
+export const editTechnology = (data) => {
+    return apiClient.put("/Technology", data);
 };
 
 export const getStatus = () => {

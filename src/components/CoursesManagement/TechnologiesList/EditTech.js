@@ -1,22 +1,10 @@
 // ** React Imports
-import { Fragment, useState } from "react";
+import { Fragment, useState , useEffect } from "react";
+import { updateTechnology , getData } from "./store/index";
+import { useDispatch } from "react-redux";
 
 // ** Reactstrap Imports
-import {
-  Card,
-  Row,
-  Col,
-  Modal,
-  Input,
-  Label,
-  Button,
-  CardBody,
-  CardText,
-  CardTitle,
-  ModalBody,
-  ModalHeader,
-  FormFeedback,
-} from "reactstrap";
+import {Card,Row,Col,Modal,Input,Label,Button,CardBody,CardText,CardTitle,ModalBody,ModalHeader,FormFeedback,} from "reactstrap";
 
 // ** Third Party Components
 import Select from "react-select";
@@ -29,59 +17,48 @@ import { selectThemeColors } from "@utils";
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 
-const statusOptions = [
-  { value: "user", label: "کاربر عادی" },
-  { value: "teacher", label: "استاد" },
-  { value: "admin", label: "ادمین" },
-];
-
-const countryOptions = [
-  { value: "uk", label: "UK" },
-  { value: "usa", label: "USA" },
-  { value: "france", label: "France" },
-  { value: "russia", label: "Russia" },
-  { value: "canada", label: "Canada" },
-];
-
-const languageOptions = [
-  { value: "english", label: "English" },
-  { value: "spanish", label: "Spanish" },
-  { value: "french", label: "French" },
-  { value: "german", label: "German" },
-  { value: "dutch", label: "Dutch" },
-];
-
 const defaultValues = {
-  firstName: "",
-  lastName: "",
-  username: "",
+  techName: "",
+  iconAddress: "",
+  describe: "",
 };
 
-const AddUser = () => {
+const AddUser = ({technology}) => {
   // ** States
   const [show, setShow] = useState(false);
 
-  // ** Hooks
-  const {
-    control,
-    setError,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ defaultValues });
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    if (Object.values(data).every((field) => field.length > 0)) {
-      return null;
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: "manual",
-          });
-        }
-      }
+  // ** Hooks
+  const {control, reset, setError, handleSubmit, formState: { errors },} = useForm({ defaultValues });
+
+  const onSubmit = async (data) => {
+    try {
+      const values = {
+        id: technology.id,
+        techName: data.techName,
+        describe: data.describe,
+        iconAddress: data.iconAddress,
+      };
+
+      await dispatch(updateTechnology(values)).unwrap();
+      await dispatch(getData());
+
+      setShow(false);
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data);
     }
-  };
+  }
+  useEffect(() => {
+    if (technology && show) {
+      reset({
+        techName: technology.techName,
+        describe: technology.describe,
+        iconAddress: technology.iconAddress ?? "",
+      });
+    }
+  }, [technology, show, reset]);
 
   return (
     <Fragment>
@@ -106,113 +83,68 @@ const AddUser = () => {
             onSubmit={handleSubmit(onSubmit)}
           >
             <Col md={6} xs={12}>
-              <Label className="form-label" for="firstName">
-                نام
+              <Label className="form-label" for="techName">
+                نام تکنولوژی
               </Label>
               <Controller
                 control={control}
-                name="firstName"
+                name="techName"
                 render={({ field }) => {
                   return (
                     <Input
                       {...field}
-                      id="firstName"
+                      id="techName"
                       placeholder=""
                       value={field.value}
-                      invalid={errors.firstName && true}
+                      invalid={errors.techName && true}
                     />
                   );
                 }}
               />
-              {errors.firstName && (
+              {errors.techName && (
                 <FormFeedback>لطفا یک اسم درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col md={6} xs={12}>
-              <Label className="form-label" for="lastName">
-                نام خانوادگی
+              <Label className="form-label" for="iconAddress">
+                آدرس عکس
               </Label>
               <Controller
-                name="lastName"
+                name="iconAddress"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="lastName"
+                    id="iconAddress"
                     placeholder=""
-                    invalid={errors.lastName && true}
+                    invalid={errors.iconAddress && true}
                   />
                 )}
               />
-              {errors.lastName && (
-                <FormFeedback>لطفا یک نام خانوادگی درست وارد کنید</FormFeedback>
+              {errors.iconAddress && (
+                <FormFeedback>لطفا یک آدرس عکس درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col xs={12}>
-              <Label className="form-label" for="username">
-                نام کاربری
+              <Label className="form-label" for="describe">
+                توضیحات تکنولوژی
               </Label>
               <Controller
-                name="username"
+                name="describe"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    id="username"
+                    id="describe"
                     placeholder=""
-                    invalid={errors.username && true}
+                    invalid={errors.describe && true}
                   />
                 )}
               />
-              {errors.username && (
-                <FormFeedback>لطفا یک نام کاربری درست وارد کنید</FormFeedback>
+              {errors.describe && (
+                <FormFeedback>لطفا یک توضیحات درست وارد کنید</FormFeedback>
               )}
             </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="email">
-                ایمیل
-              </Label>
-              <Input type="email" id="email" placeholder="example@domain.com" />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="contact">
-                شماره تماس
-              </Label>
-              <Input
-                id="contact"
-                defaultValue=""
-                placeholder=""
-              />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="language">
-                زبان
-              </Label>
-              <Select
-                id="language"
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={languageOptions}
-                theme={selectThemeColors}
-                defaultValue={languageOptions[0]}
-              />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="status">
-                نقش
-              </Label>
-              <Select
-                id="status"
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={statusOptions}
-                theme={selectThemeColors}
-                defaultValue={statusOptions[0]}
-              />
-            </Col>
-            
             <Col xs={12} className="text-center mt-2 pt-50">
               <Button type="submit" className="me-1" color="primary">
                 تایید

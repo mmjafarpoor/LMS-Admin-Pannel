@@ -17,12 +17,6 @@ import { selectThemeColors } from "@utils";
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 
-const statusOptions = [
-  { value: "user", label: "کاربر عادی" },
-  { value: "teacher", label: "استاد" },
-  { value: "admin", label: "ادمین" },
-];
-
 const defaultValues = {
   id: "",
   buildingName: "",
@@ -71,7 +65,7 @@ const AddUser = ({ building }) => {
         active: building.active,
       });
     }
-}, [building, show, reset]);
+  }, [building, show, reset]);
 
   return (
     <Fragment>
