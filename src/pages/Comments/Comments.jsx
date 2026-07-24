@@ -24,9 +24,32 @@ import {
 } from "react-feather";
 
 import StatsHorizontal from "../../components/_Global/StatsHorizontal";
-import UsersList from "../../components/Comments/list/index"
+import CommentsList from "../../components/Comments/list/index";
+
+// import { getComments } from "../../core/services/commentsApi";
+
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "../../components/Comments/store";
 
 const Comments = () => {
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state.comments);
+  const commentsList = store.allData;
+  const totalCount = store.total;
+
+  const acceptCount = commentsList?.filter(
+    (user) => user.accept === true,
+  ).length;
+
+  const notAcceptCount = commentsList?.filter(
+    (user) => user.accept === false,
+  ).length;
+
+  useEffect(() => {
+    dispatch(getData());
+  }, [dispatch]);
+
   return (
     <div
       style={{
@@ -41,7 +64,7 @@ const Comments = () => {
           <StatsHorizontal
             icon={<CheckCircle size={21} />}
             color="success"
-            stats="23"
+            stats={acceptCount}
             statTitle="نظرات تایید شده"
           />
         </Col>
@@ -49,7 +72,7 @@ const Comments = () => {
           <StatsHorizontal
             icon={<Circle size={21} />}
             color="info"
-            stats="45"
+            stats={totalCount}
             statTitle="کل نظرات"
           />
         </Col>
@@ -57,12 +80,12 @@ const Comments = () => {
           <StatsHorizontal
             icon={<XCircle size={21} />}
             color="danger"
-            stats="22"
+            stats={notAcceptCount}
             statTitle="نظرات تایید نشده"
           />
         </Col>
       </Row>
-      {/* <UsersList/> */}
+      <CommentsList/>
     </div>
   );
 };

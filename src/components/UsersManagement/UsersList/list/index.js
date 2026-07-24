@@ -47,7 +47,6 @@ const CustomHeader = ({
   handleRoleFilter,
   status,
   handleStatusFilter,
-  handleFilter,
   value,
   handlePerPage,
   rowsPerPage,
@@ -56,7 +55,7 @@ const CustomHeader = ({
   return (
     <div className="invoice-list-table-header w-100 py-2">
       <Row>
-        <Col className="mb-1" md="4" sm="12">
+        <Col className="mb-1" md="6" sm="12">
           <Label className="form-label fs-5">نقش</Label>
           <Select
             theme={selectThemeColors}
@@ -70,7 +69,7 @@ const CustomHeader = ({
             }
           />
         </Col>
-        <Col className="mb-1" md="4" sm="12">
+        <Col className="mb-1" md="6" sm="12">
           <Label className="form-label fs-5">وضعیت</Label>
           <Select
             theme={selectThemeColors}
@@ -84,8 +83,8 @@ const CustomHeader = ({
         </Col>
       </Row>
       <Row>
-        <Col lg="12" className="d-flex align-items-center px-0 px-lg-1">
-          <div className="d-flex align-items-center me-2">
+        <Col lg="12" className="d-flex align-items-center mt-1 px-0 px-lg-1">
+          {/* <div className="d-flex align-items-center me-2">
             <label className="fs-4" htmlFor="rows-per-page">
               نمایش
             </label>
@@ -100,18 +99,7 @@ const CustomHeader = ({
               <option value="25">25</option>
               <option value="50">50</option>
             </Input>
-          </div>
-          <div className="d-flex align-items-center">
-            <label className="fs-4" htmlFor="search-invoice"></label>
-            <Input
-              id="search-invoice"
-              className="ms-50 me-2 w-100"
-              type="text"
-              value={value}
-              onChange={(e) => handleFilter(e.target.value)}
-              placeholder="جست‌وجو"
-            />
-          </div>
+          </div> */}
           <AddUser />
         </Col>
       </Row>
@@ -131,7 +119,6 @@ const InvoiceList = () => {
   const [sort, setSort] = useState("desc");
   const [sortColumn, setSortColumn] = useState("id");
   const [currentPage, setCurrentPage] = useState(1);
-  // const [statusValue, setStatusValue] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
@@ -187,21 +174,6 @@ const InvoiceList = () => {
         perPage: rowsPerPage,
         roleId: role.id,
         isActiveUser: statusOption.value
-      }),
-    );
-  };
-
-  const handleFilter = (val) => {
-    setValue(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        roleId: role.id,
-        isActiveUser: status.value
       }),
     );
   };
@@ -320,7 +292,6 @@ const InvoiceList = () => {
                 rowsPerPage={rowsPerPage}
                 handleRoleFilter={handleRoleFilter}
                 handleStatusFilter={handleStatusFilter}
-                handleFilter={handleFilter}
                 handlePerPage={handlePerPage}
                 role={role}
                 status={status}

@@ -7,6 +7,7 @@ import comments from "../components/Comments/store";
 import news from "../components/News/NewsList/store";
 import news_categories from "../components/News/NewsCategoriesList/store";
 import news_details from "../components/News/NewsDetails/store";
+import create_news from "../components/News/CreateNews/store";
 import courses from "../components/CoursesManagement/CoursesList/store";
 import courses_technologies from "../components/CoursesManagement/TechnologiesList/store";
 import courses_status from "../components/CoursesManagement/StatusList/store";
@@ -27,6 +28,7 @@ const rootReducer = {
   news,
   news_categories,
   news_details,
+  create_news,
   courses,
   courses_technologies,
   courses_status,

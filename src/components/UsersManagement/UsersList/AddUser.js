@@ -86,7 +86,7 @@ const AddUser = () => {
 
   return (
     <Fragment>
-      <Button color="primary" onClick={() => setShow(true)}>
+      <Button style={{width: "100%", fontSize: "18px"}} color="primary" onClick={() => setShow(true)}>
         افزودن کاربر
       </Button>
       <Modal
