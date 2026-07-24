@@ -11,3 +11,7 @@ export const getNewsCategories = () => {
 export const getNewsDetails = (NewsId) => {
     return apiClient.get(`News/${NewsId}`);
 };
+
+export const createNews = (data) => {
+    return apiClient.post("News/CreateNews", data);
+};

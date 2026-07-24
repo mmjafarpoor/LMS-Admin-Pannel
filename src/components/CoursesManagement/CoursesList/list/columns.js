@@ -28,6 +28,8 @@ import {
   Save,
   Info,
   Trash,
+  CheckSquare,
+  Users,
   PieChart,
   Download,
   TrendingUp,
@@ -46,8 +48,10 @@ const invoiceStatusObj = {
   'Partial Payment': { color: 'light-warning', icon: PieChart }
 }
 
+import { deleteCourse, activeCourse } from '../store'
+
 // ** Table columns
-export const columns = [
+export const columns = (dispatch) => [
   {
     name: "عنوان",
     minWidth: '200px',
@@ -105,44 +109,28 @@ export const columns = [
     minWidth: '80px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
-        {/* <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
-        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
-          Send Mail
-        </UncontrolledTooltip> */}
         <Link to={`/courses-management/${row.courseId}/${row.googleTitle.replaceAll(" ", "-")}`} id={`pw-tooltip-${row.courseId}`}>
           <Eye size={17} className='mx-1' />
         </Link>
         <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.courseId}`}>
-          Preview Invoice
+          جزئیات دوره
         </UncontrolledTooltip>
         <UncontrolledDropdown>
           <DropdownToggle tag='span'>
             <MoreVertical size={17} className='cursor-pointer' />
           </DropdownToggle>
           <DropdownMenu end>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Download size={14} className='me-50' />
-              <span className='align-middle'>Download</span>
+            <DropdownItem className='w-100'>
+              <Users size={14} className='me-50' />
+              <span className='align-middle'>لیست کاربران</span>
             </DropdownItem>
-            <DropdownItem tag={Link} to={`/apps/invoice/edit/${row.courseId}`} className='w-100'>
-              <Edit size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
+            <DropdownItem className='w-100' onClick={() => dispatch(activeCourse(row.courseId))}>
+              <CheckSquare size={14} className='me-50' />
+              <span className='align-middle'>تایید دوره</span>
             </DropdownItem>
-            <DropdownItem
-              tag='a'
-              href='/'
-              className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                // store.dispatch(deleteInvoice(row.id))
-              }}
-            >
+            <DropdownItem className='w-100' onClick={() => dispatch(deleteCourse(row.courseId))} >
               <Trash size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
-            </DropdownItem>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Copy size={14} className='me-50' />
-              <span className='align-middle'>Duplicate</span>
+              <span className='align-middle'>حذف دوره</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

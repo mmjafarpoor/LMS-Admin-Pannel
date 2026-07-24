@@ -40,7 +40,6 @@ const CustomHeader = ({
   handlePerPage,
   rowsPerPage,
 }) => {
-  // const [addUserModal, setAddUserModal] = useState(false);
 
   return (
     <div className="invoice-list-table-header w-100 py-2">
@@ -180,7 +179,7 @@ const InvoiceList = () => {
         status: statusValue,
       }),
     );
-  }, []);
+  }, [dispatch]);
 
   const handleFilter = (val) => {
     setValue(val);
@@ -307,7 +306,7 @@ const InvoiceList = () => {
             sortServer
             paginationServer
             subHeader={true}
-            columns={columns}
+            columns={columns(dispatch)}
             responsive={true}
             onSort={handleSort}
             data={dataToRender()}

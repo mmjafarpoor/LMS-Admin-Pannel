@@ -7,7 +7,6 @@ import Avatar from '@components/avatar'
 
 // ** Store & Actions
 import { store } from '@store/store'
-// import { deleteInvoice } from '../store'
 
 // ** Reactstrap Imports
 import {
@@ -21,116 +20,88 @@ import {
 
 // ** Third Party Components
 import {
-  Eye,
-  Send,
-  Edit,
-  Copy,
-  Save,
-  Info,
+  CheckSquare,
   Trash,
-  PieChart,
-  Download,
-  TrendingUp,
-  CheckCircle,
   MoreVertical,
-  ArrowDownCircle
 } from 'react-feather'
 
-// ** Vars
-const invoiceStatusObj = {
-  Sent: { color: 'light-secondary', icon: Send },
-  Paid: { color: 'light-success', icon: CheckCircle },
-  Draft: { color: 'light-primary', icon: Save },
-  Downloaded: { color: 'light-info', icon: ArrowDownCircle },
-  'Past Due': { color: 'light-danger', icon: Info },
-  'Partial Payment': { color: 'light-warning', icon: PieChart }
-}
+// import { useDispatch } from 'react-redux'
+import { deleteComment, acceptComment } from '../store'
 
 // ** Table columns
-export const columns = [
+export const columns = (dispatch) => [
   {
-    name: "نام",
-    minWidth: '350px',
+    name: "کاربر",
+    minWidth: '250px',
     sortable: true,
     sortField: "fName",
     cell: (row) => (
       <div className='d-flex justify-content-left align-items-center'>
-        <Avatar className='me-50' img={row.currentPictureAddress} width='32' height='32' />
-        <div className='d-flex flex-column'>
-          <div className="fw-bold">{`${row.fName} ${row.lName}`}</div>
-          <small className="text-muted">{row.userName}</small>
-        </div>
+        <Avatar className='me-50' img={row.pictureAddress} width='32' height='32' />
+        <div className="fw-bold fs-5">{row.author}</div>
       </div>
     ),
   },
   {
-    name: "نقش",
-    minWidth: '250px',
+    name: "عنوان نظر",
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.userRoles.replaceAll(",", " & "),
+    cell: (row) => <div className='fw-bold fs-5'>{row.title}</div>
   },
   {
-    name: "درصد تکمیل پروفایل",
+    name: "توضیحات نظر",
+    minWidth: '250px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => `${row.profileCompletionPercentage}%`,
+    cell: (row) => <div className='fw-bold fs-5'
+    style={{display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden"}}>{row.describe}</div>
   },
   {
-    name: "وضعیت",
-    minWidth: '110px',
+    name: "عنوان دوره",
+    minWidth: '200px',
     sortable: true,
     sortField: "active",
+    cell: (row) => <div className='fw-bold fs-5'>{row.courseTitle}</div>
+  },
+
+  {
+    name: "وضعیت",
+    minWidth: '150px',
+    sortable: true,
+    sortField: "userRoles",
     cell: (row) => (
-      <Badge color={row.active ? "light-success px-1" : "light-danger px-1"} pill>
-        {row.active ? "فعال" : "غیرفعال"}
+      <Badge color={row.accept ? "light-success fs-6" : "light-warning fs-6"} pill>
+        {row.accept ? "تایید شده" : "تایید نشده"}
       </Badge>
     ),
   },
-
+  {
+    name: "پاسخ‌ها",
+    minWidth: '100px',
+    sortable: true,
+    sortField: "profileCompletionPercentage",
+    cell: (row) => <div className='fw-bold fs-5'>{row.replyCount}</div>
+  },
   {
     name: 'عملیات',
     minWidth: '100px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
-        {/* <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
-        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
-          Send Mail
-        </UncontrolledTooltip> */}
-        <Link to={`/apps/invoice/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
-          <Eye size={17} className='mx-1' />
-        </Link>
-        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
-          Preview Invoice
-        </UncontrolledTooltip>
         <UncontrolledDropdown>
           <DropdownToggle tag='span'>
             <MoreVertical size={17} className='cursor-pointer' />
           </DropdownToggle>
           <DropdownMenu end>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Download size={14} className='me-50' />
-              <span className='align-middle'>Download</span>
-            </DropdownItem>
-            <DropdownItem tag={Link} to={`/apps/invoice/edit/${row.id}`} className='w-100'>
-              <Edit size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
-            </DropdownItem>
-            <DropdownItem
-              tag='a'
-              href='/'
-              className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                // store.dispatch(deleteInvoice(row.id))
-              }}
-            >
+            {!row.accept
+            ? <DropdownItem className='w-100' onClick={() => dispatch(acceptComment(row.id))}>
+                <CheckSquare size={14} className='me-50' />
+                <span className='align-middle'>تایید نظر</span>
+              </DropdownItem>
+            : <></>
+            }
+            <DropdownItem className='w-100' onClick={() => dispatch(deleteComment(row.id))} >
               <Trash size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
-            </DropdownItem>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Copy size={14} className='me-50' />
-              <span className='align-middle'>Duplicate</span>
+              <span className='align-middle'>حذف نظر</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
