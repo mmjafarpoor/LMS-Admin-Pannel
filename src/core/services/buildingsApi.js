@@ -7,3 +7,7 @@ export const getBuildings = () => {
 export const createBuilding = (data) => {
     return apiClient.post("Building", data);
 };
+
+export const editBuilding = (data) => {
+    return apiClient.put("Building", data);
+};

@@ -73,7 +73,7 @@ export const columns = [
     minWidth: '150px',
     sortable: true,
     sortField: "fName",
-    cell: (row) => <EditBuilding />
+    cell: (row) => <EditBuilding building={row}/>
   },
   {
     name: 'عملیات',

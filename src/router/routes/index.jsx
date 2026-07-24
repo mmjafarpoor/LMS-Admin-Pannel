@@ -13,11 +13,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 
 // ** Utils
 import { isObjEmpty } from "@utils";
-import {
-  getUserData,
-  getUserRole,
-  getHomeRouteForLoggedInUser,
-} from "../../utility/Utils";
+import { getUserData, getUserRole, getHomeRouteForLoggedInUser,} from "../../utility/Utils";
 import { elements } from "chart.js";
 
 const getLayout = {
@@ -48,30 +44,20 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 const DefaultRoute = "/home";
 
 const Home = lazy(() => import("../../pages/Dashboard/Home"));
-const UsersManagement = lazy(() =>
-  import("../../pages/UsersManagement/UsersManagement"),
-);
-const UserDetails = lazy(() =>
-  import("../../pages/UsersManagement/UserDetails"),
-);
+const UsersManagement = lazy(() => import("../../pages/UsersManagement/UsersManagement"),);
+const UserDetails = lazy(() => import("../../pages/UsersManagement/UserDetails"),);
 const Login = lazy(() => import("../../pages/Auth/Login"));
 const Register = lazy(() => import("../../pages/Auth/Register"));
 const ForgotPassword = lazy(() => import("../../pages/Auth/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error/Error"));
 
-const CoursesManagement = lazy(() =>
-  import("../../pages/Courses/CoursesManagement"),
-);
+const CoursesManagement = lazy(() => import("../../pages/Courses/CoursesManagement"),);
 const CoursesList = lazy(() => import("../../pages/Courses/CoursesList"));
 const CreateCourse = lazy(() => import("../../pages/Courses/CreateCourse"));
 const CoursesLevel = lazy(() => import("../../pages/Courses/CoursesLevel"));
 const CoursesStatus = lazy(() => import("../../pages/Courses/CoursesStatus"));
-const CoursesTechnologies = lazy(() =>
-  import("../../pages/Courses/CoursesTechnologies"),
-);
-const CourseUsersList = lazy(() =>
-  import("../../pages/Courses/CourseUsersList"),
-);
+const CoursesTechnologies = lazy(() => import("../../pages/Courses/CoursesTechnologies"),);
+const CourseUsersList = lazy(() => import("../../pages/Courses/CourseUsersList"),);
 const ClassList = lazy(() => import("../../pages/Courses/ClassList"));
 const Tasks = lazy(() => import("../../pages/Courses/Tasks"));
 const Terms = lazy(() => import("../../pages/Courses/Terms"));
@@ -80,22 +66,12 @@ const CourseDetails = lazy(() => import("../../pages/Courses/CourseDetails"));
 const News = lazy(() => import("../../pages/News/News"));
 const NewsList = lazy(() => import("../../pages/News/NewsList"));
 const AddNews = lazy(() => import("../../pages/News/AddNews"));
-const NewsCategoriesManagement = lazy(() =>
-  import("../../pages/News/NewsCategoriesManagement"),
-);
-const NewsDetails = lazy(() =>
-  import("../../pages/News/NewsDetails"),
-);
+const NewsCategoriesManagement = lazy(() => import("../../pages/News/NewsCategoriesManagement"),);
+const NewsDetails = lazy(() => import("../../pages/News/NewsDetails"),);
 
-const TimeManagement = lazy(() =>
-  import("../../pages/TimeManagement/TimeManagement"),
-);
-const StudentsTimeManagement = lazy(() =>
-  import("../../pages/TimeManagement/StudentsTimeManagement"),
-);
-const AdminsTimeManagement = lazy(() =>
-  import("../../pages/TimeManagement/AdminsTimeManagement"),
-);
+const TimeManagement = lazy(() => import("../../pages/TimeManagement/TimeManagement"),);
+const StudentsTimeManagement = lazy(() => import("../../pages/TimeManagement/StudentsTimeManagement"),);
+const AdminsTimeManagement = lazy(() => import("../../pages/TimeManagement/AdminsTimeManagement"),);
 
 const Comments = lazy(() => import("../../pages/Comments/Comments"));
 const Mails = lazy(() => import("../../pages/Mails/Mails"));
@@ -127,22 +103,10 @@ const Routes = [
     children: [
       { path: "courses-list", element: <CoursesList /> },
       { path: "create-course", element: <CreateCourse /> },
-      {
-        path: "courses-technologies",
-        element: <CoursesTechnologies />,
-      },
-      {
-        path: "courses-status",
-        element: <CoursesStatus />,
-      },
-      {
-        path: "courses-level",
-        element: <CoursesLevel />,
-      },
-      {
-        path: "course-users-list",
-        element: <CourseUsersList />,
-      },
+      { path: "courses-technologies",element: <CoursesTechnologies />, },
+      { path: "courses-status", element: <CoursesStatus />, },
+      { path: "courses-level", element: <CoursesLevel />, },
+      { path: "course-users-list", element: <CourseUsersList />, },
       {
         path: "class-list",
         element: <ClassList />,
@@ -193,20 +157,13 @@ const Routes = [
     path: "/department",
     element: <Department />,
   },
-  {
-    path: "/buildings",
-    element: <Buildings />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
+  { path: "/buildings", element: <Buildings />, },
+  {path: "/login", element: <Login />,
     meta: {
       layout: "blank",
     },
   },
-  {
-    path: "/register",
-    element: <Register />,
+  { path: "/register", element: <Register />,
     meta: {
       layout: "blank",
     },
@@ -296,8 +253,7 @@ const getRoutes = (layout) => {
   layouts.forEach((layoutItem) => {
     const LayoutRoutes = MergeLayoutRoutes(layoutItem, defaultLayout);
 
-    AllRoutes.push({
-      path: "/",
+    AllRoutes.push({ path: "/",
       element: getLayout[layoutItem] || getLayout[defaultLayout],
       children: LayoutRoutes,
     });
