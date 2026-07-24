@@ -49,12 +49,12 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/courses-management/courses-level",
       },
-      {
-        id: "CourseUsersList",
-        title: "لیست کاربران",
-        icon: <Circle size={12} />,
-        navLink: "/courses-management/course-users-list",
-      },
+      // {
+      //   id: "CourseUsersList",
+      //   title: "لیست کاربران",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/courses-management/course-users-list",
+      // },
       {
         id: "classList",
         title: "لیست کلاس‌ها",
@@ -81,12 +81,12 @@ export default [
     icon: <Clock size={20} />,
     navLink: "/time-management",
     children: [
-      {
-        id: "StudentsTimeManagement",
-        title: "بازه زمانی کاربران",
-        icon: <Circle size={12} />,
-        navLink: "/time-management/students",
-      },
+      // {
+      //   id: "StudentsTimeManagement",
+      //   title: "بازه زمانی کاربران",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/time-management/students",
+      // },
       {
         id: "AdminsTimeManagement",
         title: "بازه زمانی ادمین‌ها",
@@ -127,12 +127,12 @@ export default [
     icon: <MessageSquare size={20} />,
     navLink: "/comments",
   },
-  {
-    id: "mails",
-    title: "پیام‌ها",
-    icon: <Mail size={20} />,
-    navLink: "/mails",
-  },
+  // {
+  //   id: "mails",
+  //   title: "پیام‌ها",
+  //   icon: <Mail size={20} />,
+  //   navLink: "/mails",
+  // },
   {
     id: "department",
     title: "دپارتمان",

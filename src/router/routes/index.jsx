@@ -106,7 +106,7 @@ const Routes = [
       { path: "courses-technologies",element: <CoursesTechnologies />, },
       { path: "courses-status", element: <CoursesStatus />, },
       { path: "courses-level", element: <CoursesLevel />, },
-      { path: "course-users-list", element: <CourseUsersList />, },
+      // { path: "course-users-list", element: <CourseUsersList />, },
       {
         path: "class-list",
         element: <ClassList />,
@@ -127,7 +127,7 @@ const Routes = [
     path: "/time-management",
     element: <TimeManagement />,
     children: [
-      { path: "students", element: <StudentsTimeManagement /> },
+      // { path: "students", element: <StudentsTimeManagement /> },
       { path: "admins", element: <AdminsTimeManagement /> },
     ],
   },
@@ -148,10 +148,10 @@ const Routes = [
     path: "/comments",
     element: <Comments />,
   },
-  {
-    path: "/mails",
-    element: <Mails />,
-  },
+  // {
+  //   path: "/mails",
+  //   element: <Mails />,
+  // },
 
   {
     path: "/department",

@@ -49,6 +49,7 @@ const invoiceStatusObj = {
 }
 
 import { deleteCourse, activeCourse } from '../store'
+import CourseUsers from '../CourseUsers'
 
 // ** Table columns
 export const columns = (dispatch) => [
@@ -120,13 +121,14 @@ export const columns = (dispatch) => [
             <MoreVertical size={17} className='cursor-pointer' />
           </DropdownToggle>
           <DropdownMenu end>
-            <DropdownItem className='w-100'>
-              <Users size={14} className='me-50' />
-              <span className='align-middle'>لیست کاربران</span>
-            </DropdownItem>
-            <DropdownItem className='w-100' onClick={() => dispatch(activeCourse(row.courseId))}>
-              <CheckSquare size={14} className='me-50' />
-              <span className='align-middle'>تایید دوره</span>
+            {/* <DropdownItem className='w-100'> */}
+              {/* <Users size={14} className='me-50' />
+              <span className='align-middle'>لیست کاربران</span> */}
+              <CourseUsers courseId={row.courseId}/>
+            {/* </DropdownItem> */}
+            <DropdownItem className='w-100' onClick={() => dispatch(activeCourse({courseId: row.courseId, active: !row.active}))}>
+              <Edit size={14} className='me-50' />
+              <span className='align-middle'>تغییر وضعیت</span>
             </DropdownItem>
             <DropdownItem className='w-100' onClick={() => dispatch(deleteCourse(row.courseId))} >
               <Trash size={14} className='me-50' />

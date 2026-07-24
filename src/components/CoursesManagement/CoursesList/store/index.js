@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getCourses, deleteCourseById, activeCourseById } from "../../../../core/services/coursesApi";
+import { getCourses, deleteCourseById, activeCourseById, getCourseDetails } from "../../../../core/services/coursesApi";
 
 export const getData = createAsyncThunk(
   "courses/getData",
@@ -30,10 +30,9 @@ export const getData = createAsyncThunk(
 
 export const activeCourse = createAsyncThunk(
   "courses/activeCourse",
-  async (courseId, { rejectWithValue }) => {
+  async ({courseId, active}, { rejectWithValue }) => {
     try {
-      const response = await activeCourseById(courseId);
-      return courseId;
+      return await activeCourseById(courseId, active);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -45,7 +44,7 @@ export const deleteCourse = createAsyncThunk(
   async (courseId, { rejectWithValue }) => {
     console.log("deleted")
     try {
-      const response = await deleteCourseById(courseId);
+      const response = await deleteCourseById(courseId, active);
       return courseId;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -53,12 +52,30 @@ export const deleteCourse = createAsyncThunk(
   }
 );
 
+export const getCourseUsers = createAsyncThunk(
+  "courses/getCourseUsers",
+  async (params) => {
+    try {
+      const response = await getCourseDetails(params);
+      
+      return {
+        allStudents: response.data.courseStudent,
+        studentsCount: response.data.courseStudent.length,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
+
 export const appInvoiceSlice = createSlice({
   name: "courses",
   initialState: {
     data: [],
     allData: [],
-    total: 0
+    total: 0,
+    allStudents: [],
+    studentsCount: 0
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -72,15 +89,19 @@ export const appInvoiceSlice = createSlice({
       const course = state.allData.find(
         item => item.courseId === action.payload
       )
-      console.log("course:", course)
+      // console.log("course:", course)
       if (course) {
-        course.active = !course.active;
+        course.active = true;
       }
     })
     .addCase(deleteCourse.fulfilled, (state, action) => {
       state.allData = state.allData.filter(
         (course) => course.courseId !== action.payload
       )
+    })
+    .addCase(getCourseUsers.fulfilled, (state, action) => { 
+      state.allStudents = action.payload.allStudents;
+      state.studentsCount = action.payload.studentsCount;   
     })
   },
 });
