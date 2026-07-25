@@ -72,10 +72,11 @@ export const createCourse = (data) => {
     return apiClient.post("Course", data);
 };
 
-export const activeCourseById = (courseId) => {
+export const activeCourseById = (courseId, active) => {
+    console.log(active)
     return apiClient.put("Course/ActiveAndDeactiveCourse", {
        id: courseId,
-       active: true, 
+       active: active, 
     });
 };
 
@@ -87,3 +88,4 @@ export const deleteCourseById = (courseId) => {
         },
     })
 }
+

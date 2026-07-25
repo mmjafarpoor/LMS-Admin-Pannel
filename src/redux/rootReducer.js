@@ -16,6 +16,7 @@ import courses_class_list from "../components/CoursesManagement/ClassList/store"
 import courses_terms from "../components/CoursesManagement/TermsList/store";
 import course_details from "../components/CoursesManagement/CourseDetails/store";
 import create_course from "../components/CoursesManagement/CreateCourse/store";
+import time_line from "../components/TimeManagement/store";
 import department from "../components/Department/DepartmentList/store";
 import buildings from "../components/Buildings/BuildingsList/store";
 
@@ -37,6 +38,7 @@ const rootReducer = {
   courses_terms,
   course_details,
   create_course,
+  time_line,
   department,
   buildings,
 };
