@@ -6,6 +6,8 @@ import {
   CardBody,
   CardTitle,
   CardText,
+  TabContent,
+  TabPane
 } from "reactstrap";
 
 import {
@@ -27,26 +29,20 @@ import {
 } from "react-feather";
 
 import StatsHorizontal from "../../components/_Global/StatsHorizontal";
-import CoursesListFromApi from "../../components/CoursesManagement/CoursesList/list/index";
+import AllCoursesListFromApi from "../../components/CoursesManagement/CoursesList/AllCourseList/index";
+import CoursesReserveListFromApi from "../../components/CoursesManagement/CoursesList/CourseReserve/index";
+import CoursesPayListFromApi from "../../components/CoursesManagement/CoursesList/CoursePay/index";
+import Tabs from "../../components/CoursesManagement/CoursesList/Tabs";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../components/CoursesManagement/CoursesList/store";
+import { getData } from "../../components/CoursesManagement/CoursesList/AllCourseList/store";
 
 const NewsList = () => {
-  const dispatch = useDispatch();
-  const store = useSelector((state) => state.courses);
-  const CoursesList = store.allData;
-  const totalCount = store.total;
-
-  const activeCount = CoursesList.filter((course) => course.active).length;
-  const notActiveCount = CoursesList.filter((course) => !course.active).length;
-
-  console.log(NewsList);
-
-  useEffect(() => {
-    dispatch(getData());
-  }, [dispatch]);
+  const [activeTab, setActiveTab] = useState('1')
+  const toggleTab = tab => {
+    setActiveTab(tab)
+  }
 
   return (
     <div
@@ -57,30 +53,23 @@ const NewsList = () => {
         flexFlow: "column",
       }}
     >
-      <Row md="4" className="d-flex justify-content-around">
-        <StatsHorizontal
-          icon={<CheckCircle size={21} />}
-          color="success"
-          stats={activeCount}
-          statTitle="دوره‌های فعال"
-        />
-
-        <StatsHorizontal
-          icon={<Circle size={21} />}
-          color="info"
-          statTitle="کل دوره‌ها"
-          stats={totalCount}
-        />
-
-        <StatsHorizontal
-          icon={<XCircle size={21} />}
-          color="danger"
-          stats={notActiveCount}
-          statTitle="دوره‌های غیرفعال"
-        />
+      
+      <Row>
+        <Col xs={12}>
+          <Tabs className='mb-2' activeTab={activeTab} toggleTab={toggleTab} />
+          <TabContent activeTab={activeTab}>
+            <TabPane tabId='1'>
+              <AllCoursesListFromApi />
+            </TabPane>
+            <TabPane tabId='2'>
+              <CoursesReserveListFromApi/>
+            </TabPane>
+            <TabPane tabId='3'>
+              <CoursesPayListFromApi />
+            </TabPane>
+          </TabContent>
+        </Col>
       </Row>
-
-      <CoursesListFromApi />
     </div>
   );
 };

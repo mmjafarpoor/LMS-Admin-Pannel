@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getCourses, deleteCourseById, activeCourseById, getCourseDetails } from "../../../../core/services/coursesApi";
+import { getCourses, deleteCourseById, activeCourseById, getCourseDetails } from "../../../../../core/services/coursesApi";
 
 export const getData = createAsyncThunk(
   "courses/getData",
@@ -57,7 +57,6 @@ export const getCourseUsers = createAsyncThunk(
   async (params) => {
     try {
       const response = await getCourseDetails(params);
-      
       return {
         allStudents: response.data.courseStudent,
         studentsCount: response.data.courseStudent.length,

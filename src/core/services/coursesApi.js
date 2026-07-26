@@ -89,3 +89,27 @@ export const deleteCourseById = (courseId) => {
     })
 }
 
+export const getReservedCourses = () => {
+    return apiClient.get("CourseReserve");
+};
+
+export const getCourseGroupList = () => {
+    return apiClient.get("CourseGroup");
+};
+
+export const acceptCourseReserve = (data) => {
+    return apiClient.post("CourseReserve/SendReserveToCourse", data);
+};
+
+export const deleteCourseReserveById = (id) => {
+    return apiClient.delete("CourseReserve",{ 
+        data: {
+            id: id
+        }
+    })
+}
+
+export const getCoursesPayList = () => {
+    return apiClient.get("CoursePayment/ListOfWhoIsPay");
+};
+

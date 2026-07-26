@@ -8,7 +8,9 @@ import news from "../components/News/NewsList/store";
 import news_categories from "../components/News/NewsCategoriesList/store";
 import news_details from "../components/News/NewsDetails/store";
 import create_news from "../components/News/CreateNews/store";
-import courses from "../components/CoursesManagement/CoursesList/store";
+import courses from "../components/CoursesManagement/CoursesList/AllCourseList/store";
+import reserved_courses from "../components/CoursesManagement/CoursesList/CourseReserve/store"
+import courses_pay from "../components/CoursesManagement/CoursesList/CoursePay/store"
 import courses_technologies from "../components/CoursesManagement/TechnologiesList/store";
 import courses_status from "../components/CoursesManagement/StatusList/store";
 import courses_levels from "../components/CoursesManagement/LevelsList/store";
@@ -31,6 +33,8 @@ const rootReducer = {
   news_details,
   create_news,
   courses,
+  reserved_courses,
+  courses_pay,
   courses_technologies,
   courses_status,
   courses_levels,
