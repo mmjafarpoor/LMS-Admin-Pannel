@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getClasses , editClasses} from "../../../../core/services/coursesApi";
+import { getClasses , editClasses, createClass} from "../../../../core/services/coursesApi";
 
 export const getData = createAsyncThunk(
   "courses_class_list/getData",
@@ -28,6 +28,19 @@ export const updateClasses = createAsyncThunk(
     try {
       const response = await editClasses(data);
       return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const addClass = createAsyncThunk(
+  "courses_class_list/addClass",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await createClass(data);
+      return response.data
+
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

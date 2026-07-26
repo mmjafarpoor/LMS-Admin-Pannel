@@ -31,7 +31,7 @@ import BuildingsListFromApi from "../../components/Buildings/BuildingsList/list/
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../components/Buildings/BuildingsList/store";
+import { getBuildingData } from "../../components/Buildings/BuildingsList/store";
 
 const Buildings = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const Buildings = () => {
   console.log(DepartmentList);
 
   useEffect(() => {
-    dispatch(getData());
+    dispatch(getBuildingData());
   }, [dispatch]);
 
   return (

@@ -24,72 +24,40 @@ import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { selectThemeColors } from "@utils";
 
-const colourOptions = [
-  { value: "ocean", label: "Ocean" },
-  { value: "blue", label: "Blue" },
-  { value: "purple", label: "Purple" },
-  { value: "red", label: "Red" },
-  { value: "orange", label: "Orange" },
-];
+// const CustomHeader = ({
+//   value,
+//   handleStatusValue,
+//   statusValue,
+//   handlePerPage,
+//   rowsPerPage,
+// }) => {
+//   // const [addUserModal, setAddUserModal] = useState(false);
 
-const CustomHeader = ({
-  handleFilter,
-  value,
-  handleStatusValue,
-  statusValue,
-  handlePerPage,
-  rowsPerPage,
-}) => {
-  // const [addUserModal, setAddUserModal] = useState(false);
-
-  return (
-    <div className="invoice-list-table-header w-100 py-2">
-      <Row>
-        <Col md="6" className="d-flex align-items-center px-0 px-lg-1 mx-2">
-          <div className="d-flex align-items-center me-2">
-            <label className="fs-4" htmlFor="rows-per-page">
-              نمایش
-            </label>
-            <Input
-              type="select"
-              id="rows-per-page"
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              className="form-control ms-50 pe-3"
-            >
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </Input>
-          </div>
-          <div className="d-flex align-items-center">
-            <label className="fs-4" htmlFor="search-invoice"></label>
-            <Input
-              id="search-invoice"
-              className="ms-50 me-2 w-100"
-              type="text"
-              value={value}
-              onChange={(e) => handleFilter(e.target.value)}
-              placeholder="جست‌وجو"
-            />
-          </div>
-        </Col>
-        
-        <Col md="5">
-          <Label className="form-label fs-5">وضعیت</Label>
-          <Select
-            theme={selectThemeColors}
-            className="react-select"
-            classNamePrefix="select"
-            defaultValue={colourOptions[0]}
-            options={colourOptions}
-            isClearable={false}
-          />
-        </Col>
-      </Row>   
-    </div>
-  );
-};
+//   return (
+//     <div className="invoice-list-table-header w-100 py-2">
+//       <Row>
+//         <Col md="6" className="d-flex align-items-center px-0 px-lg-1 mx-2">
+//           <div className="d-flex align-items-center me-2">
+//             <label className="fs-4" htmlFor="rows-per-page">
+//               نمایش
+//             </label>
+//             <Input
+//               type="select"
+//               id="rows-per-page"
+//               value={rowsPerPage}
+//               onChange={handlePerPage}
+//               className="form-control ms-50 pe-3"
+//             >
+//               <option value="10">10</option>
+//               <option value="25">25</option>
+//               <option value="50">50</option>
+//             </Input>
+//           </div>
+//         </Col>
+//       </Row>   
+//     </div>
+//   );
+// };
 
 const InvoiceList = () => {
   // ** Store vars
@@ -118,20 +86,6 @@ const InvoiceList = () => {
       }),
     );
   }, []);
-
-  const handleFilter = (val) => {
-    setValue(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        status: statusValue,
-      }),
-    );
-  };
 
   const handlePerPage = (e) => {
     dispatch(
@@ -210,8 +164,8 @@ const InvoiceList = () => {
       return filters[k].length > 0;
     });
 
-    if (store.data.length > 0) {
-      return store.data;
+    if (store.allData.length > 0) {
+      return store.allData;
     } else if (store.allData.length === 0 && isFiltered) {
       return [];
     } else {
@@ -244,7 +198,7 @@ const InvoiceList = () => {
             sortServer
             paginationServer
             subHeader={true}
-            columns={columns}
+            columns={columns(dispatch)}
             responsive={true}
             onSort={handleSort}
             data={dataToRender()}
@@ -253,16 +207,15 @@ const InvoiceList = () => {
             defaultSortField="invoiceId"
             paginationDefaultPage={currentPage}
             paginationComponent={CustomPagination}
-            subHeaderComponent={
-              <CustomHeader
-                value={value}
-                statusValue={statusValue}
-                rowsPerPage={rowsPerPage}
-                handleFilter={handleFilter}
-                handlePerPage={handlePerPage}
-                handleStatusValue={handleStatusValue}
-              />
-            }
+            // subHeaderComponent={
+            //   <CustomHeader
+            //     value={value}
+            //     statusValue={statusValue}
+            //     rowsPerPage={rowsPerPage}
+            //     handlePerPage={handlePerPage}
+            //     handleStatusValue={handleStatusValue}
+            //   />
+            // }
           />
         </div>
       </Card>

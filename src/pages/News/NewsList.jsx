@@ -34,10 +34,10 @@ const NewsList = () => {
   const dispatch = useDispatch();
   const store = useSelector((state) => state.news);
   const NewsList = store.allData;
-  const totalCount = store.allData.length;
+  const totalCount = store.total;
 
   const activeCount = NewsList.filter((news) => news.active).length;
-  const notActiveCount = totalCount - activeCount;
+  const notActiveCount = NewsList.filter((news) => !news.active).length;
 
   console.log(NewsList);
   console.log(activeCount);

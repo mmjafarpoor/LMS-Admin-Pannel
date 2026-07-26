@@ -1,8 +1,13 @@
 import apiClient from "../interceptor/interceptor";
 
-export const getNews = () => {
-    return apiClient.get("News");
-};
+export const getNews = ({pageNumber , rowsOfPage}) =>{
+    return apiClient.get("/News",{
+        params:{
+            PageNumber:pageNumber,
+            RowsOfPage:rowsOfPage,
+        }
+    });
+}
 
 export const getNewsCategories = () => {
     return apiClient.get("News/GetListNewsCategory");
@@ -25,4 +30,16 @@ export const getNewsDetails = (NewsId) => {
 
 export const createNews = (data) => {
     return apiClient.post("News/CreateNews", data);
+};
+
+export const activeNewsById = (newsId, active) => {
+    console.log(active, newsId)
+    return apiClient.put("News/ActiveDeactiveNews", {
+       Id: newsId,
+       Active: active, 
+    });
+};
+
+export const createCategory = (data) => {
+    return apiClient.post("News/CreateNewsCategory", data);
 };

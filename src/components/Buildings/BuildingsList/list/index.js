@@ -16,7 +16,7 @@ import DataTable from "react-data-table-component";
 import { Button, Input, Row, Col, Card, CardBody, Label } from "reactstrap";
 
 // ** Store & Actions
-import { getData } from "../store";
+import { getBuildingData } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 
 // ** Styles
@@ -34,48 +34,11 @@ const colourOptions = [
 ];
 
 const CustomHeader = ({
-  handleFilter,
-  value,
-  handleStatusValue,
-  statusValue,
-  handlePerPage,
-  rowsPerPage,
 }) => {
 
   return (
     <div className="invoice-list-table-header w-100 py-2">
-      <Row>
-        <Col md="10" className="d-flex align-items-center px-0 px-lg-1 mx-2">
-          <div className="d-flex align-items-center me-2">
-            <label className="fs-4" htmlFor="rows-per-page">
-              نمایش
-            </label>
-            <Input
-              type="select"
-              id="rows-per-page"
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              className="form-control ms-50 pe-3"
-            >
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </Input>
-          </div>
-          <div className="d-flex align-items-center">
-            <label className="fs-4" htmlFor="search-invoice"></label>
-            <Input
-              id="search-invoice"
-              className="ms-50 me-2 w-100"
-              type="text"
-              value={value}
-              onChange={(e) => handleFilter(e.target.value)}
-              placeholder="جست‌وجو"
-            />
-          </div>
-          <AddBuilding/>
-        </Col>       
-      </Row>
+      <AddBuilding/>
     </div>
   );
 };
@@ -96,7 +59,7 @@ const InvoiceList = () => {
 
   useEffect(() => {
     dispatch(
-      getData({
+      getBuildingData({
         sort,
         q: value,
         sortColumn,
@@ -107,38 +70,10 @@ const InvoiceList = () => {
     );
   }, []);
 
-  const handleFilter = (val) => {
-    setValue(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        status: statusValue,
-      }),
-    );
-  };
-
-  const handlePerPage = (e) => {
-    dispatch(
-      getData({
-        sort,
-        q: value,
-        sortColumn,
-        page: currentPage,
-        status: statusValue,
-        perPage: parseInt(e.target.value),
-      }),
-    );
-    setRowsPerPage(parseInt(e.target.value));
-  };
-
   const handleStatusValue = (e) => {
     setStatusValue(e.target.value);
     dispatch(
-      getData({
+      getBuildingData({
         sort,
         q: value,
         sortColumn,
@@ -146,45 +81,6 @@ const InvoiceList = () => {
         perPage: rowsPerPage,
         status: e.target.value,
       }),
-    );
-  };
-
-  const handlePagination = (page) => {
-    dispatch(
-      getData({
-        sort,
-        q: value,
-        sortColumn,
-        status: statusValue,
-        perPage: rowsPerPage,
-        page: page.selected + 1,
-      }),
-    );
-    setCurrentPage(page.selected + 1);
-  };
-
-  const CustomPagination = () => {
-    const count = Number((store.total / rowsPerPage).toFixed(0));
-
-    return (
-      <ReactPaginate
-        nextLabel=""
-        breakLabel="..."
-        previousLabel=""
-        pageCount={count || 1}
-        activeClassName="active"
-        breakClassName="page-item"
-        pageClassName={"page-item"}
-        breakLinkClassName="page-link"
-        nextLinkClassName={"page-link"}
-        pageLinkClassName={"page-link"}
-        nextClassName={"page-item next"}
-        previousLinkClassName={"page-link"}
-        previousClassName={"page-item prev"}
-        onPageChange={(page) => handlePagination(page)}
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        containerClassName={"pagination react-paginate justify-content-end p-1"}
-      />
     );
   };
 
@@ -207,49 +103,21 @@ const InvoiceList = () => {
     }
   };
 
-  const handleSort = (column, sortDirection) => {
-    setSort(sortDirection);
-    setSortColumn(column.sortField);
-    dispatch(
-      getData({
-        q: value,
-        page: currentPage,
-        sort: sortDirection,
-        status: statusValue,
-        perPage: rowsPerPage,
-        sortColumn: column.sortField,
-      }),
-    );
-  };
-
   return (
     <div className="invoice-list-wrapper">
       <Card>
         <div className="invoice-list-dataTable react-dataTable">
           <DataTable
             noHeader
-            pagination
-            sortServer
-            paginationServer
             subHeader={true}
-            columns={columns}
+            columns={columns(dispatch)}
             responsive={true}
-            onSort={handleSort}
             data={dataToRender()}
             sortIcon={<ChevronDown />}
             className="react-dataTable"
             defaultSortField="invoiceId"
-            paginationDefaultPage={currentPage}
-            paginationComponent={CustomPagination}
             subHeaderComponent={
-              <CustomHeader
-                value={value}
-                statusValue={statusValue}
-                rowsPerPage={rowsPerPage}
-                handleFilter={handleFilter}
-                handlePerPage={handlePerPage}
-                handleStatusValue={handleStatusValue}
-              />
+              <CustomHeader/>
             }
           />
         </div>

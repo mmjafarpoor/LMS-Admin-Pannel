@@ -115,10 +115,10 @@ const Routes = [
         path: "terms",
         element: <Terms />,
       },
-      {
-        path: "tasks",
-        element: <Tasks />,
-      },
+      // {
+      //   path: "tasks",
+      //   element: <Tasks />,
+      // },
     ],
   },
   { path: "/courses-management/:CourseId/:Name", element: <CourseDetails /> },

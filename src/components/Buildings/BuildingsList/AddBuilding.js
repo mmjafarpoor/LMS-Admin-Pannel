@@ -24,7 +24,7 @@ import { User, Check, X } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 
 // ** Utils
-import { addBuilding, getData } from "./store";
+import { addBuilding, getBuildingData } from "./store";
 import { selectThemeColors } from "@utils";
 
 // ** Styles
@@ -61,7 +61,7 @@ const AddBuilding = () => {
           })
         ).unwrap();
 
-        dispatch(getData());
+        dispatch(getBuildingData());
         setShow(false);
         
 
@@ -82,7 +82,7 @@ const AddBuilding = () => {
 
   return (
     <Fragment>
-      <Button className="fs-5" color="primary" onClick={() => setShow(true)}>
+      <Button className="fs-5 w-100" color="primary" onClick={() => setShow(true)}>
         افزودن ساختمان
       </Button>
       <Modal

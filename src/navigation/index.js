@@ -67,12 +67,12 @@ export default [
         icon: <Circle size={12} />,
         navLink: "/courses-management/terms",
       },
-      {
-        id: "tasks",
-        title: "تسک‌ها",
-        icon: <Circle size={12} />,
-        navLink: "/courses-management/tasks",
-      },
+      // {
+      //   id: "tasks",
+      //   title: "تسک‌ها",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/courses-management/tasks",
+      // },
     ],
   },
   {

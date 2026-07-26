@@ -52,6 +52,8 @@ const Step4 = ({ stepper }) => {
         })
       ).unwrap();
 
+      window.location.reload();
+
       dispatch(getData());
       setShow(false);
       

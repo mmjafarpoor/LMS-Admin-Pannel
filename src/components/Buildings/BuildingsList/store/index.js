@@ -4,9 +4,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // ** Axios Imports
 import axios from "axios";
 
-import { getBuildings, createBuilding, editBuilding } from "../../../../core/services/buildingsApi";
+import { getBuildings, createBuilding, editBuilding, activeBuildingById } from "../../../../core/services/buildingsApi";
 
-export const getData = createAsyncThunk(
+export const getBuildingData = createAsyncThunk(
   "buildings/getData",
   async () => {
     try {
@@ -47,6 +47,17 @@ export const updateBuilding = createAsyncThunk(
   }
 );
 
+export const activeBuilding = createAsyncThunk(
+  "buildings/activeBuilding",
+  async ({buildingId, active}, { rejectWithValue }) => {
+    try {
+      return await activeBuildingById(buildingId, active);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const appInvoiceSlice = createSlice({
   name: "buildings",
   initialState: {
@@ -55,8 +66,16 @@ export const appInvoiceSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.
-    addCase(getData.fulfilled, (state, action) => { 
+    addCase(getBuildingData.fulfilled, (state, action) => { 
       state.allData = action.payload.allData;
+    })
+    .addCase(activeBuilding.fulfilled, (state, action) => {
+      const building = state.allData.find(
+        item => item.id === action.payload
+      )
+      if (building) {
+        building.active = true;
+      }
     })
     // .addCase(addBuilding.fulfilled, (state, action) => {
     //   state.allData.push(action.payload)

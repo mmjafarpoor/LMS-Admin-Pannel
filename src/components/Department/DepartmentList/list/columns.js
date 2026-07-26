@@ -52,7 +52,7 @@ const invoiceStatusObj = {
 export const columns = [
   {
     name: "عنوان",
-    minWidth: '200px',
+    minWidth: '300px',
     sortable: true,
     sortField: "fName",
     cell: (row) => (
@@ -61,14 +61,14 @@ export const columns = [
   },
   {
     name: "ساختمان",
-    minWidth: '300px',
+    minWidth: '600px',
     sortable: true,
     sortField: "userRoles",
     cell: (row) => `${row.building.buildingName} طبقه ${row.building.floor}`
   },
   {
     name: 'اقدام',
-    minWidth: '150px',
+    minWidth: '200px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
         <EditDepartment department={row}/>

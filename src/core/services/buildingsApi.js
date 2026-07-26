@@ -11,3 +11,11 @@ export const createBuilding = (data) => {
 export const editBuilding = (data) => {
     return apiClient.put("Building", data);
 };
+
+export const activeBuildingById = (buildingId, active) => {
+    console.log(active, buildingId)
+    return apiClient.put("Building/Active", {
+       id: buildingId,
+       active: active, 
+    });
+};

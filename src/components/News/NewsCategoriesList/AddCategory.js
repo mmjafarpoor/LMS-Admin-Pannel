@@ -25,9 +25,11 @@ import { useForm, Controller } from "react-hook-form";
 
 // ** Utils
 import { selectThemeColors } from "@utils";
+import { addCategory, getData } from "./store";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
+import { useDispatch } from "react-redux";
 
 const statusOptions = [
   { value: "user", label: "کاربر عادی" },
@@ -52,13 +54,13 @@ const languageOptions = [
 ];
 
 const defaultValues = {
-  firstName: "",
-  lastName: "",
-  username: "",
+  categoryName: "",
+  googleTitle: "",
+  googleDescribe: ""
 };
 
-const AddUser = () => {
-  // ** States
+const AddCategory = () => {
+  const dispatch = useDispatch()
   const [show, setShow] = useState(false);
 
   // ** Hooks
@@ -69,24 +71,48 @@ const AddUser = () => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onSubmit = (data) => {
-    if (Object.values(data).every((field) => field.length > 0)) {
-      return null;
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: "manual",
-          });
+  const onSubmit = async (data) => {
+      if (Object.values(data).every((field) => field.length > 0)) {
+        try {
+          await dispatch(
+            addCategory({
+              CategoryName: data.categoryName,
+              GoogleTitle: data.googleTitle,
+              GoogleDescribe: data.googleDescribe,
+              IconName: "",
+              IconAddress: "",
+              Image: "",
+              // buildingName: data.buildingName,
+              // floor: data.buildingFloor,
+              // id: "",
+              // latitude: "",
+              // longitude: ""
+            })
+          ).unwrap();
+  
+          dispatch(getData());
+          setShow(false);
+          
+  
+        } catch (error){
+          console.log(error)
+        }}
+  
+      else {
+        for (const key in data) {
+          if (data[key].length === 0) {
+            setError(key, {
+              type: "manual",
+            });
+          }
         }
       }
-    }
-  };
+    };
 
   return (
     <Fragment>
       <Button className="fs-4" color="primary" onClick={() => setShow(true)}>
-        افزودن تکنولوژی
+        افزودن دسته‌بندی
       </Button>
       <Modal
         isOpen={show}
@@ -99,120 +125,81 @@ const AddUser = () => {
         ></ModalHeader>
         <ModalBody className="px-sm-5 mx-50 pb-5">
           
-          <h1 className="text-center mb-2">افزودن کاربر جدید</h1>    
+          <h1 className="text-center mb-2">افزودن دسته‌بندی جدید</h1>    
           <Row
             tag="form"
             className="gy-1 pt-75"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="firstName">
-                نام
+            <Col xs={6}>
+              <Label className="form-label fs-5" for="categoryName">
+                نام دسته‌بندی
               </Label>
               <Controller
                 control={control}
-                name="firstName"
+                name="categoryName"
                 render={({ field }) => {
                   return (
                     <Input
                       {...field}
-                      id="firstName"
+                      id="categoryName"
                       placeholder=""
                       value={field.value}
-                      invalid={errors.firstName && true}
+                      invalid={errors.categoryName && true}
                     />
                   );
                 }}
               />
-              {errors.firstName && (
+              {errors.categoryName && (
                 <FormFeedback>لطفا یک اسم درست وارد کنید</FormFeedback>
               )}
             </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="lastName">
-                نام خانوادگی
+            <Col xs={6}>
+              <Label className="form-label fs-5" for="googleTitle">
+                عنوان گوگل
               </Label>
               <Controller
-                name="lastName"
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="lastName"
-                    placeholder=""
-                    invalid={errors.lastName && true}
-                  />
-                )}
+                name="googleTitle"
+                render={({ field }) => {
+                  return (
+                    <Input
+                      {...field}
+                      id="googleTitle"
+                      placeholder=""
+                      value={field.value}
+                      invalid={errors.googleTitle && true}
+                    />
+                  );
+                }}
               />
-              {errors.lastName && (
-                <FormFeedback>لطفا یک نام خانوادگی درست وارد کنید</FormFeedback>
+              {errors.googleTitle && (
+                <FormFeedback>لطفا یک عنوان درست وارد کنید</FormFeedback>
               )}
             </Col>
             <Col xs={12}>
-              <Label className="form-label" for="username">
-                نام کاربری
+              <Label className="form-label fs-5" for="googleDescribe">
+                توضیحات گوگل
               </Label>
               <Controller
-                name="username"
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    id="username"
-                    placeholder=""
-                    invalid={errors.username && true}
-                  />
-                )}
+                name="googleDescribe"
+                render={({ field }) => {
+                  return (
+                    <Input
+                      {...field}
+                      id="googleDescribe"
+                      placeholder=""
+                      value={field.value}
+                      invalid={errors.googleDescribe && true}
+                    />
+                  );
+                }}
               />
-              {errors.username && (
-                <FormFeedback>لطفا یک نام کاربری درست وارد کنید</FormFeedback>
+              {errors.googleDescribe && (
+                <FormFeedback>لطفا یک توضیح  مناسب وارد کنید</FormFeedback>
               )}
             </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="email">
-                ایمیل
-              </Label>
-              <Input type="email" id="email" placeholder="example@domain.com" />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="contact">
-                شماره تماس
-              </Label>
-              <Input
-                id="contact"
-                defaultValue=""
-                placeholder=""
-              />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="language">
-                زبان
-              </Label>
-              <Select
-                id="language"
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={languageOptions}
-                theme={selectThemeColors}
-                defaultValue={languageOptions[0]}
-              />
-            </Col>
-            <Col md={6} xs={12}>
-              <Label className="form-label" for="status">
-                نقش
-              </Label>
-              <Select
-                id="status"
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={statusOptions}
-                theme={selectThemeColors}
-                defaultValue={statusOptions[0]}
-              />
-            </Col>
-            
             <Col xs={12} className="text-center mt-2 pt-50">
               <Button type="submit" className="me-1" color="primary">
                 تایید
@@ -233,4 +220,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddCategory;

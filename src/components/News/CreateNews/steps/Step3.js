@@ -41,8 +41,8 @@ const Step3 = ({ stepper }) => {
       ).unwrap();
 
       dispatch(getData());
-      setShow(false);
       
+      window.location.reload();
 
     } catch (error){
       console.log(error)

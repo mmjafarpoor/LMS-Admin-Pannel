@@ -61,14 +61,14 @@ export const columns = [
   },
   {
     name: "توضیحات",
-    minWidth: '300px',
+    minWidth: '600px',
     sortable: true,
     sortField: "userRoles",
     cell: (row) => row.GoogleDescribe,
   },
   {
     name: 'اقدام',
-    minWidth: '100px',
+    minWidth: '300px',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
         <EditCategory category={row}/>

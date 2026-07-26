@@ -1,6 +1,6 @@
 // ** React Imports
 import { Fragment, useState , useEffect } from "react";
-import { updateBuilding, getData } from "./store/index";
+import { updateBuilding, getBuildingData } from "./store/index";
 import { useDispatch } from "react-redux";
 
 // ** Reactstrap Imports
@@ -47,7 +47,7 @@ const AddUser = ({ building }) => {
       };
 
       await dispatch(updateBuilding(values)).unwrap();
-      await dispatch(getData());
+      await dispatch(getBuildingData());
 
       setShow(false);
     } catch (error) {
