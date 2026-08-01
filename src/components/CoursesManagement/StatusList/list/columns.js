@@ -64,7 +64,7 @@ export const columns = [
   },
   {
     name: "توضیحات",
-    minWidth: '200px',
+    minWidth: '600px',
     sortable: true,
     sortField: "userRoles",
     cell: (row) => "",

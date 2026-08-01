@@ -52,19 +52,19 @@ const invoiceStatusObj = {
 export const columns = [
   {
     name: "عنوان",
-    minWidth: '100px',
+    minWidth: '200px',
     sortable: true,
     sortField: "fName",
     cell: (row) => (
       <div className='d-flex justify-content-left align-items-center gap-1'>
         <Avatar className='me-50' width='32' height='32' img={row.iconAddress} /> 
-        {/* <div className="fw-bold fs-5">{}</div>      */}
+        <div className="fw-bold fs-5">{row.levelName}</div>     
       </div>
     ),
   },
   {
     name: "سطح",
-    minWidth: '200px',
+    minWidth: '700px',
     sortable: true,
     sortField: "userRoles",
     cell: (row) => row.levelName,

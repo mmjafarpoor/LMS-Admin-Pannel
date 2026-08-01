@@ -21,7 +21,7 @@ const UserTabs = ({ active, toggleTab, selectedCourse }) => {
             <span className='fw-bold fs-5'>سایر اطلاعات دوره</span>
           </NavLink>
         </NavItem>
-        <NavItem>
+        {/* <NavItem>
           <NavLink active={active === '2'} onClick={() => toggleTab('2')}>
             <MessageSquare className='font-medium-3 me-50' />
             <span className='fw-bold fs-5'>نظرات</span>
@@ -38,13 +38,13 @@ const UserTabs = ({ active, toggleTab, selectedCourse }) => {
             <Book className='font-medium-3 me-50' />
             <span className='fw-bold fs-5'>دوره‌های رزور شده</span>
           </NavLink>
-        </NavItem>
+        </NavItem> */}
       </Nav>
       <TabContent activeTab={active}>
         <TabPane tabId='1'>
           <MoreDetails selectedCourse={selectedCourse}/>    
         </TabPane>
-        <TabPane tabId='2'>
+        {/* <TabPane tabId='2'>
           <UserProjectsList />
         </TabPane>
         <TabPane tabId='3'>
@@ -52,7 +52,7 @@ const UserTabs = ({ active, toggleTab, selectedCourse }) => {
         </TabPane>
         <TabPane tabId='4'>
           <UserProjectsList />
-        </TabPane>
+        </TabPane> */}
       </TabContent>
     </Fragment>
   )

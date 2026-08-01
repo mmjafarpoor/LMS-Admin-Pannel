@@ -217,14 +217,14 @@ const CourseInfoCard = ({ selectedCourse }) => {
               </ul>
             ) : null}
           </div>
-          <div className='d-flex justify-content-center pt-2'>
+          {/* <div className='d-flex justify-content-center pt-2'>
             <Button color='primary' onClick={() => setShow(true)}>
               ویرایش
             </Button>
             <Button className='ms-1' color='danger' outline onClick={handleSuspendedClick}>
               غیرفعال کردن
             </Button>
-          </div>
+          </div> */}
         </CardBody>
       </Card>
       <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>

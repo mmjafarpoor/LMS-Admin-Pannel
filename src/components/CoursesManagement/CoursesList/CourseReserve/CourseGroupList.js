@@ -40,22 +40,21 @@ const CourseGroupList = ({studentId, courseId, groupList}) => {
   return (
     <div style={{position: "relative"}}>
       <Button className="fs-5 w-100" color='primary' onClick={() => setShow(true)}>
-        لیست کاربران
+        لیست گروه‌‌ها
       </Button>
       {show && (<div 
-          className="d-flex align-items-center justify-content-center"
-          style={{width: "500px", position: "absolute", top: "0px", left: "150px", backgroundColor: '#161D31', borderRadius: "20px", zIndex: 1000 }}
+          style={{display: "flex", flexFlow: "row wrap", width: "750px", position: "fixed", bottom: "-100px", left: "150px", backgroundColor: '#161D31', borderRadius: "20px", zIndex: 10000 }}
           onClick={() => setShow(false)}
         >
         <ModalHeader className='bg-transparent'></ModalHeader>
         <ModalBody className='px-sm-5 mx-50 pb-4 '>
           <h1 className='text-start my-3'>لیست گروه‌ها</h1>          
           <p className='fw-bolder pt-50 mt-2 fs-4'>{groupList?.totalCount} گروه</p>
-          <ListGroup flush className='mb-2'>
+          <ListGroup flush className='mb-2' style={{display: "flex", flexFlow: "row wrap", gap: "10px"}}>
             
             {groupList?.courseGroupDtos?.map(item => {
               return (
-                <ListGroupItem key={item?.id} style={{border: "1px solid #7367F0", marginBottom: "10px", borderRadius: "20px"}} className='d-flex align-items-start px-2'>
+                <ListGroupItem key={item?.id} style={{border: "1px solid #7367F0", width: "300px", marginBottom: "10px", borderRadius: "20px"}} className='d-flex align-items-start px-2'>
                   <div className='d-flex align-items-center justify-content-between w-100'>
                     <div className='me-1'>
                       <h5 className='mb-25 fs-3'>{item?.groupName}</h5>

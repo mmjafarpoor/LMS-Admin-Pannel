@@ -105,7 +105,7 @@ export const columns = [
         <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
           Preview Invoice
         </UncontrolledTooltip>
-        <UncontrolledDropdown>
+        {/* <UncontrolledDropdown>
           <DropdownToggle tag='span'>
             <MoreVertical size={17} className='cursor-pointer' />
           </DropdownToggle>
@@ -135,7 +135,7 @@ export const columns = [
               <span className='align-middle'>Duplicate</span>
             </DropdownItem>
           </DropdownMenu>
-        </UncontrolledDropdown>
+        </UncontrolledDropdown> */}
       </div>
     )
   }

@@ -59,21 +59,21 @@ export const columns = [
   },
   {
     name: "تاریخ شروع",
-    minWidth: '240px',
+    minWidth: '300px',
     sortable: true,
     sortField: "profileCompletionPercentage",
     cell: (row) => row.startDate,
   },
   {
     name: "تاریخ پایان",
-    minWidth: '240px',
+    minWidth: '300px',
     sortable: true,
     sortField: "profileCompletionPercentage",
     cell: (row) => row.endDate,
   },
   {
     name: "وضعیت",
-    minWidth: '110px',
+    minWidth: '300px',
     sortable: true,
     sortField: "active",
     cell: (row) => (
@@ -83,54 +83,54 @@ export const columns = [
     ),
   },
 
-  {
-    name: 'عملیات',
-    minWidth: '100px',
-    cell: row => (
-      <div className='column-action d-flex align-items-center'>
-        {/* <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
-        <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
-          Send Mail
-        </UncontrolledTooltip> */}
-        <Link to={`/apps/invoice/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
-          <Eye size={17} className='mx-1' />
-        </Link>
-        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
-          Preview Invoice
-        </UncontrolledTooltip>
-        <UncontrolledDropdown>
-          <DropdownToggle tag='span'>
-            <MoreVertical size={17} className='cursor-pointer' />
-          </DropdownToggle>
-          <DropdownMenu end>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Download size={14} className='me-50' />
-              <span className='align-middle'>Download</span>
-            </DropdownItem>
-            <DropdownItem tag={Link} to={`/apps/invoice/edit/${row.id}`} className='w-100'>
-              <Edit size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
-            </DropdownItem>
-            <DropdownItem
-              tag='a'
-              href='/'
-              className='w-100'
-              onClick={e => {
-                e.preventDefault()
-                // store.dispatch(deleteInvoice(row.id))
-              }}
-            >
-              <Trash size={14} className='me-50' />
-              <span className='align-middle'>Delete</span>
-            </DropdownItem>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Copy size={14} className='me-50' />
-              <span className='align-middle'>Duplicate</span>
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </div>
-    )
-  }
+  // {
+  //   name: 'عملیات',
+  //   minWidth: '100px',
+  //   cell: row => (
+  //     <div className='column-action d-flex align-items-center'>
+  //       {/* <Send className='cursor-pointer' size={17} id={`send-tooltip-${row.id}`} />
+  //       <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
+  //         Send Mail
+  //       </UncontrolledTooltip> */}
+  //       <Link to={`/apps/invoice/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
+  //         <Eye size={17} className='mx-1' />
+  //       </Link>
+  //       <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
+  //         Preview Invoice
+  //       </UncontrolledTooltip>
+  //       <UncontrolledDropdown>
+  //         <DropdownToggle tag='span'>
+  //           <MoreVertical size={17} className='cursor-pointer' />
+  //         </DropdownToggle>
+  //         <DropdownMenu end>
+  //           <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
+  //             <Download size={14} className='me-50' />
+  //             <span className='align-middle'>Download</span>
+  //           </DropdownItem>
+  //           <DropdownItem tag={Link} to={`/apps/invoice/edit/${row.id}`} className='w-100'>
+  //             <Edit size={14} className='me-50' />
+  //             <span className='align-middle'>Edit</span>
+  //           </DropdownItem>
+  //           <DropdownItem
+  //             tag='a'
+  //             href='/'
+  //             className='w-100'
+  //             onClick={e => {
+  //               e.preventDefault()
+  //               // store.dispatch(deleteInvoice(row.id))
+  //             }}
+  //           >
+  //             <Trash size={14} className='me-50' />
+  //             <span className='align-middle'>Delete</span>
+  //           </DropdownItem>
+  //           <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
+  //             <Copy size={14} className='me-50' />
+  //             <span className='align-middle'>Duplicate</span>
+  //           </DropdownItem>
+  //         </DropdownMenu>
+  //       </UncontrolledDropdown>
+  //     </div>
+  //   )
+  // }
 ]
 
