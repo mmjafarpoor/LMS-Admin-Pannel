@@ -52,8 +52,7 @@ const NewsList = () => {
         display: "flex",
         flexFlow: "column",
       }}
-    >
-      
+    > 
       <Row>
         <Col xs={12}>
           <Tabs className='mb-2' activeTab={activeTab} toggleTab={toggleTab} />

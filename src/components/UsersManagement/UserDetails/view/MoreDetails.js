@@ -1,5 +1,6 @@
 import React from 'react'
 import { CardBody, Badge } from 'reactstrap'
+import { toShamsiDate } from "../../../../utility/dateFormatter"
 
 const MoreDetails = ({selectedUser}) => {
     
@@ -25,7 +26,7 @@ const MoreDetails = ({selectedUser}) => {
             </li>
             <li className='mb-75'>
                 <span className='fw-bolder me-25 fs-4'>تاریخ تولد:</span>
-                <span>{selectedUser?.birthDay}</span>
+                <span>{toShamsiDate(selectedUser?.birthDay)}</span>
             </li>
             <li className='mb-75'>
                 <span className='fw-bolder me-25 fs-4'>درصد تکمیل پروفایل:</span>

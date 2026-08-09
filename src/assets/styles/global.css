@@ -1,0 +1,6 @@
+@import "./font.css" ;
+
+*{
+    font-family: IranYekan , sans-serif ;
+    font-weight: 500;
+}

@@ -1,6 +1,7 @@
 // ** React Imports
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { toShamsiDateTime } from '../../../../utility/dateFormatter'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -56,7 +57,7 @@ export const columns = (dispatch) => [
     minWidth: '200px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row?.PeymentDate,
+    cell: (row) => ( <div style={{ direction : "ltr" }}>{toShamsiDateTime(row?.PeymentDate)}</div>),
   },
   {
     name: "شناسه پرداخت",

@@ -189,7 +189,7 @@ const InvoiceList = () => {
   };
 
   return (
-    <div className="invoice-list-wrapper">
+    <div className="invoice-list-wrapper" style={{ width : "100%"}}>
       <Card>
         <div className="invoice-list-dataTable react-dataTable">
           <DataTable

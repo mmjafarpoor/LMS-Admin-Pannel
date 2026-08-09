@@ -1,6 +1,7 @@
 // ** React Imports
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { toShamsiDateTime } from "../../../utility/dateFormatter"
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -82,7 +83,7 @@ export const columns = (dispatch) => [
     sortable: true,
     sortField: "fName",
     cell: (row) => (
-        <div className="fw-bold fs-5">{row.startDate}</div>     
+        <div className="fw-bold fs-5" style={{ direction: "ltr" }}>{toShamsiDateTime(row.startDate)}</div>
     ),
   },
   {
