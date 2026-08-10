@@ -53,6 +53,7 @@ export const columns = [
   {
     name: "عنوان",
     minWidth: '300px',
+    width:"40%",
     sortable: true,
     sortField: "fName",
     cell: (row) => (
@@ -62,9 +63,10 @@ export const columns = [
   {
     name: "ساختمان",
     minWidth: '600px',
+    width:"45%",
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => `${row.building.buildingName} طبقه ${row.building.floor}`
+    cell: (row) => (<div style={{ fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{`${row.building.buildingName} طبقه ${row.building.floor}`}</div>)
   },
   {
     name: 'اقدام',

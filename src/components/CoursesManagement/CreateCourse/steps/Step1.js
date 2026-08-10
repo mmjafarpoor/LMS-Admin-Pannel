@@ -1,53 +1,84 @@
 // ** React Imports
 import { Fragment } from 'react'
 
-// ** Utils
-import { isObjEmpty } from '@utils'
-
 // ** Third Party Components
-import * as yup from 'yup'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { ArrowLeft, ArrowRight } from 'react-feather'
-import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Reactstrap Imports
-import { Form, Label, Input, Row, Col, Button, FormFeedback } from 'reactstrap'
-import { useFormContext } from "react-hook-form";
+import {
+  Form,
+  Label,
+  Input,
+  Row,
+  Col,
+  Button
+} from 'reactstrap'
 
 const Step1 = ({ stepper }) => {
 
   const {
     control,
-    handleSubmit,
-    formState: { errors },
-  } = useFormContext();
+    trigger,
+    formState: { errors }
+  } = useFormContext()
 
-  const onSubmit = (data) => {
+  const onNext = async(data) => {
+    const isValid = await trigger([
+      'title',
+      'googleTitle',
+      'courseLink',
+      'price',
+      'capacity',
+      'startDate',
+      'endDate'
+    ])
+    console.log('Step1 valid:', isValid);
+
+    console.log('VALID:', isValid)
+    console.log('ERRORS:', errors)
+
+    if (!isValid) {
+      console.log('Step1 errors:', errors)
+      return
+    }
+
     stepper.next()
-    // console.log("data:", data);
   }
 
   return (
     <Fragment>
-      <div className='content-header'>
-        <h3 className='mb-0'>مرحله اول</h3>
-        <h4 className='text-muted'>لطفا اطلاعات خواسته شده را وارد کنید</h4>
+
+      <div className="content-header">
+        <h3 className="mb-0">
+          مرحله اول
+        </h3>
+        <h4 className="text-muted">
+          لطفا اطلاعات خواسته شده را وارد کنید
+        </h4>
       </div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+
+      <Form onSubmit={(e) => e.preventDefault()}>
+
+        {/* Title */}
+
         <Row>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label fs-5' for="title">
+          <Col md="6" className="mb-1">
+            <Label
+              className="form-label fs-5"
+              for="title"
+            >
               عنوان دوره
             </Label>
             <Controller
               name="title"
               control={control}
-              rules={{ required: "انتخاب یک عنوان الزامی است." }}
               render={({ field }) => (
                 <Input
                   {...field}
                   id="title"
-                  placeholder=""
+                  invalid={!!errors.title}
+                  placeholder="عنوان دوره را وارد کنید"
                 />
               )}
             />
@@ -57,19 +88,24 @@ const Step1 = ({ stepper }) => {
               </small>
             )}
           </Col>
-          <Col md='6' className='mb-1'>
-            <Label className='form-label fs-5' for="googleTitle">
+          {/* Google Title */}
+
+          <Col md="6" className="mb-1">
+            <Label
+              className="form-label fs-5"
+              for="googleTitle"
+            >
               عنوان گوگل
             </Label>
             <Controller
               name="googleTitle"
               control={control}
-              rules={{ required: "انتخاب یک عنوان الزامی است." }}
               render={({ field }) => (
                 <Input
                   {...field}
                   id="googleTitle"
-                  placeholder=""
+                  invalid={!!errors.googleTitle}
+                  placeholder="عنوان مناسب برای گوگل"
                 />
               )}
             />
@@ -80,88 +116,191 @@ const Step1 = ({ stepper }) => {
             )}
           </Col>
         </Row>
+
+        {/* Course Link */}
+
         <Row>
-          {/* <Col md='6' className='mb-1'>
-            <Label className='form-label fs-5' for='courseId'>
-              شناسه دوره
-            </Label>
-            <Controller
-              id='courseId'
-              name='courseId'
-              control={control}
-              render={({ field }) => <Input {...field} />}
-            />
-          </Col> */}
-          <Col className='mb-1'>
-            <Label className='form-label fs-5' for="courseLink">
+          <Col className="mb-1">
+            <Label
+              className="form-label fs-5"
+              for="courseLink"
+            >
               لینک دوره
             </Label>
             <Controller
+              name="courseLink"
               control={control}
-              id='courseLink'
-              name='courseLink'
               render={({ field }) => (
-                <Input {...field} id='courseLink'/>
+                <Input
+                  {...field}
+                  id="courseLink"
+                  invalid={!!errors.courseLink}
+                  placeholder="لینک دوره را وارد کنید"
+                />
               )}
             />
+            {errors.courseLink && (
+              <small className="text-danger">
+                {errors.courseLink.message}
+              </small>
+            )}
           </Col>
         </Row>
+
+        {/* Price / Capacity */}
+
         <Row>
-          <div className='form-label col-md-6 mb-1'>
-            <Label className='form-label fs-5' for='price'>
+          <Col
+            md="6"
+            className="mb-1"
+          >
+            <Label
+              className="form-label fs-5"
+              for="price"
+            >
               قیمت دوره (تومان)
             </Label>
             <Controller
-              id='price'
-              name='price'
+              name="price"
               control={control}
-              render={({ field }) => <Input type='text' {...field} />}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="price"
+                  type="text"
+                  inputMode="tel"
+                  min="0"
+                  invalid={!!errors.price}
+                  placeholder="قیمت دوره"
+                />
+              )}
             />
-          </div>
-          <div className='form-label-toggle col-md-6 mb-1'>
-            <Label className='form-label fs-5' for='capacity'>
-             ظرفیت دوره 
+            {errors.price && (
+              <small className="text-danger">
+                {errors.price.message}
+              </small>
+            )}
+          </Col>
+          <Col
+            md="6"
+            className="mb-1"
+          >
+            <Label
+              className="form-label fs-5"
+              for="capacity"
+            >
+              ظرفیت دوره
             </Label>
             <Controller
+              name="capacity"
               control={control}
-              id='capacity'
-              name='capacity'
-              render={({ field }) => <Input type='text' {...field} />}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="capacity"
+                  type="text"
+                  inputMode="tel"
+                  min="1"
+                  invalid={!!errors.capacity}
+                  placeholder="ظرفیت دوره"
+                />
+              )}
             />
-          </div>
+            {errors.capacity && (
+              <small className="text-danger">
+                {errors.capacity.message}
+              </small>
+            )}
+          </Col>
         </Row>
+
+        {/* Start / End Date */}
+
         <Row>
-          <div className='form-label col-md-6 mb-1'>
-            <Label className='form-label fs-5' for='startDate'>
+          <Col md="6" className="mb-1">
+            <Label
+              className="form-label fs-5"
+              for="startDate"
+            >
               تاریخ شروع
             </Label>
             <Controller
-              id='startDate'
-              name='startDate'
+              name="startDate"
               control={control}
-              render={({ field }) => <Input type='text' {...field} />}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="startDate"
+                  type="date"
+                  invalid={!!errors.startDate}
+                />
+              )}
             />
-          </div>
-          <div className='form-label-toggle col-md-6 mb-1'>
-            <Label className='form-label fs-5' for='endDate'>
-              تاریخ پایان 
+            {errors.startDate && (
+              <small className="text-danger">
+                {errors.startDate.message}
+              </small>
+            )}
+          </Col>
+          <Col md="6" className="mb-1">
+            <Label
+              className="form-label fs-5"
+              for="endDate"
+            >
+              تاریخ پایان
             </Label>
             <Controller
+              name="endDate"
               control={control}
-              id='endDate'
-              name='endDate'
-              render={({ field }) => <Input type='text' {...field} />}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="endDate"
+                  type="date"
+                  invalid={!!errors.endDate}
+                />
+              )}
             />
-          </div>
+            {errors.endDate && (
+              <small className="text-danger">
+                {errors.endDate.message}
+              </small>
+            )}
+          </Col>
         </Row>
-        <div className='mt-3 d-flex justify-content-center gap-1'>
-          <Button color='secondary' className='btn-prev' outline disabled>
-            <ArrowLeft size={14} className='align-middle me-sm-25 me-0'></ArrowLeft>
-            <span className='align-middle d-sm-inline-block d-none fs-4'>قبلی</span>
+
+        {/* Buttons */}
+
+        <div className="mt-3 d-flex justify-content-center gap-1">
+
+          <Button
+            type="button"
+            color="secondary"
+            className="btn-prev"
+            outline
+            disabled
+          >
+            <ArrowLeft
+              size={14}
+              className="align-middle me-sm-25 me-0"
+            />
+            <span className="align-middle d-sm-inline-block d-none fs-4">
+              قبلی
+            </span>
           </Button>
-          <Button type='submit' color='primary' className='btn-next' onClick={() => stepper.next()}>
-            <span className='align-middle d-sm-inline-block d-none fs-4'>بعدی</span>
-            <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'></ArrowRight>
+          <Button
+            type="button"
+            color="primary"
+            className="btn-next"
+            onClick={onNext}
+          >
+            <span className="align-middle d-sm-inline-block d-none fs-4">
+              بعدی
+            </span>
+            <ArrowRight
+              size={14}
+              className="align-middle ms-sm-25 ms-0"
+            />
           </Button>
         </div>
       </Form>

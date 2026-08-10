@@ -61,7 +61,7 @@ export const columns = (dispatch) => [
     cell: (row) => (
       <div className='d-flex justify-content-left align-items-center gap-1'>
         <Avatar className='me-50' width='32' height='32' img={row.imageAddress} /> 
-        <div className="fw-bold fs-5">{row.title}</div>     
+        <div className="fw-bold fs-5" style={{ overflow : "hidden" , maxHeight : "50px" }}>{row.title}</div>     
       </div>
     ),
   },
@@ -70,28 +70,28 @@ export const columns = (dispatch) => [
     minWidth: '300px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.miniDescribe,
+    cell: (row) =>(<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{ row.miniDescribe}</div>),
   },
   {
     name: "قیمت",
     minWidth: '100px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.cost,
+    cell: (row) => (<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{row.cost}</div>),
   },
   {
     name: "تکنولوژی",
     minWidth: '230px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row.technologyList,
+    cell: (row) => (<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{row.technologyList}</div>),
   },
   {
     name: "استاد",
     minWidth: '120px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row.teacherName,
+    cell: (row) => (<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{row.teacherName}</div>),
   },
   {
     name: "وضعیت",

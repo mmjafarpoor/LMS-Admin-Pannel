@@ -14,7 +14,7 @@ export const newsFormSchema = yup.object().shape({
         .min(5, 'عنوان گوگل باید حداقل ۵ کاراکتر باشد')
         .max(70, 'عنوان گوگل بهتر است کمتر از ۷۰ کاراکتر باشد'),
 
-    keywords: yup
+    keyword: yup
         .string()
         .nullable()
         .max(200, 'کلمات کلیدی نمی‌تواند بیشتر از ۲۰۰ کاراکتر باشد'),
@@ -24,7 +24,7 @@ export const newsFormSchema = yup.object().shape({
         .nullable()
         .required('انتخاب دسته‌بندی خبر الزامی است'),
 
-    slider: yup
+    isSlider: yup
         .object()
         .nullable()
         .required('انتخاب وضعیت اسلایدر الزامی است'),
@@ -44,11 +44,10 @@ export const newsFormSchema = yup.object().shape({
     describe: yup
         .string()
         .required('توضیحات اصلی الزامی است')
-        .min(70, 'توضیحات اصلی باید حداقل ۷۰ کاراکتر باشد'),
+        .min(70, 'توضیحات اصلی باید حداقل ۷۰ کاراکتر باشد'),    
 
     // Step 3
     image: yup
-        .string()
-        .required('لینک عکس الزامی است')
-        .url('لطفاً یک لینک معتبر وارد کنید'),
+        .mixed()
+        .required("انتخاب عکس الزامی است"),
 })

@@ -79,8 +79,8 @@ export const createCourse = (data) => {
 export const activeCourseById = (courseId, active) => {
     console.log(active)
     return apiClient.put("Course/ActiveAndDeactiveCourse", {
-       id: courseId,
-       active: active, 
+        id: courseId,
+        active: active, 
     });
 };
 

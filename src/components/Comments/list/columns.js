@@ -46,7 +46,7 @@ export const columns = (dispatch) => [
     name: "عنوان نظر",
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => <div className='fw-bold' style={{height: "100%" , fontSize: "0.98rem"}}>{row.title}</div>
+    cell: (row) => <div className='fw-bold' style={{ maxHeight: "50px" , fontSize: "1rem" , overflow : "hidden" , textOverflow : "ellipsis" }}>{row.title}</div>
   },
   {
     name: "توضیحات نظر",
@@ -54,14 +54,14 @@ export const columns = (dispatch) => [
     sortable: true,
     sortField: "profileCompletionPercentage",
     cell: (row) => <div className='fw-bold'
-    style={{height: "100%" , fontSize: "0.98rem"}}>{row.describe}</div>
+    style={{ maxHeight: "50px" , fontSize: "1rem" , overflow : "hidden" , textOverflow : "ellipsis" }}>{row.describe}</div>
   },
   {
     name: "عنوان دوره",
     minWidth: '200px',
     sortable: true,
     sortField: "active",
-    cell: (row) => <div className='fw-bold fs-5'>{row.courseTitle}</div>
+    cell: (row) => <div className='fw-bold' style={{ maxHeight: "50px" , fontSize: "1rem" , overflow : "hidden" , textOverflow : "ellipsis" }}>{row.courseTitle}</div>
   },
 
   {

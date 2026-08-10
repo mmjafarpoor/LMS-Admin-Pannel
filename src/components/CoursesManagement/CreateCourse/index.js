@@ -1,5 +1,5 @@
 // ** React Imports
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // ** Custom Components
 import Wizard from "@components/wizard";
@@ -13,17 +13,27 @@ import Step4 from "./steps/Step4";
 // ** Icons Imports
 import { FileText, User, MapPin, Link } from "react-feather";
 
+// ** Redux
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "./store";
-import { useEffect } from "react";
+
+// ** React Hook Form
 import { FormProvider, useForm } from "react-hook-form";
 
+// ** Yup
+import { yupResolver } from "@hookform/resolvers/yup";
+import { courseFormSchema } from "../../../utility/validations/courseFormSchema";
+
 const FormWizard = () => {
+
   const ref = useRef(null);
+
   const [stepper, setStepper] = useState(null);
 
   const dispatch = useDispatch();
+
   const store = useSelector((state) => state.create_course);
+
   const filtersData = store.allData;
 
   console.log(filtersData);
@@ -42,21 +52,25 @@ const FormWizard = () => {
     capacity: '',
     startDate: '',
     endDate: '',
-    courseType: '',
+    courseType: null,
     // courseTech: '',
-    courseLevel: '',
-    courseClass: '',
-    courseStatus: '',
-    courseTerm: '',
-    courseTeacher: '',
+    courseLevel: null,
+    courseClass: null,
+    courseStatus: null,
+    courseTerm: null,
+    courseTeacher: null,
     sessionsCount: '',
     miniDescribe: '',
     describe: '',
-    photoLink: '',
+    image: null,
   }
 
   const methods = useForm({
     defaultValues,
+    resolver: yupResolver(
+      courseFormSchema
+    ),
+    mode: "onTouched",
   });
 
 
