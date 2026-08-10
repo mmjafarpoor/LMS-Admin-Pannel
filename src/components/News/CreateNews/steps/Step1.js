@@ -1,19 +1,9 @@
-// ** React Imports
 import { Fragment } from 'react'
-
-// ** Utils
-import { isObjEmpty } from '@utils'
-
-// ** Third Party Components
-import * as yup from 'yup'
 import Select from 'react-select'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller , useFormContext } from 'react-hook-form'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { yupResolver } from '@hookform/resolvers/yup'
-
-// ** Reactstrap Imports
 import { Form, Label, Input, Row, Col, Button, FormFeedback } from 'reactstrap'
-import { useFormContext } from "react-hook-form";
 
 const Step1 = ({ stepper, newsCategoriesList }) => {
 
@@ -27,18 +17,33 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
     {value: false, label: "نه"},
   ]
 
-  console.log(newsCategoriesOptions)
+  console.log(newsCategoriesOptions);
 
   const {
     control,
     handleSubmit,
+    trigger,
     formState: { errors },
   } = useFormContext();
 
-  const onSubmit = (data) => {
-    stepper.next()
-    // console.log("data:", data);
-  }
+  const onNext = async (e) => {
+    e?.preventDefault();
+
+    const isValid = await trigger([
+      "title",
+      "googleTitle",
+      "keyword",
+      "newsCategory",
+      "isSlider",
+    ]);
+
+    console.log("isValid:", isValid);
+    console.log("errors:", errors);
+
+    if (isValid) {
+      stepper.next();
+    }
+  };
 
   return (
     <Fragment>
@@ -46,7 +51,7 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
         <h3 className='mb-0'>مرحله اول</h3>
         <h4 className='text-muted'>لطفا اطلاعات خواسته شده را وارد کنید</h4>
       </div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <Row>
           <Col md='6' className='mb-1'>
             <Label className='form-label fs-5' for="title">
@@ -55,19 +60,18 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
             <Controller
               name="title"
               control={control}
-              rules={{ required: "انتخاب یک عنوان الزامی است." }}
               render={({ field }) => (
                 <Input
                   {...field}
                   id="title"
-                  placeholder=""
+                  invalid={!!errors.title}
                 />
               )}
             />
             {errors.title && (
-              <small className="text-danger">
+              <FormFeedback className="d-block">
                 {errors.title.message}
-              </small>
+              </FormFeedback>
             )}
           </Col>
           <Col md='6' className='mb-1'>
@@ -77,42 +81,41 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
             <Controller
               name="googleTitle"
               control={control}
-              rules={{ required: "انتخاب یک عنوان الزامی است." }}
               render={({ field }) => (
                 <Input
                   {...field}
                   id="googleTitle"
-                  placeholder=""
+                  invalid={!!errors.googleTitle}
                 />
               )}
             />
             {errors.googleTitle && (
-              <small className="text-danger">
+              <FormFeedback className="d-block">
                 {errors.googleTitle.message}
-              </small>
+              </FormFeedback>
             )}
           </Col>
         </Row>
         <Row>
           <Col className='mb-1'>
-            <Label className='form-label fs-5' for="keywords">
+            <Label className='form-label fs-5' for="keyword">
               کلمات کلیدی
             </Label>
             <Controller
-              name="keywords"
+              name="keyword"
               control={control}
               render={({ field }) => (
                 <Input
                   {...field}
-                  id="keywords"
-                  placeholder=""
+                  id="keyword"
+                  invalid={!!errors.keyword}
                 />
               )}
             />
-            {errors.keywords && (
-              <small className="text-danger">
-                {errors.keywords.message}
-              </small>
+            {errors.keyword && (
+              <FormFeedback className="d-block">
+                {errors.keyword.message}
+              </FormFeedback>
             )}
           </Col>
         </Row>
@@ -124,7 +127,6 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
             <Controller
               name="newsCategory"
               control={control}
-              rules={{ required: "انتخاب دسته‌بندی خبر الزامی است." }}
               render={({ field }) => (
                 <Select
                   {...field}
@@ -137,17 +139,17 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
               )}
             />
             {errors.newsCategory && (
-              <small className="text-danger">
+              <FormFeedback className="d-block">
                 {errors.newsCategory.message}
-              </small>
+              </FormFeedback>
             )}
           </Col>
           <Col className='mb-1'>
-            <Label className='form-label fs-5' for='slider'>
+            <Label className='form-label fs-5' for='isSlider'>
               اسلایدر؟
             </Label>
             <Controller
-              name="slider"
+              name="isSlider"
               control={control}
               render={({ field }) => (
                 <Select
@@ -160,10 +162,10 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
                 />
               )}
             />
-            {errors.slider && (
-              <small className="text-danger">
-                {errors.slider.message}
-              </small>
+            {errors.isSlider && (
+              <FormFeedback className="d-block">
+                {errors.isSlider.message}
+              </FormFeedback>
             )}
           </Col>
         </Row>  
@@ -172,9 +174,9 @@ const Step1 = ({ stepper, newsCategoriesList }) => {
             <ArrowLeft size={14} className='align-middle me-sm-25 me-0'></ArrowLeft>
             <span className='align-middle d-sm-inline-block d-none fs-4'>قبلی</span>
           </Button>
-          <Button type='submit' color='primary' className='btn-next' onClick={() => stepper.next()}>
+          <Button type='button' color='primary' className='btn-next' onClick={onNext}>
             <span className='align-middle d-sm-inline-block d-none fs-4'>بعدی</span>
-            <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'></ArrowRight>
+            <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'/>
           </Button>
         </div>
       </Form>

@@ -1,24 +1,24 @@
-// ** React Imports
 import { Fragment } from 'react'
-
-// ** Third Party Components
-import { useForm, Controller } from 'react-hook-form'
+import { useFormContext , Controller } from 'react-hook-form'
 import { ArrowLeft, ArrowRight } from 'react-feather'
-
-// ** Reactstrap Imports
 import { Label, Row, Col, Button, Form, Input, FormFeedback, Card, CardBody, CardHeader, CardTitle, CardText} from 'reactstrap'
 
-import { useFormContext } from "react-hook-form";
-
 const Step2 = ({ stepper }) => {
-  
   const {
     control,
-    handleSubmit,
+    trigger,
+    formState: { errors },
   } = useFormContext();
 
-  const onSubmit = (data) => {
-    stepper.next()
+  const onNext = async() => {
+    const isValid = await trigger([
+      "googleDescribe",
+      "miniDescribe",
+      "describe",
+    ]);
+    if (isValid) {
+      stepper.next()
+    }
   }
 
   return (
@@ -27,7 +27,7 @@ const Step2 = ({ stepper }) => {
         <h3 className='mb-0'>توضیحات درباره دوره</h3>
         <h4 className='text-muted'>لطفا توضیحات خود را درباره خبر بنویسید</h4>
       </div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <div style={{display: "flex", flexFlow: "column", alignItems: "center"}}>
           <Col md='10' className='mb-1 mt-5'>
             <CardHeader>
@@ -38,9 +38,12 @@ const Step2 = ({ stepper }) => {
                 name='googleDescribe'
                 control={control}
                 render={({ field }) => (
-                <Input {...field} className="fs-4" type='textarea' id='googleDescribe' rows='2' placeholder='لطفا توضیح گوگلی درمورد خبر بنویسید' />
+                <Input {...field} className="fs-4" type='textarea' id='googleDescribe' rows='2' placeholder='لطفا توضیح گوگلی درمورد خبر بنویسید' invalid={!!errors.googleDescribe}/>
                 )}
               />
+              {errors.googleDescribe && (
+                <FormFeedback className="d-block">{errors.googleDescribe.message}</FormFeedback>
+              )}
             </CardBody>
           </Col>
           <Col md='10' className='mb-1 mt-5'>
@@ -52,9 +55,12 @@ const Step2 = ({ stepper }) => {
                 name='miniDescribe'
                 control={control}
                 render={({ field }) => (
-                <Input {...field} className="fs-4" type='textarea' id='miniDescribe' rows='4' placeholder='لطفا توضیح کوتاهی درمورد خبر بنویسید' />
+                <Input {...field} className="fs-4" type='textarea' id='miniDescribe' rows='4' placeholder='لطفا توضیح کوتاهی درمورد خبر بنویسید' invalid={!!errors.miniDescribe}/>
                 )}
               />
+              {errors.miniDescribe && (
+                <FormFeedback className="d-block">{errors.miniDescribe.message}</FormFeedback>
+              )}
             </CardBody>
           </Col>
           <Col md='10' className='mb-1 mt-4'>
@@ -66,9 +72,12 @@ const Step2 = ({ stepper }) => {
                 name='describe'
                 control={control}
                 render={({ field }) => (
-                <Input {...field} className="fs-4" type='textarea' id='describe' rows='10' placeholder='لطفا توضیحات اصلی خبر را بنویسید' />
+                <Input {...field} className="fs-4" type='textarea' id='describe' rows='10' placeholder='لطفا توضیحات اصلی خبر را بنویسید' invalid={!!errors.describe}/>
                 )}
               />
+              {errors.describe && (
+                <FormFeedback className="d-block">{errors.describe.message}</FormFeedback>
+              )}
             </CardBody>
           </Col>
         
@@ -77,7 +86,7 @@ const Step2 = ({ stepper }) => {
             <ArrowLeft size={14} className='align-middle me-sm-25 me-0'></ArrowLeft>
             <span className='align-middle d-sm-inline-block d-none fs-4'>قبلی</span>
           </Button>
-          <Button type='submit' color='primary' className='btn-next'>
+          <Button type='button' color='primary' className='btn-next' onClick={onNext}>
             <span className='align-middle d-sm-inline-block d-none fs-4'>بعدی</span>
             <ArrowRight size={14} className='align-middle ms-sm-25 ms-0'></ArrowRight>
           </Button>

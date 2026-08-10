@@ -58,7 +58,7 @@ export const columns = (dispatch) => [
     cell: (row) => (
       <div className='d-flex justify-content-left align-items-center'>
         <Avatar className='me-50' width='32' height='32' img={row.currentImageAddress} /> 
-        <div className="fw-bold fs-5">{row.title}</div>     
+        <div className="fw-bold fs-5" style={{ height: "100%" , overflow : "hidden" , maxHeight : "50px"}}>{row.title}</div>     
       </div>
     ),
   },
@@ -76,14 +76,14 @@ export const columns = (dispatch) => [
     minWidth: '120px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row.newsCatregoryName,
+    cell: (row) => (<div className="fw-bold fs-5">{row.newsCatregoryName}</div>),
   },
   {
     name: "تعداد بازدید",
     minWidth: '120px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row.currentView,
+    cell: (row) => (<div className="fw-bold fs-5">{row.currentView}</div>),
   },
   {
     name: "وضعیت",

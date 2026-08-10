@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getData } from "./store";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup"
+import { newsFormSchema } from "../../../utility/validations/newsFormSchema"
 
 const FormWizard = () => {
   const ref = useRef(null);
@@ -35,17 +37,19 @@ const FormWizard = () => {
   const defaultValues = {
     title: '',
     googleTitle: '',
-    newsCategory: '',
-    miniDescribe: '',
-    googleDescribe: '',
-    describe: '',
     keyword: '',
-    isSlider: '',
+    newsCategory: null,
+    isSlider: null,
+    googleDescribe: '',
+    miniDescribe: '',
+    describe: '',
     image: '',
   }
 
   const methods = useForm({
     defaultValues,
+    resolver: yupResolver(newsFormSchema),
+    mode: 'onSubmit',
   });
 
 

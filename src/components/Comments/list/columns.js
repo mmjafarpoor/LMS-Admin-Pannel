@@ -46,15 +46,15 @@ export const columns = (dispatch) => [
     name: "عنوان نظر",
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => <div className='fw-bold fs-5'>{row.title}</div>
+    cell: (row) => <div className='fw-bold' style={{height: "100%" , fontSize: "0.98rem"}}>{row.title}</div>
   },
   {
     name: "توضیحات نظر",
     minWidth: '250px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => <div className='fw-bold fs-5'
-    style={{display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden"}}>{row.describe}</div>
+    cell: (row) => <div className='fw-bold'
+    style={{height: "100%" , fontSize: "0.98rem"}}>{row.describe}</div>
   },
   {
     name: "عنوان دوره",

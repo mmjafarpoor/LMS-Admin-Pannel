@@ -35,8 +35,8 @@ export const createNews = (data) => {
 export const activeNewsById = (newsId, active) => {
     console.log(active, newsId)
     return apiClient.put("News/ActiveDeactiveNews", {
-       Id: newsId,
-       Active: active, 
+        Id: newsId,
+        Active: active, 
     });
 };
 
