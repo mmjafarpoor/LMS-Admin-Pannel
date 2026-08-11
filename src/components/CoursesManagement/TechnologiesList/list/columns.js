@@ -52,7 +52,8 @@ const invoiceStatusObj = {
 export const columns = [
   {
     name: "عنوان",
-    minWidth: '100px',
+    minWidth: '200px',
+    width: "30%",
     sortable: true,
     sortField: "fName",
     cell: (row) => (
@@ -65,9 +66,10 @@ export const columns = [
   {
     name: "توضیحات",
     minWidth: '500px',
+    width: "50%",
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.describe,
+    cell: (row) => (<div style={{ maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis"}}>{row.describe}</div>),
   },
   {
     name: 'اقدام',

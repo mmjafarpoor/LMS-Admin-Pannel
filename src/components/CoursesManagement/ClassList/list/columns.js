@@ -71,14 +71,14 @@ export const columns = [
     minWidth: '500px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => `${row.building.buildingName}، طبقه ${row.building.floor}`
+    cell: (row) => (<div style={{ maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis"}}>{`${row.building.buildingName}، طبقه ${row.building.floor}`}</div>)
   },
   {
     name: "ظرفیت",
     minWidth: '200px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.capacity,
+    cell: (row) => (<div style={{ maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis"}}>{row.capacity}</div>),
   },
   
   {

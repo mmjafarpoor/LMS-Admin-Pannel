@@ -64,7 +64,7 @@ export const columns = [
     minWidth: '600px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.GoogleDescribe,
+    cell: (row) => (<div style={{ maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{row.GoogleDescribe}</div>),
   },
   {
     name: 'اقدام',

@@ -59,7 +59,7 @@ export const columns = [
       <div className='d-flex justify-content-left align-items-center'>
         <Avatar className='me-50' img={row.currentPictureAddress} width='32' height='32' />
         <div className='d-flex flex-column'>
-          <div className="fw-bold">{`${row.fName} ${row.lName}`}</div>
+          <div className="fw-bold" style={{ fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{`${row.fName} ${row.lName}`}</div>
           <small className="text-muted">{row.userName}</small>
         </div>
       </div>
@@ -70,13 +70,13 @@ export const columns = [
     minWidth: '250px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.userRoles.replaceAll(",", " & "),
+    cell: (row) => (<div style={{ fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{row.userRoles.replaceAll(",", " & ")}</div>),
   },
   {
     name: "درصد تکمیل پروفایل",
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => `${row.profileCompletionPercentage}%`,
+    cell: (row) => (<div style={{ fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{`${row.profileCompletionPercentage}%`}</div>),
   },
   {
     name: "وضعیت",

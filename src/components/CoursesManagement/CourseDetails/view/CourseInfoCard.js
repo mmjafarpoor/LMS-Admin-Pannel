@@ -16,17 +16,11 @@ import Avatar from '@components/avatar'
 
 // ** Utils
 import { selectThemeColors } from '@utils'
+import formatPrice  from '../../../../utility/priceFormatter'
+import { toShamsiDate } from '../../../../utility/dateFormatter'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
-
-const roleColors = {
-  editor: 'light-info',
-  admin: 'light-danger',
-  author: 'light-warning',
-  maintainer: 'light-success',
-  subscriber: 'light-primary'
-}
 
 const statusColors = {
   active: 'light-success',
@@ -40,29 +34,11 @@ const statusOptions = [
   { value: 'suspended', label: 'Suspended' }
 ]
 
-const countryOptions = [
-  { value: 'uk', label: 'UK' },
-  { value: 'usa', label: 'USA' },
-  { value: 'france', label: 'France' },
-  { value: 'russia', label: 'Russia' },
-  { value: 'canada', label: 'Canada' }
-]
-
-const languageOptions = [
-  { value: 'english', label: 'English' },
-  { value: 'spanish', label: 'Spanish' },
-  { value: 'french', label: 'French' },
-  { value: 'german', label: 'German' },
-  { value: 'dutch', label: 'Dutch' }
-]
-
 const MySwal = withReactContent(Swal)
 
 const CourseInfoCard = ({ selectedCourse }) => {
   // ** State
   const [show, setShow] = useState(false)
-  // console.log("card info:", selectedCourse);
-
   
   // ** Hook
   const {
@@ -196,7 +172,7 @@ const CourseInfoCard = ({ selectedCourse }) => {
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25 fs-4'>قیمت:</span>
-                  <span>{selectedCourse?.cost}</span>
+                  <span>{formatPrice(selectedCourse?.cost)}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25 fs-4'>وضعیت:</span>
@@ -208,30 +184,30 @@ const CourseInfoCard = ({ selectedCourse }) => {
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25 fs-4'>تاریخ شروع:</span>
-                  <span>{selectedCourse?.startTime}</span>
+                  <span>{toShamsiDate(selectedCourse?.startTime)}</span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25 fs-4'>تاریخ پایان:</span>
-                  <span>{selectedCourse?.endTime}</span>
+                  <span>{toShamsiDate(selectedCourse?.endTime)}</span>
                 </li>
               </ul>
             ) : null}
           </div>
-          {/* <div className='d-flex justify-content-center pt-2'>
+          <div className='d-flex justify-content-center pt-2'>
             <Button color='primary' onClick={() => setShow(true)}>
               ویرایش
             </Button>
             <Button className='ms-1' color='danger' outline onClick={handleSuspendedClick}>
               غیرفعال کردن
             </Button>
-          </div> */}
+          </div>
         </CardBody>
       </Card>
       <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 pt-50 pb-5'>
           <div className='text-center mb-2'>
-            <h1 className='mb-1'>تغییر اطلاعات کاربر</h1>
+            <h1 className='mb-1'>تغییر اطلاعات دوره</h1>
             <p className='fs-4'>به‌روزرسانی اطلاعات کاربر مشمول ارزیابی حریم خصوصی خواهد شد.</p>
           </div>
           <Form onSubmit={handleSubmit(onSubmit)}>
@@ -308,34 +284,6 @@ const CourseInfoCard = ({ selectedCourse }) => {
                   شماره تماس
                 </Label>
                 <Input id='contact' defaultValue={""} placeholder='+1 609 933 4422' />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='language'>
-                  زبان
-                </Label>
-                <Select
-                  id='language'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={languageOptions}
-                  theme={selectThemeColors}
-                  defaultValue={languageOptions[0]}
-                />
-              </Col>
-              <Col md={6} xs={12}>
-                <Label className='form-label' for='country'>
-                  کشور
-                </Label>
-                <Select
-                  id='country'
-                  isClearable={false}
-                  className='react-select'
-                  classNamePrefix='select'
-                  options={countryOptions}
-                  theme={selectThemeColors}
-                  defaultValue={countryOptions[0]}
-                />
               </Col>
               <Col xs={12} className='text-center mt-2 pt-50'>
                 <Button type='submit' className='me-1' color='primary'>

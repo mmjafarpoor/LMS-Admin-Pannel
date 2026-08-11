@@ -37,6 +37,7 @@ import {
   MoreVertical,
   ArrowDownCircle
 } from 'react-feather'
+import formatPrice from '../../../../utility/priceFormatter'
 
 // ** Vars
 const invoiceStatusObj = {
@@ -70,14 +71,14 @@ export const columns = (dispatch) => [
     minWidth: '300px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) =>(<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{ row.miniDescribe}</div>),
+    cell: (row) =>(<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{row.miniDescribe}</div>),
   },
   {
     name: "قیمت",
     minWidth: '100px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => (<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{row.cost}</div>),
+    cell: (row) => (<div style={{ overflow : "hidden" , maxHeight : "50px" , fontSize : "1rem" }}>{formatPrice(row.cost)}</div>),
   },
   {
     name: "تکنولوژی",

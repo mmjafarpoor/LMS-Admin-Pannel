@@ -38,6 +38,8 @@ import {
   ArrowDownCircle
 } from 'react-feather'
 
+import formatPrice from "../../../../utility/priceFormatter"
+
 // ** Table columns
 export const columns = (dispatch) => [
   {
@@ -57,21 +59,21 @@ export const columns = (dispatch) => [
     minWidth: '200px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => ( <div style={{ direction : "ltr" }}>{toShamsiDateTime(row?.PeymentDate)}</div>),
+    cell: (row) => ( <div style={{ direction : "ltr" , maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{toShamsiDateTime(row?.PeymentDate)}</div>),
   },
   {
     name: "شناسه پرداخت",
     minWidth: '150px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row?.PaymentInvoiceNumber,
+    cell: (row) => (<div style={{ maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{row?.PaymentInvoiceNumber}</div>),
   },
   {
     name: "مبلغ پرداخت",
     minWidth: '100px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row?.Paid,
+    cell: (row) => (<div style={{ maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{formatPrice(row?.Paid)}</div>),
   },
   {
     name: "وضعیت",

@@ -58,7 +58,7 @@ export const columns = [
     cell: (row) => (
       <div className='d-flex justify-content-left align-items-center gap-1'>
         <Avatar className='me-50' width='32' height='32' img={row.iconAddress} /> 
-        <div className="fw-bold fs-5">{row.levelName}</div>     
+        <div className="fw-bold fs-5" style={{ maxHeight: "50px" , overflow: "hidden" , textOverflow: "ellipsis"}}>{row.levelName}</div>     
       </div>
     ),
   },
@@ -67,7 +67,7 @@ export const columns = [
     minWidth: '700px',
     sortable: true,
     sortField: "userRoles",
-    cell: (row) => row.levelName,
+    cell: (row) => (<div style={{ fontSize: "1rem" , maxHeight: "50px" , overflow: "hidden" , textOverflow: "ellipsis"}}>{row.levelName}</div>),
   },
   // {
   //   name: 'اقدام',

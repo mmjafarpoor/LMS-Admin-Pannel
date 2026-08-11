@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Tabs from '../Tabs'
 import StatsHorizontal from "../../../_Global/StatsHorizontal";
 
-
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { selectThemeColors } from "@utils";

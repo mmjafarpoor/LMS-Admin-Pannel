@@ -63,14 +63,14 @@ export const columns = [
     minWidth: '300px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) =>( <div style={{direction: "ltr"}}>{toShamsiDateTime(row.startDate)}</div>)
+    cell: (row) =>( <div style={{ direction: "ltr" , maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{toShamsiDateTime(row.startDate)}</div>)
   },
   {
     name: "تاریخ پایان",
     minWidth: '300px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) =>( <div style={{direction: "ltr"}}>{toShamsiDateTime(row.endDate)}</div>)
+    cell: (row) =>( <div style={{ direction: "ltr" , maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{toShamsiDateTime(row.endDate)}</div>)
   },
   {
     name: "وضعیت",

@@ -68,7 +68,7 @@ export const columns = (dispatch, groupList) => [
     minWidth: '120px',
     sortable: true,
     sortField: "profileCompletionPercentage",
-    cell: (row) => row?.courseName,
+    cell: (row) => (<div style={{ maxHeight: "50px" , fontSize: "1rem" , overflow: "hidden" , textOverflow: "ellipsis" }}>{row?.courseName}</div>),
   },
   {
     name: "وضعیت",
