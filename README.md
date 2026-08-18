@@ -1,4 +1,4 @@
-# 🎛️ LMS Admin & Teacher Panel
+# 👮🏻 LMS Admin & Teacher Panel
 
 A dedicated **Admin & Teacher Management Panel** for the Learning Management System (LMS).
 
